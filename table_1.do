@@ -78,3 +78,111 @@ label variable injectdrugs "Does person inject any drugs?"
 
 by BC31, sort: fre injectdrugs if drugtx == 1
 prtest injectdrugs if drugtx==1, by(BC31)
+
+*English is primary language
+
+tabulate BC6, generate(english)
+drop english2 
+rename english1 english
+
+by BC31, sort: fre english if drugtx==1
+prtest english if drugtx==1, by(BC31)
+
+*Married
+
+by BC31, sort: fre Married if drugtx==1
+prtest Married if drugtx==1, by(BC31)
+
+*Heterosexual
+
+tabulate BC9, generate(heterosexual)
+drop heterosexual2 heterosexual3 heterosexual4 
+rename heterosexual1 heterosexual
+
+by BC31, sort: fre heterosexual if drugtx==1
+prtest heterosexual if drugtx==1, by(BC31)
+
+*Employed
+
+tabulate BC11, generate(employed)
+drop employed1 
+rename employed2 employed
+
+by BC31, sort: fre employed if drugtx==1
+prtest employed if drugtx==1, by(BC31)
+
+*Self-reported homelessness
+
+by BC31, sort: fre BC14 if drugtx==1
+prtest BC14 if drugtx==1, by(BC31)
+
+*Recent drug use
+
+generate recentalcintox = .
+generate recentheroin = .
+generate recentmethad = .
+generate otheranalg = .
+generate recentbarb = .
+generate recentseda = .
+generate recentcocaine = .
+generate recentamph = .
+generate recentmarij = .
+generate recenthalluc = .
+generate recentinhal = .
+
+replace recentalcintox = 0 if BC102D == 0
+replace recentalcintox = 1 if BC102D > 0
+
+replace recentheroin = 0 if BC103D == 0
+replace recentheroin = 1 if BC103D > 0
+
+replace recentmethad = 0 if BC104D == 0
+replace recentmethad = 1 if BC104D > 0
+
+replace otheranal = 0 if BC105D == 0
+replace otheranal = 1 if BC105D > 0
+
+replace recentbarb = 0 if BC106D == 0
+replace recentbarb = 1 if BC106D > 0
+
+replace recentseda = 0 if BC107D == 0
+replace recentseda = 1 if BC107D > 0
+
+replace recentcocaine = 0 if BC108D == 0
+replace recentcocaine = 1 if BC108D > 0
+
+replace recentamph = 0 if BC109D == 0
+replace recentamph = 1 if BC109D > 0
+
+replace recentmarij = 0 if BC110D == 0
+replace recentmarij = 1 if BC110D > 0
+
+replace recenthalluc = 0 if BC111D == 0
+replace recenthalluc = 1 if BC111D > 0
+
+replace recentinhal = 0 if BC112D == 0
+replace recentinhal = 1 if BC112D > 0
+
+by BC31, sort: fre recentalcintox if drugtx==1
+by BC31, sort: fre recentheroin if drugtx==1
+by BC31, sort: fre recentmethad if drugtx==1
+by BC31, sort: fre otheranal if drugtx==1
+by BC31, sort: fre recentbarb if drugtx==1
+by BC31, sort: fre recentseda if drugtx==1
+by BC31, sort: fre recentcocaine if drugtx==1
+by BC31, sort: fre recentamph if drugtx==1
+by BC31, sort: fre recentmarij if drugtx==1
+by BC31, sort: fre recenthalluc if drugtx==1
+by BC31, sort: fre recentinhal if drugtx==1
+
+prtest recentalcintox if drugtx==1, by(BC31)
+prtest recentheroin if drugtx==1, by(BC31)
+prtest recentmethad if drugtx==1, by(BC31)
+prtest otheranal if drugtx==1, by(BC31)
+prtest recentbarb if drugtx==1, by(BC31)
+prtest recentseda if drugtx==1, by(BC31)
+prtest recentcocaine if drugtx==1, by(BC31)
+prtest recentamph if drugtx==1, by(BC31)
+prtest recentmarij if drugtx==1, by(BC31)
+prtest recenthalluc if drugtx==1, by(BC31)
+prtest recentinhal if drugtx==1, by(BC31)

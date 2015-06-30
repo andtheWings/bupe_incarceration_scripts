@@ -186,3 +186,83 @@ prtest recentamph if drugtx==1, by(BC31)
 prtest recentmarij if drugtx==1, by(BC31)
 prtest recenthalluc if drugtx==1, by(BC31)
 prtest recentinhal if drugtx==1, by(BC31)
+
+*Lives alone
+
+clonevar alone = BC18A
+recode alone (0=0) (1=1) (8=.)
+by BC31, sort: fre alone if drugtx==1
+prtest alone if drugtx==1, by(BC31)
+
+*Social support index
+
+histogram bsupport if drugtx==1, by(BC31)
+ranksum bsupport if drugtx==1, by(BC31)
+median bsupport if drugtx==1, by(BC31) exact medianties(split)
+by BC31, sort : summarize bsupport if drugtx==1, detail
+
+*Self-reported current health status
+
+histogram BC74 if drugtx==1, by(BC31)
+tabstat BC74 if drugtx ==1, statistics( mean p50 sd ) by(BC31)
+ttest BC74 if drugtx==1, by(BC31) unequal
+
+*Short form health survey
+
+histogram sf12_GH if drugtx==1, by(BC31)
+histogram sf12_PF if drugtx==1, by(BC31)
+histogram sf12_RP if drugtx==1, by(BC31)
+histogram sf12_BP if drugtx==1, by(BC31)
+histogram sf12_VT if drugtx==1, by(BC31)
+histogram sf12_SF if drugtx==1, by(BC31)
+histogram sf12_RE if drugtx==1, by(BC31)
+histogram sf12_MH if drugtx==1, by(BC31)
+
+ttest sf12_GH if drugtx==1, by(BC31) unequal
+ttest sf12_PF if drugtx==1, by(BC31) unequal
+ttest sf12_RP if drugtx==1, by(BC31) unequal
+ttest sf12_BP if drugtx==1, by(BC31) unequal
+ttest sf12_VT if drugtx==1, by(BC31) unequal
+ttest sf12_SF if drugtx==1, by(BC31) unequal
+ttest sf12_RE if drugtx==1, by(BC31) unequal
+ttest sf12_MH if drugtx==1, by(BC31) unequal
+
+*Brief symptom inventory - anxiety
+
+histogram BCIAnx if drugtx==1, by(BC31)
+by BC31, sort : summarize BCIAnx if drugtx==1, detail
+ranksum BCIAnx if drugtx==1, by(BC31)
+
+*CES-D
+
+histogram CESD if drugtx==1, by(BC31)
+summarize CESD, detail
+ttest CESD if drugtx==1, by(BC31)
+
+*Ever diagnosed with mental illness
+
+clonevar diagmentalill = BC91
+recode diagmentalill (0=0) (1=1) (.=.) (8=.)
+by BC31, sort: fre diagmentalill if drugtx==1
+prtest diagmentalill if drugtx==1, by(BC31)
+
+*Ever hospitalized for mental health issue
+
+clonevar psychhosp = BC95
+recode psychhosp (0=0) (1=1) (.=.) (8=.)
+by BC31, sort: fre psychhosp if drugtx==1
+prtest psychhosp if drugtx==1, by(BC31)
+
+*Ready to make a change in opioid use, index
+
+histogram readychange if drugtx==1, by(BC31)
+median readychange if drugtx==1, by(BC31) exact medianties(split)
+ranksum readychange if drugtx==1, by(BC31)
+by BC31, sort : summarize readychange if drugtx==1, detail
+
+*Number of times overdosed on drugs
+
+histogram BC115 if drugtx==1, by(BC31)
+by BC31, sort : summarize BC115 if drugtx==1, detail
+ranksum BC115 if drugtx==1, by(BC31)
+

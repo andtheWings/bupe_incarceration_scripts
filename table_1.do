@@ -1,69 +1,197 @@
+*This table reports variables only investigated in the baseline interview 
+*or variables with "ever" in the baseline interview's question stem. The table only includes
+*subjects who were treated with buprenorphine at any point in the study. It sorts
+*by whether individuals had ever been incarcerated greater than 3 days 
+*before or during the study.
 
-*Age
+label define no_yes 0 "no" 1 "yes"
+label values bc31 no_yes
 
-tabstat BC2 if drugtx ==1, statistics( mean p50 sd ) by(BC31)
-histogram BC2 if drugtx==1, by(BC31)
-ttest BC2 if drugtx==1, by(BC31) unequal
+*''Age''
+* Person who refused to answer was coded as 99, value was recoded to .
 
-*Male
+fre bc2
+list pid if bc2==99
+replace bc2 = . in 322
 
-tabulate BC8, generate(gender)
-by BC31, sort: fre gender1 if drugtx==1
-prtest gender1 if drugtx==1, by(BC31)
+histogram bc2 if everbupe>0, by(everincarall)
+ttest bc2 if everbupe>0, by(everincarall) unequal
 
-*Race/Ethnicity
+*''Race/Ethnicity''
 
-tabulate racemd, generate(ethrace)
+fre racemd
+tab racemd bc3
+tab racemd, generate(ethrace)
+tab racemd ethrace1
+tab racemd ethrace2
+tab racemd ethrace3
+tab racemd ethrace4
+tab racemd ethrace5
 
-prtest ethrace1 if drugtx==1, by(BC31)
-prtest ethrace2 if drugtx==1, by(BC31)
-prtest ethrace3 if drugtx==1, by(BC31)
-prtest ethrace4 if drugtx==1, by(BC31)
-prtest ethrace5 if drugtx==1, by(BC31)
+rename ethrace1 white
+rename ethrace2 black
+rename ethrace3 latino
+rename ethrace4 asian
+rename ethrace5 otherrace
 
-*High school diploma or equivalency
+by everincarall, sort: fre white if everbupe>0
+by everincarall, sort: fre black if everbupe>0
+by everincarall, sort: fre latino if everbupe>0
+by everincarall, sort: fre asian if everbupe>0
+by everincarall, sort: fre otherrace if everbupe>0
 
-recode BC10 (1 = 0) (2 =0) (3=1) (4=1) (5=1) (6=1), generate(hsdiploma)
+prtest white if everbupe>0, by(everincarall)
+prtest black if everbupe>0, by(everincarall)
+prtest latino if everbupe>0, by(everincarall)
+prtest asian if everbupe>0, by(everincarall)
+prtest otherrace if everbupe>0, by(everincarall)
+
+*''English as primary language''
+* About half of latinos claim Spanish as primary language and other half claim English.
+
+label define bc6 1 "english" 2 "spanish"
+label values bc6 bc6
+
+fre bc6
+tab bc6 bc3
+
+tab bc6, generate(english)
+drop english2 
+rename english1 english
+tab english bc6
+
+by everincarall, sort: fre english if everbupe>0
+prtest english if everbupe>0, by(everincarall)
+
+*''Male''
+
+label define bc8 1 "male" 2 "female" 3 "transgender"
+label values bc8 bc8
+
+fre bc8
+tab bc8, generate(gender)
+tab bc8 gender1
+
+by everincarall, sort: fre gender1 if everbupe>0
+prtest gender1 if everbupe>0, by(everincarall)
+
+*''Heterosexual''
+* Majority of heterosexual men said they did not get HIV from sex with men (5/254 said they did)
+* Majority of heterosexual women said they did not get HIV from sex with women (3/113 said they did)
+
+label define bc9 1 "straight/heterosexual" 2 "gay/lesbian/homosexual" 3 "bisexual" 8 "don't know"
+label values bc9 bc9
+
+fre bc9
+tab bc9 bc40a if gender1==1
+tab bc9 bc40b if gender2==1
+
+tabulate bc9, generate(heterosexual)
+drop heterosexual2 heterosexual3 heterosexual4 
+rename heterosexual1 heterosexual
+tab heterosexual bc9
+
+by everincarall, sort: fre heterosexual if everbupe>0
+prtest heterosexual if everbupe>0, by(everincarall)
+
+*''Married''
+* Interesting results:
+*  Some people "married or living with partner" say they are not living with partner
+*  Small amount of people "separate" or "divorced" say they are living with partner
+
+label define bc7 1 "never married" 2 "married or living with partner" 3 "separated" 4 "divorced" 5 "widowed"
+label values bc7 bc7
+
+fre bc7
+tab bc7 bc18b
+
+tab bc7, generate(married)
+drop married1 married3 married4 married5 
+rename married2 married
+tab married bc7
+
+by everincarall, sort: fre married if everbupe>0
+prtest married if everbupe>0, by(everincarall)
+
+*''Lives alone''
+* 	2 of 109 people who reported living alone (bc18) said they stayed with family/friends
+*	These individuals kept in alone category.
+*	3 of 113 people who reported living alone (bc18) said they were responsible
+*	for daily care of children. Individuals kept in alone category.
+
+tab bc15 bc18a
+tab bc20 bc18a
+
+clonevar alone = bc18a
+recode alone (0=0) (1=1) (8=.)
+tab alone bc15
+
+by everincarall, sort: fre alone if everbupe>0
+prtest alone if everbupe>0, by(everincarall)
+
+*''High school diploma or equivalency''
+
+label define bc10 1 "8th grade or less" 2 "some high school" 3 "GED" 4 "high school graduate" 5 "some college" 6 "college graduate"
+label values bc10 bc10
+
+fre bc10
+recode bc10 (1 = 0) (2 =0) (3=1) (4=1) (5=1) (6=1), generate(hsdiploma)
 label variable hsdiploma "Does person have at a least a high school diploma or equivalent?"
+tab bc10 hsdiploma
 
-by BC31, sort: fre hsdiploma if drugtx==1
-prtest hsdiploma if drugtx==1, by(BC31)
+by everincarall, sort: fre hsdiploma if everbupe>0
+prtest hsdiploma if everbupe>0, by(everincarall)
+
+*Ever diagnosed with mental illness
+
+clonevar diagmentalillbase = bc91
+
+recode diagmentalillbase (0=0) (1=1) (.=0) (8=0)
+
+by everincarall, sort: fre diagmentalillbase if everbupe>0
+prtest diagmentalillbase if everbupe>0, by(everincarall)
 
 *Inject drugs ever?
+*	37 of 152 people who did not report injection as typical route of administration for drug
+*	use reported that injecting drugs was likely reason for acquiring HIV (bc40C). These people were
+*	added to the "injectdrugs" variable.
+*		27 of 115 people who did not report injection as typical route of administration
+*		and did not report injecting drugs as likely means of acquiring HIV
+*		reported sharing a needle (ShareNd). These people were added to the injectdrugs variable.
 
-tab BC103R, generate(injectheroin)
+tab bc103r, generate(injectheroin)
 drop injectheroin1 injectheroin2 injectheroin3 injectheroin6 injectheroin7 injectheroin8
 rename injectheroin4 injectheroin1
 rename injectheroin5 injectheroin2
 
-tab BC104R, generate(injectmethadone)
+tab bc104r, generate(injectmethadone)
 drop injectmethadone1 injectmethadone2 injectmethadone4 injectmethadone5
 rename injectmethadone3 injectmethadone
 
-tab BC105R, generate(injectotherpk)
+tab bc105r, generate(injectotherpk)
 drop injectotherpk1 injectotherpk2 injectotherpk3 injectotherpk6 injectotherpk7 injectotherpk8
 rename injectotherpk4 injectotherpk1
 rename injectotherpk5 injectotherpk2
 
-tab BC108R, generate(injectcocaine)
-drop injectsedative2 injectcocaine1 injectcocaine2 injectcocaine3 injectcocaine6 injectcocaine7
+tab bc108r, generate(injectcocaine)
+drop injectcocaine1 injectcocaine2 injectcocaine3 injectcocaine6 injectcocaine7
 rename injectcocaine4 injectcocaine1
 rename injectcocaine5 injectcocaine2
 
-tab BC109R, generate(injectamph)
+tab bc109r, generate(injectamph)
 drop injectamph1 injectamph2 injectamph3 injectamph6 injectamph7
 rename injectamph4 injectamph1
 rename injectamph5 injectamph2
 
-tab BC111R, generate(injecthalluc)
+tab bc111r, generate(injecthalluc)
 drop injecthalluc1 injecthalluc2 injecthalluc4 injecthalluc5
 rename injecthalluc3 injecthalluc
 
-tab BC112R, generate(injectinhal)
+tab bc112r, generate(injectinhal)
 drop injectinhal1 injectinhal2 injectinhal3 injectinhal5 injectinhal6 injectinhal7
 rename injectinhal4 injectinhal
 
-tab BC107R, generate(injectsedative)
+tab bc107r, generate(injectsedative)
 drop injectsedative1 injectsedative2 injectsedative5 injectsedative6
 rename injectsedative3 injectsedative1
 rename injectsedative4 injectsedative2
@@ -76,193 +204,63 @@ label variable numinjectdrugs "How many drugs does person inject?"
 recode numinjectdrugs (0 = 0) (1 =1) (2=1) (3=1) (4=1) (5=1), generate(injectdrugs)
 label variable injectdrugs "Does person inject any drugs?"
 
-by BC31, sort: fre injectdrugs if drugtx == 1
-prtest injectdrugs if drugtx==1, by(BC31)
+tab injectdrugs bc40c
+recode injectdrugs (0=1) (1=1) (.=.) if bc40c==1
 
-*English is primary language
+tab injectdrugs sharend
+recode injectdrugs (0=1) (1=1) (.=.) if sharend==1
 
-tabulate BC6, generate(english)
-drop english2 
-rename english1 english
+by everincarall, sort: fre injectdrugs if drugtx == 1
+prtest injectdrugs if everbupe>0, by(everincarall)
 
-by BC31, sort: fre english if drugtx==1
-prtest english if drugtx==1, by(BC31)
+*Ever use drugs?
 
-*Married
+generate everalcintox = .
+generate everheroin = .
+generate evermethadone = .
+generate everotherpk = .
+generate eversedative = .
+generate evercocaine = .
+generate evermarijuana = .
 
-by BC31, sort: fre Married if drugtx==1
-prtest Married if drugtx==1, by(BC31)
+replace everalcintox = 0 if bc102y == 0
+replace everalcintox = 1 if bc102y > 0
 
-*Heterosexual
+replace everheroin = 0 if bc103y == 0
+replace everheroin = 1 if bc103y > 0
 
-tabulate BC9, generate(heterosexual)
-drop heterosexual2 heterosexual3 heterosexual4 
-rename heterosexual1 heterosexual
+replace evermethadone = 0 if bc104y == 0
+replace evermethadone = 1 if bc104y > 0
 
-by BC31, sort: fre heterosexual if drugtx==1
-prtest heterosexual if drugtx==1, by(BC31)
+replace everotherpk = 0 if bc105y == 0
+replace everotherpk = 1 if bc105y > 0
 
-*Employed
+replace eversedative = 0 if bc107y == 0
+replace eversedative = 1 if bc107y > 0
 
-tabulate BC11, generate(employed)
-drop employed1 
-rename employed2 employed
+replace evercocaine = 0 if bc108y == 0
+replace evercocaine = 1 if bc108y > 0
 
-by BC31, sort: fre employed if drugtx==1
-prtest employed if drugtx==1, by(BC31)
+replace evermarijuana = 0 if bc110y == 0
+replace evermarijuana = 1 if bc110y > 0
 
-*Self-reported homelessness
+by everincarall, sort: fre everalcintox if everbupe>0
+prtest everalcintox if everbupe>0, by(everincarall)
 
-by BC31, sort: fre BC14 if drugtx==1
-prtest BC14 if drugtx==1, by(BC31)
+by everincarall, sort: fre everheroin if everbupe>0
+prtest everheroin if everbupe>0, by(everincarall)
 
-*Recent drug use
+by everincarall, sort: fre evermethadone if everbupe>0
+prtest evermethadone if everbupe>0, by(everincarall)
 
-generate recentalcintox = .
-generate recentheroin = .
-generate recentmethad = .
-generate otheranalg = .
-generate recentbarb = .
-generate recentseda = .
-generate recentcocaine = .
-generate recentamph = .
-generate recentmarij = .
-generate recenthalluc = .
-generate recentinhal = .
+by everincarall, sort: fre everotherpk if everbupe>0
+prtest everotherpk if everbupe>0, by(everincarall)
 
-replace recentalcintox = 0 if BC102D == 0
-replace recentalcintox = 1 if BC102D > 0
+by everincarall, sort: fre eversedative if everbupe>0
+prtest eversedative if everbupe>0, by(everincarall)
 
-replace recentheroin = 0 if BC103D == 0
-replace recentheroin = 1 if BC103D > 0
+by everincarall, sort: fre evercocaine if everbupe>0
+prtest evercocaine if everbupe>0, by(everincarall)
 
-replace recentmethad = 0 if BC104D == 0
-replace recentmethad = 1 if BC104D > 0
-
-replace otheranal = 0 if BC105D == 0
-replace otheranal = 1 if BC105D > 0
-
-replace recentbarb = 0 if BC106D == 0
-replace recentbarb = 1 if BC106D > 0
-
-replace recentseda = 0 if BC107D == 0
-replace recentseda = 1 if BC107D > 0
-
-replace recentcocaine = 0 if BC108D == 0
-replace recentcocaine = 1 if BC108D > 0
-
-replace recentamph = 0 if BC109D == 0
-replace recentamph = 1 if BC109D > 0
-
-replace recentmarij = 0 if BC110D == 0
-replace recentmarij = 1 if BC110D > 0
-
-replace recenthalluc = 0 if BC111D == 0
-replace recenthalluc = 1 if BC111D > 0
-
-replace recentinhal = 0 if BC112D == 0
-replace recentinhal = 1 if BC112D > 0
-
-by BC31, sort: fre recentalcintox if drugtx==1
-by BC31, sort: fre recentheroin if drugtx==1
-by BC31, sort: fre recentmethad if drugtx==1
-by BC31, sort: fre otheranal if drugtx==1
-by BC31, sort: fre recentbarb if drugtx==1
-by BC31, sort: fre recentseda if drugtx==1
-by BC31, sort: fre recentcocaine if drugtx==1
-by BC31, sort: fre recentamph if drugtx==1
-by BC31, sort: fre recentmarij if drugtx==1
-by BC31, sort: fre recenthalluc if drugtx==1
-by BC31, sort: fre recentinhal if drugtx==1
-
-prtest recentalcintox if drugtx==1, by(BC31)
-prtest recentheroin if drugtx==1, by(BC31)
-prtest recentmethad if drugtx==1, by(BC31)
-prtest otheranal if drugtx==1, by(BC31)
-prtest recentbarb if drugtx==1, by(BC31)
-prtest recentseda if drugtx==1, by(BC31)
-prtest recentcocaine if drugtx==1, by(BC31)
-prtest recentamph if drugtx==1, by(BC31)
-prtest recentmarij if drugtx==1, by(BC31)
-prtest recenthalluc if drugtx==1, by(BC31)
-prtest recentinhal if drugtx==1, by(BC31)
-
-*Lives alone
-
-clonevar alone = BC18A
-recode alone (0=0) (1=1) (8=.)
-by BC31, sort: fre alone if drugtx==1
-prtest alone if drugtx==1, by(BC31)
-
-*Social support index
-
-histogram bsupport if drugtx==1, by(BC31)
-ranksum bsupport if drugtx==1, by(BC31)
-median bsupport if drugtx==1, by(BC31) exact medianties(split)
-by BC31, sort : summarize bsupport if drugtx==1, detail
-
-*Self-reported current health status
-
-histogram BC74 if drugtx==1, by(BC31)
-tabstat BC74 if drugtx ==1, statistics( mean p50 sd ) by(BC31)
-ttest BC74 if drugtx==1, by(BC31) unequal
-
-*Short form health survey
-
-histogram sf12_GH if drugtx==1, by(BC31)
-histogram sf12_PF if drugtx==1, by(BC31)
-histogram sf12_RP if drugtx==1, by(BC31)
-histogram sf12_BP if drugtx==1, by(BC31)
-histogram sf12_VT if drugtx==1, by(BC31)
-histogram sf12_SF if drugtx==1, by(BC31)
-histogram sf12_RE if drugtx==1, by(BC31)
-histogram sf12_MH if drugtx==1, by(BC31)
-
-ttest sf12_GH if drugtx==1, by(BC31) unequal
-ttest sf12_PF if drugtx==1, by(BC31) unequal
-ttest sf12_RP if drugtx==1, by(BC31) unequal
-ttest sf12_BP if drugtx==1, by(BC31) unequal
-ttest sf12_VT if drugtx==1, by(BC31) unequal
-ttest sf12_SF if drugtx==1, by(BC31) unequal
-ttest sf12_RE if drugtx==1, by(BC31) unequal
-ttest sf12_MH if drugtx==1, by(BC31) unequal
-
-*Brief symptom inventory - anxiety
-
-histogram BCIAnx if drugtx==1, by(BC31)
-by BC31, sort : summarize BCIAnx if drugtx==1, detail
-ranksum BCIAnx if drugtx==1, by(BC31)
-
-*CES-D
-
-histogram CESD if drugtx==1, by(BC31)
-summarize CESD, detail
-ttest CESD if drugtx==1, by(BC31)
-
-*Ever diagnosed with mental illness
-
-clonevar diagmentalill = BC91
-recode diagmentalill (0=0) (1=1) (.=.) (8=.)
-by BC31, sort: fre diagmentalill if drugtx==1
-prtest diagmentalill if drugtx==1, by(BC31)
-
-*Ever hospitalized for mental health issue
-
-clonevar psychhosp = BC95
-recode psychhosp (0=0) (1=1) (.=.) (8=.)
-by BC31, sort: fre psychhosp if drugtx==1
-prtest psychhosp if drugtx==1, by(BC31)
-
-*Ready to make a change in opioid use, index
-
-histogram readychange if drugtx==1, by(BC31)
-median readychange if drugtx==1, by(BC31) exact medianties(split)
-ranksum readychange if drugtx==1, by(BC31)
-by BC31, sort : summarize readychange if drugtx==1, detail
-
-*Number of times overdosed on drugs
-
-histogram BC115 if drugtx==1, by(BC31)
-by BC31, sort : summarize BC115 if drugtx==1, detail
-ranksum BC115 if drugtx==1, by(BC31)
-
+by everincarall, sort: fre evermarijuana if everbupe>0
+prtest evermarijuana if everbupe>0, by(everincarall)

@@ -147,15 +147,5 @@ recode psychhosp (0=0) (1=1) (.=.) (8=.)
 by bc31, sort: fre psychhosp if everbupe>0
 prtest psychhosp if everbupe>0, by(bc31)
 
-*Ready to make a change in opioid use, index
 
-histogram readychange if everbupe>0, by(bc31)
-median readychange if everbupe>0, by(bc31) exact medianties(split)
-ranksum readychange if everbupe>0, by(bc31)
-by bc31, sort : summarize readychange if everbupe>0, detail
 
-*Number of times overdosed on drugs
-
-histogram bc115 if everbupe>0, by(bc31)
-by bc31, sort : summarize bc115 if everbupe>0, detail
-ranksum bc115 if everbupe>0, by(bc31)

@@ -33,6 +33,9 @@ fre bc2
 list pid if bc2==99
 replace bc2 = . in 322
 
+histogram bc2 if drugtx==1
+summarize bc2, detail
+
 histogram bc2 if drugtx==1, by(bc31)
 ttest bc2 if drugtx==1, by(bc31) unequal
 
@@ -53,17 +56,18 @@ rename ethrace3 latino
 rename ethrace4 asian
 rename ethrace5 otherrace
 
-by bc31, sort: fre white if drugtx==1
-by bc31, sort: fre black if drugtx==1
-by bc31, sort: fre latino if drugtx==1
-by bc31, sort: fre asian if drugtx==1
-by bc31, sort: fre otherrace if drugtx==1
+generate asian_and_other = .
+replace asian_and_other = 1 if asian==1 | otherrace==1
+replace asian_and_other = 0 if asian==0 & otherrace==0
 
-prtest white if drugtx==1, by(bc31)
-prtest black if drugtx==1, by(bc31)
-prtest latino if drugtx==1, by(bc31)
-prtest asian if drugtx==1, by(bc31)
-prtest otherrace if drugtx==1, by(bc31)
+tab white if drugtx==1
+tab bc31 white if drugtx==1, row chi2
+tab black if drugtx==1
+tab bc31 black if drugtx==1, row chi2
+tab latino if drugtx==1
+tab bc31 latino if drugtx==1, row chi2
+tab asian_and_other if drugtx==1
+tab bc31 asian_and_other if drugtx==1, row chi2
 
 *''English as primary language''
 * About half of latinos claim Spanish as primary language and other half claim English.
@@ -79,8 +83,8 @@ drop english2
 rename english1 english
 tab english bc6
 
-by bc31, sort: fre english if drugtx==1
-prtest english if drugtx==1, by(bc31)
+tab english if drugtx==1
+tab bc31 english if drugtx==1, row chi2
 
 *''Male''
 
@@ -91,8 +95,8 @@ fre bc8
 tab bc8, generate(gender)
 tab bc8 gender1
 
-by bc31, sort: fre gender1 if drugtx==1
-prtest gender1 if drugtx==1, by(bc31)
+tab gender1 if drugtx==1
+tab bc31 gender1 if drugtx==1, row chi2
 
 *''Heterosexual''
 * Majority of heterosexual men said they did not get HIV from sex with men (5/254 said they did)

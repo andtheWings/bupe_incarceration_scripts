@@ -35,8 +35,8 @@ replace second_followup_quarter = 2 if second_mnths_since==7 & second_mnths_sinc
 replace second_followup_quarter = 3 if second_mnths_since==7 & third_mnths_since>9
 replace second_followup_quarter = 3 if second_mnths_since>7 & second_mnths_since<10 & third_mnths_since>9
 replace second_followup_quarter = 3 if second_mnths_since>7 & second_mnths_since<10 & third_mnths_since==.
-replace second_followup_quarter = 3 if second_mnths_since==10 & second_mnths_since<third_mnths_since & third_mnths_since<14
 replace second_followup_quarter = 4 if second_mnths_since==10 & third_mnths_since>12
+replace second_followup_quarter = 3 if second_mnths_since==10 & second_mnths_since<third_mnths_since & third_mnths_since<14
 replace second_followup_quarter = 4 if second_mnths_since>10 & second_mnths_since<13
 
 replace third_followup_quarter = 1 if third_mnths_since<4 & first_mnths_since==. & second_mnths_since==.

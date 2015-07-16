@@ -596,34 +596,74 @@ tab bc29 evermarijuana if drugtx==1, row chi2
 *	12.1% of those who reported zero years of regular cocaine use, reported recent cocaine use
 *	7.0% of those who reported zero years of regular marijuana use, reported recent marijuana use
 
-*generate recentalcintox = .
-*generate recentheroin = .
-*generate recentmethadone = .
-*generate recentotherpk = .
-*generate recentsedative = .
-*generate recentcocaine = .
-*generate recentmarijuana = .
+generate recentalcintox = .
+generate recentheroin = .
+generate recentmethadone = .
+generate recentotherpk = .
+generate recentsedative = .
+generate recentcocaine = .
+generate recentmarijuana = .
 
-*replace recentalcintox = 0 if bc102d == 0
-*replace recentalcintox = 1 if bc102d > 0
+replace recentalcintox = .a if bc102d==98
+replace recentalcintox = .b if bc102d==99
+replace recentalcintox = 0 if bc102d == 0
+replace recentalcintox = 1 if bc102d > 0
 
-*replace recentheroin = 0 if bc103d == 0
-*replace recentheroin = 1 if bc103d > 0
+replace recentheroin = .a if bc103d == 92
+replace recentheroin = 0 if bc103d == 0
+replace recentheroin = 1 if bc103d > 0
 
-*replace recentmethadone = 0 if bc104d == 0
-*replace recentmethadone = 1 if bc104d > 0
+replace recentmethadone = 0 if bc104d == 0
+replace recentmethadone = 0 if bc104d == 0
+replace recentmethadone = 1 if bc104d > 0
 
-*replace recentotherpk = 0 if bc105d == 0
-*replace recentotherpk = 1 if bc105d > 0
+replace recentotherpk = 0 if bc105d == 0
+replace recentotherpk = 1 if bc105d > 0
 
-*replace recentsedative = 0 if bc107d == 0
-*replace recentsedative = 1 if bc107d > 0
+replace recentsedative = .a if bc107d == 98
+replace recentsedative = 0 if bc107d == 0
+replace recentsedative = 1 if bc107d > 0
 
-*replace recentcocaine = 0 if bc108d == 0
-*replace recentcocaine = 1 if bc108d > 0
+replace recentcocaine = 0 if bc108d == 0
+replace recentcocaine = 1 if bc108d > 0
 
-*replace recentmarijuana = 0 if bc110d == 0
-*replace recentmarijuana = 1 if bc110d > 0
+replace recentmarijuana = 0 if bc110d == 0
+replace recentmarijuana = 1 if bc110d > 0
+
+tab recentalcintox if drugtx==1
+tab bc31 recentalcintox if drugtx==1, row chi2
+tab recent_incar_base recentalcintox if drugtx==1, row chi2
+tab bc29 recentalcintox if drugtx==1, row chi2
+
+tab recentheroin if drugtx==1
+tab bc31 recentheroin if drugtx==1, row chi2
+tab recent_incar_base recentheroin if drugtx==1, row chi2
+tab bc29 recentheroin if drugtx==1, row chi2
+
+tab recentmethadone if drugtx==1
+tab bc31 recentmethadone if drugtx==1, row chi2
+tab recent_incar_base recentmethadone if drugtx==1, row chi2
+tab bc29 recentmethadone if drugtx==1, row chi2
+
+tab recentotherpk if drugtx==1
+tab bc31 recentotherpk if drugtx==1, row chi2
+tab recent_incar_base recentotherpk if drugtx==1, row chi2
+tab bc29 recentotherpk if drugtx==1, row chi2
+
+tab recentsedative if drugtx==1
+tab bc31 recentsedative if drugtx==1, row chi2
+tab recent_incar_base recentsedative if drugtx==1, row chi2
+tab bc29 recentsedative if drugtx==1, row chi2
+
+tab recentcocaine if drugtx==1
+tab bc31 recentcocaine if drugtx==1, row chi2
+tab recent_incar_base recentcocaine if drugtx==1, row chi2
+tab bc29 recentcocaine if drugtx==1, row chi2
+
+tab recentmarijuana if drugtx==1
+tab bc31 recentmarijuana if drugtx==1, row chi2
+tab recent_incar_base recentmarijuana if drugtx==1, row chi2
+tab bc29 recentmarijuana if drugtx==1, row chi2
 
 *tab recentalcintox everalcintox, column
 *tab recentheroin everheroin, column
@@ -633,92 +673,92 @@ tab bc29 evermarijuana if drugtx==1, row chi2
 *tab recentcocaine evercocaine, column
 *tab recentmarijuana evermarijuana, column
 
-fre bc102d
-recode bc102d 98=.a 99=.b
+*fre bc102d
+*recode bc102d 98=.a 99=.b
 
-histogram bc102d if drugtx==1
-summarize bc102d if drugtx==1, detail
+*histogram bc102d if drugtx==1
+*summarize bc102d if drugtx==1, detail
 
-by bc31, sort: summarize bc102d if drugtx==1, detail
-ranksum bc102d if drugtx==1, by(bc31)
-by recent_incar_base, sort: summarize bc102d if drugtx==1, detail
-ranksum bc102d if drugtx==1, by(recent_incar_base)
-by bc29, sort: summarize bc102d if drugtx==1, detail
-ranksum bc102d if drugtx==1, by(bc29)
+*by bc31, sort: summarize bc102d if drugtx==1, detail
+*ranksum bc102d if drugtx==1, by(bc31)
+*by recent_incar_base, sort: summarize bc102d if drugtx==1, detail
+*ranksum bc102d if drugtx==1, by(recent_incar_base)
+*by bc29, sort: summarize bc102d if drugtx==1, detail
+*ranksum bc102d if drugtx==1, by(bc29)
 
-fre bc103d
-recode bc103d 92=.a
+*fre bc103d
+*recode bc103d 92=.a
 
-histogram bc103d if drugtx==1
-summarize bc103d if drugtx==1, detail
+*histogram bc103d if drugtx==1
+*summarize bc103d if drugtx==1, detail
 
-by bc31, sort: summarize bc103d if drugtx==1, detail
-ranksum bc103d if drugtx==1, by(bc31)
-by recent_incar_base, sort: summarize bc103d if drugtx==1, detail
-ranksum bc103d if drugtx==1, by(recent_incar_base)
-by bc29, sort: summarize bc103d if drugtx==1, detail
-ranksum bc103d if drugtx==1, by(bc29)
+*by bc31, sort: summarize bc103d if drugtx==1, detail
+*ranksum bc103d if drugtx==1, by(bc31)
+*by recent_incar_base, sort: summarize bc103d if drugtx==1, detail
+*ranksum bc103d if drugtx==1, by(recent_incar_base)
+*by bc29, sort: summarize bc103d if drugtx==1, detail
+*ranksum bc103d if drugtx==1, by(bc29)
 
-fre bc104d
+*fre bc104d
 
-histogram bc104d if drugtx==1
-summarize bc104d if drugtx==1, detail
+*histogram bc104d if drugtx==1
+*summarize bc104d if drugtx==1, detail
 
-by bc31, sort: summarize bc104d if drugtx==1, detail
-ranksum bc104d if drugtx==1, by(bc31)
-by recent_incar_base, sort: summarize bc104d if drugtx==1, detail
-ranksum bc104d if drugtx==1, by(recent_incar_base)
-by bc29, sort: summarize bc104d if drugtx==1, detail
-ranksum bc104d if drugtx==1, by(bc29)
+*by bc31, sort: summarize bc104d if drugtx==1, detail
+*ranksum bc104d if drugtx==1, by(bc31)
+*by recent_incar_base, sort: summarize bc104d if drugtx==1, detail
+*ranksum bc104d if drugtx==1, by(recent_incar_base)
+*by bc29, sort: summarize bc104d if drugtx==1, detail
+*ranksum bc104d if drugtx==1, by(bc29)
 
-fre bc105d
+*fre bc105d
 
-histogram bc105d if drugtx==1
-summarize bc105d if drugtx==1, detail
+*histogram bc105d if drugtx==1
+*summarize bc105d if drugtx==1, detail
 
-by bc31, sort: summarize bc105d if drugtx==1, detail
-ranksum bc105d if drugtx==1, by(bc31)
-by recent_incar_base, sort: summarize bc105d if drugtx==1, detail
-ranksum bc105d if drugtx==1, by(recent_incar_base)
-by bc29, sort: summarize bc105d if drugtx==1, detail
-ranksum bc105d if drugtx==1, by(bc29)
+*by bc31, sort: summarize bc105d if drugtx==1, detail
+*ranksum bc105d if drugtx==1, by(bc31)
+*by recent_incar_base, sort: summarize bc105d if drugtx==1, detail
+*ranksum bc105d if drugtx==1, by(recent_incar_base)
+*by bc29, sort: summarize bc105d if drugtx==1, detail
+*ranksum bc105d if drugtx==1, by(bc29)
 
-fre bc107d
-recode bc107d 98=.a
+*fre bc107d
+*recode bc107d 98=.a
 
-histogram bc107d if drugtx==1
-summarize bc107d if drugtx==1, detail
+*histogram bc107d if drugtx==1
+*summarize bc107d if drugtx==1, detail
 
-by bc31, sort: summarize bc107d if drugtx==1, detail
-ranksum bc107d if drugtx==1, by(bc31)
-by recent_incar_base, sort: summarize bc107d if drugtx==1, detail
-ranksum bc107d if drugtx==1, by(recent_incar_base)
-by bc29, sort: summarize bc107d if drugtx==1, detail
-ranksum bc107d if drugtx==1, by(bc29)
+*by bc31, sort: summarize bc107d if drugtx==1, detail
+*ranksum bc107d if drugtx==1, by(bc31)
+*by recent_incar_base, sort: summarize bc107d if drugtx==1, detail
+*ranksum bc107d if drugtx==1, by(recent_incar_base)
+*by bc29, sort: summarize bc107d if drugtx==1, detail
+*ranksum bc107d if drugtx==1, by(bc29)
 
-fre bc108d
+*fre bc108d
 
-histogram bc108d if drugtx==1
-summarize bc108d if drugtx==1, detail
+*histogram bc108d if drugtx==1
+*summarize bc108d if drugtx==1, detail
 
-by bc31, sort: summarize bc108d if drugtx==1, detail
-ranksum bc108d if drugtx==1, by(bc31)
-by recent_incar_base, sort: summarize bc108d if drugtx==1, detail
-ranksum bc108d if drugtx==1, by(recent_incar_base)
-by bc29, sort: summarize bc108d if drugtx==1, detail
-ranksum bc108d if drugtx==1, by(bc29)
+*by bc31, sort: summarize bc108d if drugtx==1, detail
+*ranksum bc108d if drugtx==1, by(bc31)
+*by recent_incar_base, sort: summarize bc108d if drugtx==1, detail
+*ranksum bc108d if drugtx==1, by(recent_incar_base)
+*by bc29, sort: summarize bc108d if drugtx==1, detail
+*ranksum bc108d if drugtx==1, by(bc29)
 
-fre bc110d
+*fre bc110d
 
-histogram bc110d if drugtx==1
-summarize bc110d if drugtx==1, detail
+*histogram bc110d if drugtx==1
+*summarize bc110d if drugtx==1, detail
 
-by bc31, sort: summarize bc110d if drugtx==1, detail
-ranksum bc110d if drugtx==1, by(bc31)
-by recent_incar_base, sort: summarize bc110d if drugtx==1, detail
-ranksum bc110d if drugtx==1, by(recent_incar_base)
-by bc29, sort: summarize bc110d if drugtx==1, detail
-ranksum bc110d if drugtx==1, by(bc29)
+*by bc31, sort: summarize bc110d if drugtx==1, detail
+*ranksum bc110d if drugtx==1, by(bc31)
+*by recent_incar_base, sort: summarize bc110d if drugtx==1, detail
+*ranksum bc110d if drugtx==1, by(recent_incar_base)
+*by bc29, sort: summarize bc110d if drugtx==1, detail
+*ranksum bc110d if drugtx==1, by(bc29)
 
 *''Years of Regular Drug Use (Heroin and other pain-killers)''
 *    One subject is coded to have used heroin regularly for 55 years. However, the oldest subject in the study is 60. The

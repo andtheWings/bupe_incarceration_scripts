@@ -1,26 +1,6 @@
-*''Employed''
-*	1 of 103 people who reported they were employed (bc11) was listed as "does not apply"
-*	under variable for type of paid work (bc12). Individual kept in.
 
-label define bc12 1 "full-time (35 hours/week or more)" 2 "part-time (less than 35 hours/week, on regular basis)" 3 "occasional work" 7 "does not apply" 9 "refused"
-label values bc12 bc12
 
-tab bc11 bc12
-list pid if bc12==7 & bc11==1
 
-tabulate bc11, generate(employed)
-drop employed1 
-rename employed2 employed
-
-by bc31, sort: fre employed if everbupe>0
-prtest employed if everbupe>0, by(bc31)
-
-*''Self-reported homelessness''
-*	9 of 112 people who reported they were homeless (bc14) also reported that they
-*	rented an apartment or house. Individuals kept in homeless category.
-
-by bc31, sort: fre bc14 if everbupe>0
-prtest bc14 if everbupe>0, by(bc31)
 
 
 

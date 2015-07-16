@@ -7,12 +7,20 @@
 label define drugtx 1 "Bupe" 2 "Methadone" 3 "Other Tx" 4 "Unknown"
 label values drugtx drugtx
 
-label define no_yes 0 "no" 1 "yes"
+label define no_yes 0 "no" 1 "yes" 8 "don't know" .a "don't know"
+label values bc29 no_yes
 label values bc31 no_yes
 label values qc16_1 no_yes
 label values qc16_2 no_yes
 label values qc16_3 no_yes
 label values qc16_4 no_yes
+
+replace bc29=.a if bc29==8
+
+generate recent_incar_base=.
+replace recent_incar_base=0 if bc32==0
+replace recent_incar_base = 1 if bc32>0
+tab bc32 recent_incar_base
 
 *clonevar everincar_base = bc31
 *clonevar everincar_1 = qc16_1
@@ -34,10 +42,16 @@ list pid if bc2==99
 replace bc2 = . in 322
 
 histogram bc2 if drugtx==1
-summarize bc2, detail
+summarize bc2 if drugtx==1
 
 histogram bc2 if drugtx==1, by(bc31)
 ttest bc2 if drugtx==1, by(bc31) unequal
+
+histogram bc2 if drugtx==1, by(bc29)
+ttest bc2 if drugtx==1, by(bc29) unequal
+
+histogram bc2 if drugtx==1, by(recent_incar_base)
+ttest bc2 if drugtx==1, by(recent_incar_base) unequal
 
 *''Race/Ethnicity''
 
@@ -61,13 +75,24 @@ replace asian_and_other = 1 if asian==1 | otherrace==1
 replace asian_and_other = 0 if asian==0 & otherrace==0
 
 tab white if drugtx==1
-tab bc31 white if drugtx==1, row chi2
 tab black if drugtx==1
-tab bc31 black if drugtx==1, row chi2
 tab latino if drugtx==1
-tab bc31 latino if drugtx==1, row chi2
 tab asian_and_other if drugtx==1
+
+tab bc31 white if drugtx==1, row chi2
+tab bc31 black if drugtx==1, row chi2
+tab bc31 latino if drugtx==1, row chi2
 tab bc31 asian_and_other if drugtx==1, row chi2
+
+tab recent_incar_base white if drugtx==1, row chi2
+tab recent_incar_base black if drugtx==1, row chi2
+tab recent_incar_base latino if drugtx==1, row chi2
+tab recent_incar_base asian_and_other if drugtx==1, row chi2
+
+tab bc29 white if drugtx==1, row chi2
+tab bc29 black if drugtx==1, row chi2
+tab bc29 latino if drugtx==1, row chi2
+tab bc29 asian_and_other if drugtx==1, row chi2
 
 *''English as primary language''
 * About half of latinos claim Spanish as primary language and other half claim English.
@@ -85,6 +110,8 @@ tab english bc6
 
 tab english if drugtx==1
 tab bc31 english if drugtx==1, row chi2
+tab recent_incar_base english if drugtx==1, row chi2
+tab bc29 english if drugtx==1, row chi2
 
 *''Male''
 
@@ -97,6 +124,8 @@ tab bc8 gender1
 
 tab gender1 if drugtx==1
 tab bc31 gender1 if drugtx==1, row chi2
+tab recent_incar_base gender1 if drugtx==1, row chi2
+tab bc29 gender1 if drugtx==1, row chi2
 
 *''Heterosexual''
 * Majority of heterosexual men said they did not get HIV from sex with men (5/254 said they did)
@@ -114,8 +143,10 @@ drop heterosexual2 heterosexual3 heterosexual4
 rename heterosexual1 heterosexual
 tab heterosexual bc9
 
-by bc31, sort: fre heterosexual if drugtx==1
-prtest heterosexual if drugtx==1, by(bc31)
+tab heterosexual if drugtx==1
+tab bc31 heterosexual if drugtx==1, row chi2
+tab recent_incar_base heterosexual if drugtx==1, row chi2
+tab bc29 heterosexual if drugtx==1, row chi2
 
 *''Married''
 * Interesting results:
@@ -133,8 +164,10 @@ drop married1 married3 married4 married5
 rename married2 married
 tab married bc7
 
-by bc31, sort: fre married if drugtx==1
-prtest married if drugtx==1, by(bc31)
+tab married if drugtx==1
+tab bc31 married if drugtx==1, row chi2
+tab recent_incar_base married if drugtx==1, row chi2
+tab bc29 married if drugtx==1, row chi2
 
 *''Lives alone''
 * 	2 of 109 people who reported living alone (bc18) said they stayed with family/friends
@@ -149,8 +182,29 @@ clonevar alone = bc18a
 recode alone (0=0) (1=1) (8=.)
 tab alone bc15
 
-by bc31, sort: fre alone if drugtx==1
-prtest alone if drugtx==1, by(bc31)
+tab alone if drugtx==1
+tab bc31 alone if drugtx==1, row chi2
+tab recent_incar_base alone if drugtx==1, row chi2
+tab bc29 alone if drugtx==1, row chi2
+
+*''Self-reported homelessness''
+*	9 of 112 people who reported they were homeless (bc14) also reported that they
+*	rented an apartment or house. Individuals kept in homeless category.
+
+label values bc14 no_yes
+replace bc14=.a if bc14==8
+
+label define bc15 1 "homeless (living on the street, in a park, in a bus station, etc)" 2 "in a shelter" 3 "transitional (time-limited) single-room occupancy hotel" 4 "permanent single-room occupancy hotel" 5 "HIV/AIDS housing/group home" 6 "drug treatment facility" 7 "other residential facility or institution (e.g. healthcare facility or halfway house)" 8 "staying with family/friends" 9 "rent and apartment/house (alone or with others)" 10 "own my home" 11 "other" 88 "don't know" 99 "refused" .a "don't know" .b "refused"
+label values bc15 bc15
+replace bc15=.a if bc15==88
+replace bc15=.b if bc15==99
+
+tab bc14 bc15
+
+tab bc14 if drugtx==1
+tab bc31 bc14 if drugtx==1, row chi2
+tab recent_incar_base bc14 if drugtx==1, row chi2
+tab bc29 bc14 if drugtx==1, row chi2
 
 *''High school diploma or equivalency''
 
@@ -158,17 +212,67 @@ label define bc10 1 "8th grade or less" 2 "some high school" 3 "GED" 4 "high sch
 label values bc10 bc10
 
 fre bc10
-recode bc10 (1 = 0) (2 =0) (3=1) (4=1) (5=1) (6=1), generate(hsdiploma)
+recode bc10 (1=0) (2=0) (3=1) (4=1) (5=1) (6=1), generate(hsdiploma)
 label variable hsdiploma "Does person have at a least a high school diploma or equivalent?"
 tab bc10 hsdiploma
 
-by bc31, sort: fre hsdiploma if drugtx==1
-prtest hsdiploma if drugtx==1, by(bc31)
+tab hsdiploma if drugtx==1
+tab bc31 hsdiploma if drugtx==1, row chi2
+tab recent_incar_base hsdiploma if drugtx==1, row chi2
+tab bc29 hsdiploma if drugtx==1, row chi2
+
+*''Employed''
+*	1 of 103 people who reported they were employed (bc11) was listed as "does not apply"
+*	under variable for type of paid work (bc12). Individual kept in.
+
+label define bc12 1 "full-time (35 hours/week or more)" 2 "part-time (less than 35 hours/week, on regular basis)" 3 "occasional work" 7 "does not apply" 9 "refused"
+label values bc12 bc12
+
+tab bc11 bc12
+list pid if bc12==7 & bc11==1
+
+tabulate bc11, generate(employed)
+drop employed1 
+rename employed2 employed
+
+tab employed if drugtx==1
+tab bc31 employed if drugtx==1, row chi2
+tab recent_incar_base employed if drugtx==1, row chi2
+tab bc29 employed if drugtx==1, row chi2
+
+*''Years since HIV diagnosis''
+
+generate sincediagnosis=bcidy-bc39y
+replace sincediagnosis=.a if sincediagnosis<0
+label define sincediagnosis .a "don't know"
+label values sincediagnosis sincediagnosis
+
+histogram sincediagnosis if drugtx==1
+summarize sincediagnosis if drugtx==1, detail
+
+by bc31, sort: summarize sincediagnosis if drugtx==1, detail
+ranksum sincediagnosis if drugtx==1, by(bc31)
+by recent_incar_base, sort: summarize sincediagnosis if drugtx==1, detail
+ranksum sincediagnosis if drugtx==1, by(recent_incar_base)
+by bc29, sort: summarize sincediagnosis if drugtx==1, detail
+ranksum sincediagnosis if drugtx==1, by(bc29)
+
+*Ever diagnosed with mental illness
+
+clonevar mental_diagnosis_base = bc91
+
+replace mental_diagnosis_base=.a if bc91==8
+
+tab mental_diagnosis_base if drugtx==1
+tab bc31 mental_diagnosis_base if drugtx==1, row chi2
+tab recent_incar_base mental_diagnosis_base if drugtx==1, row chi2
+tab bc29 mental_diagnosis_base if drugtx==1, row chi2
+
 
 *''Depression Scale''
-*  Adjusted scale to values 0-3 as with CES-D and reversed questions 5 and 8
-*  Counted number of missing answers in order to exclude those that had more than 20% missing
-*  Took average of depression question responses and standardized to a 0-100 scale
+*  Adjusted scale to values ranging from 0-3 as with CES-D and reversed questions 5 and 8.
+*  Counted number of missing answers in order to exclude those that had more than 20% missing.
+*  Took average of depression question responses and standardized to a 0-100 scale.
 
 clonevar depression1 = bc81
 clonevar depression2 = bc82
@@ -191,29 +295,29 @@ egen float cesdmean = rowmean(depression1 depression2 depression3 depression4 de
 generate cesdstandardmean = cesdmean/3*100
 label variable cesdstandardmean "Standardized depression score, 0 = minimally depressed and 100 = very depressed"
 
+histogram cesdstandardmean if drugtx==1
 summarize cesdstandardmean if drugtx==1
 
-*Ever diagnosed with mental illness
+histogram cesdstandardmean if drugtx==1, by(bc31)
+histogram cesdstandardmean if drugtx==1, by(recent_incar_base)
+histogram cesdstandardmean if drugtx==1, by(bc29)
 
-clonevar diagmentalillbase = bc91
+ttest cesdstandardmean if drugtx==1, by(bc31) unequal
+ttest cesdstandardmean if drugtx==1, by(recent_incar_base) unequal
+ttest cesdstandardmean if drugtx==1, by(bc29) unequal
 
-recode diagmentalillbase (0=0) (1=1) (.=0) (8=0)
+*''Ready to make change in heroin/opioid use''
 
-by bc31, sort: fre diagmentalillbase if drugtx==1
-prtest diagmentalillbase if drugtx==1, by(bc31)
+*clonevar readytochange = bc100
+*replace readytochange = . if bc100==88 | bc100==80 | bc100==65
 
-*Ready to make change in heroin/opioid use.
+*scatter drugtximportant readytochange
 
-clonevar readytochange = bc100
-replace readytochange = . if bc100==88 | bc100==80 | bc100==65
+*histogram readytochange if drugtx==1, by(bc31)
 
-scatter drugtximportant readytochange
-
-histogram readytochange if drugtx==1, by(bc31)
-
-ranksum readytochange if drugtx==1, by(bc31)
-median readytochange if drugtx==1, by(bc31) exact medianties(split)
-by bc31, sort : summarize readytochange if drugtx==1, detail
+*ranksum readytochange if drugtx==1, by(bc31)
+*median readytochange if drugtx==1, by(bc31) exact medianties(split)
+*by bc31, sort : summarize readytochange if drugtx==1, detail
 
 *''Composite score for alcohol use''
 *  Cloned questions pertaining to the ASI composite score for alcohol use
@@ -248,8 +352,15 @@ egen float asialcmissing = rowmiss(asialc1 asialc2 asialc3 asialc4 asialc5)
 egen float asialcscore = rowmean(asialc1 asialc2 asialc3 asialc4 asialc5) if asialcmissing<3 
 replace asialcscore = asialcscore*100
 
-histogram asialcscore
+histogram asialcscore if drugtx==1
 summarize asialcscore if drugtx==1, detail
+
+by bc31, sort: summarize asialcscore if drugtx==1, detail
+ranksum asialcscore if drugtx==1, by(bc31)
+by recent_incar_base, sort: summarize asialcscore if drugtx==1, detail
+ranksum asialcscore if drugtx==1, by(recent_incar_base)
+by bc29, sort: summarize asialcscore if drugtx==1, detail
+ranksum asialcscore if drugtx==1, by(bc29)
 
 *''Composite score for drug use''
 *  Cloned questions pertaining to the ASI composite score for drug use
@@ -326,18 +437,23 @@ egen float asidrugscore = rowmean(asidrug1 asidrug2 asidrug3 asidrug4 asidrug5 a
 replace asidrugscore = asidrugscore*100
 label variable asidrugscore "Composite score for drug use"
 
+histogram asidrugscore if drugtx==1
 summarize asidrugscore if drugtx==1
 
 histogram asidrugscore if drugtx==1, by(bc31)
-ttest asidrugscore if drugtx==1, by(bc31) unequal
+histogram asidrugscore if drugtx==1, by(recent_incar_base)
+histogram asidrugscore if drugtx==1, by(bc29)
 
+ttest asidrugscore if drugtx==1, by(bc31) unequal
+ttest asidrugscore if drugtx==1, by(recent_incar_base) unequal
+ttest asidrugscore if drugtx==1, by(bc29) unequal
 
 *Inject drugs ever?
 *	37 of 152 people who did not report injection as typical route of administration for drug
 *	use reported that injecting drugs was likely reason for acquiring HIV (bc40C). These people were
 *	added to the "injectdrugs" variable.
 *		27 of 115 people who did not report injection as typical route of administration
-*		and did not report injecting drugs as likely means of acquiring HIV
+*		and did not report injecting drugs as likely means of acquiring HIV,
 *		reported sharing a needle (ShareNd). These people were added to the injectdrugs variable.
 
 tab bc103r, generate(injectheroin)
@@ -386,13 +502,15 @@ recode numinjectdrugs (0 = 0) (1 =1) (2=1) (3=1) (4=1) (5=1), generate(injectdru
 label variable injectdrugs "Does person inject any drugs?"
 
 tab injectdrugs bc40c
-recode injectdrugs (0=1) (1=1) (.=.) if bc40c==1
+replace injectdrugs=1 if bc40c==1
 
 tab injectdrugs sharend
-recode injectdrugs (0=1) (1=1) (.=.) if sharend==1
+replace injectdrugs=1 if sharend==1
 
-by bc31, sort: fre injectdrugs if drugtx == 1
-prtest injectdrugs if drugtx==1, by(bc31)
+tab injectdrugs if drugtx==1
+tab bc31 injectdrugs if drugtx==1, row chi2
+tab recent_incar_base injectdrugs if drugtx==1, row chi2
+tab bc29 injectdrugs if drugtx==1, row chi2
 
 *Ever use specific drugs?
 
@@ -403,6 +521,7 @@ generate everotherpk = .
 generate eversedative = .
 generate evercocaine = .
 generate evermarijuana = .
+generate everanyopioid = .
 
 replace everalcintox = 0 if bc102y == 0
 replace everalcintox = 1 if bc102y > 0
@@ -416,6 +535,9 @@ replace evermethadone = 1 if bc104y > 0
 replace everotherpk = 0 if bc105y == 0
 replace everotherpk = 1 if bc105y > 0
 
+replace everanyopioid=0 if everheroin==0 & evermethadone==0 & everotherpk==0
+replace everanyopioid=1 if everheroin==1 | evermethadone==1 | everotherpk==1
+
 replace eversedative = 0 if bc107y == 0
 replace eversedative = 1 if bc107y > 0
 
@@ -425,70 +547,245 @@ replace evercocaine = 1 if bc108y > 0
 replace evermarijuana = 0 if bc110y == 0
 replace evermarijuana = 1 if bc110y > 0
 
-by bc31, sort: fre everalcintox if drugtx==1
-prtest everalcintox if drugtx==1, by(bc31)
+tab everalcintox if drugtx==1
+tab bc31 everalcintox if drugtx==1, row chi2
+tab recent_incar_base everalcintox if drugtx==1, row chi2
+tab bc29 everalcintox if drugtx==1, row chi2
 
-by bc31, sort: fre everheroin if drugtx==1
-prtest everheroin if drugtx==1, by(bc31)
+tab everheroin if drugtx==1
+tab bc31 everheroin if drugtx==1, row chi2
+tab recent_incar_base everheroin if drugtx==1, row chi2
+tab bc29 everheroin if drugtx==1, row chi2
 
-by bc31, sort: fre evermethadone if drugtx==1
-prtest evermethadone if drugtx==1, by(bc31)
+tab evermethadone if drugtx==1
+tab bc31 evermethadone if drugtx==1, row chi2
+tab recent_incar_base evermethadone if drugtx==1, row chi2
+tab bc29 evermethadone if drugtx==1, row chi2
 
-by bc31, sort: fre everotherpk if drugtx==1
-prtest everotherpk if drugtx==1, by(bc31)
+tab everotherpk if drugtx==1
+tab bc31 everotherpk if drugtx==1, row chi2
+tab recent_incar_base everotherpk if drugtx==1, row chi2
+tab bc29 everotherpk if drugtx==1, row chi2
 
-by bc31, sort: fre eversedative if drugtx==1
-prtest eversedative if drugtx==1, by(bc31)
+tab everanyopioid if drugtx==1
+tab bc31 everanyopioid if drugtx==1, row chi2
+tab recent_incar_base everanyopioid if drugtx==1, row chi2
+tab bc29 everanyopioid if drugtx==1, row chi2
 
-by bc31, sort: fre evercocaine if drugtx==1
-prtest evercocaine if drugtx==1, by(bc31)
+tab eversedative if drugtx==1
+tab bc31 eversedative if drugtx==1, row chi2
+tab recent_incar_base eversedative if drugtx==1, row chi2
+tab bc29 eversedative if drugtx==1, row chi2
 
-by bc31, sort: fre evermarijuana if drugtx==1
-prtest evermarijuana if drugtx==1, by(bc31)
+tab evercocaine if drugtx==1
+tab bc31 evercocaine if drugtx==1, row chi2
+tab recent_incar_base evercocaine if drugtx==1, row chi2
+tab bc29 evercocaine if drugtx==1, row chi2
 
-*Years of Regular Drug Use (Heroin and other pain-killers)
+tab evermarijuana if drugtx==1
+tab bc31 evermarijuana if drugtx==1, row chi2
+tab recent_incar_base evermarijuana if drugtx==1, row chi2
+tab bc29 evermarijuana if drugtx==1, row chi2
+
+*''Recent drug use:''
+*	12.5% of those who reported zero years of regular alcohol use to intoxication, reported recent alcohol use to intoxication
+*	15% of those who reported zero years of regular heroin use, reported recent heroin use
+*	13.5% of those who reported zero years of regular methadone use, reported recent methadone use
+*	11.0% of those who reported zero years of regular other painkiller use, reported recent other painkiller use
+*	6.5% of those who reported zero years of regular sedative use, reported recent sedative use
+*	12.1% of those who reported zero years of regular cocaine use, reported recent cocaine use
+*	7.0% of those who reported zero years of regular marijuana use, reported recent marijuana use
+
+*generate recentalcintox = .
+*generate recentheroin = .
+*generate recentmethadone = .
+*generate recentotherpk = .
+*generate recentsedative = .
+*generate recentcocaine = .
+*generate recentmarijuana = .
+
+*replace recentalcintox = 0 if bc102d == 0
+*replace recentalcintox = 1 if bc102d > 0
+
+*replace recentheroin = 0 if bc103d == 0
+*replace recentheroin = 1 if bc103d > 0
+
+*replace recentmethadone = 0 if bc104d == 0
+*replace recentmethadone = 1 if bc104d > 0
+
+*replace recentotherpk = 0 if bc105d == 0
+*replace recentotherpk = 1 if bc105d > 0
+
+*replace recentsedative = 0 if bc107d == 0
+*replace recentsedative = 1 if bc107d > 0
+
+*replace recentcocaine = 0 if bc108d == 0
+*replace recentcocaine = 1 if bc108d > 0
+
+*replace recentmarijuana = 0 if bc110d == 0
+*replace recentmarijuana = 1 if bc110d > 0
+
+*tab recentalcintox everalcintox, column
+*tab recentheroin everheroin, column
+*tab recentmethadone evermethadone, column
+*tab recentotherpk everotherpk, column
+*tab recentsedative eversedative, column
+*tab recentcocaine evercocaine, column
+*tab recentmarijuana evermarijuana, column
+
+fre bc102d
+recode bc102d 98=.a 99=.b
+
+histogram bc102d if drugtx==1
+summarize bc102d if drugtx==1, detail
+
+by bc31, sort: summarize bc102d if drugtx==1, detail
+ranksum bc102d if drugtx==1, by(bc31)
+by recent_incar_base, sort: summarize bc102d if drugtx==1, detail
+ranksum bc102d if drugtx==1, by(recent_incar_base)
+by bc29, sort: summarize bc102d if drugtx==1, detail
+ranksum bc102d if drugtx==1, by(bc29)
+
+fre bc103d
+recode bc103d 92=.a
+
+histogram bc103d if drugtx==1
+summarize bc103d if drugtx==1, detail
+
+by bc31, sort: summarize bc103d if drugtx==1, detail
+ranksum bc103d if drugtx==1, by(bc31)
+by recent_incar_base, sort: summarize bc103d if drugtx==1, detail
+ranksum bc103d if drugtx==1, by(recent_incar_base)
+by bc29, sort: summarize bc103d if drugtx==1, detail
+ranksum bc103d if drugtx==1, by(bc29)
+
+fre bc104d
+
+histogram bc104d if drugtx==1
+summarize bc104d if drugtx==1, detail
+
+by bc31, sort: summarize bc104d if drugtx==1, detail
+ranksum bc104d if drugtx==1, by(bc31)
+by recent_incar_base, sort: summarize bc104d if drugtx==1, detail
+ranksum bc104d if drugtx==1, by(recent_incar_base)
+by bc29, sort: summarize bc104d if drugtx==1, detail
+ranksum bc104d if drugtx==1, by(bc29)
+
+fre bc105d
+
+histogram bc105d if drugtx==1
+summarize bc105d if drugtx==1, detail
+
+by bc31, sort: summarize bc105d if drugtx==1, detail
+ranksum bc105d if drugtx==1, by(bc31)
+by recent_incar_base, sort: summarize bc105d if drugtx==1, detail
+ranksum bc105d if drugtx==1, by(recent_incar_base)
+by bc29, sort: summarize bc105d if drugtx==1, detail
+ranksum bc105d if drugtx==1, by(bc29)
+
+fre bc107d
+recode bc107d 98=.a
+
+histogram bc107d if drugtx==1
+summarize bc107d if drugtx==1, detail
+
+by bc31, sort: summarize bc107d if drugtx==1, detail
+ranksum bc107d if drugtx==1, by(bc31)
+by recent_incar_base, sort: summarize bc107d if drugtx==1, detail
+ranksum bc107d if drugtx==1, by(recent_incar_base)
+by bc29, sort: summarize bc107d if drugtx==1, detail
+ranksum bc107d if drugtx==1, by(bc29)
+
+fre bc108d
+
+histogram bc108d if drugtx==1
+summarize bc108d if drugtx==1, detail
+
+by bc31, sort: summarize bc108d if drugtx==1, detail
+ranksum bc108d if drugtx==1, by(bc31)
+by recent_incar_base, sort: summarize bc108d if drugtx==1, detail
+ranksum bc108d if drugtx==1, by(recent_incar_base)
+by bc29, sort: summarize bc108d if drugtx==1, detail
+ranksum bc108d if drugtx==1, by(bc29)
+
+fre bc110d
+
+histogram bc110d if drugtx==1
+summarize bc110d if drugtx==1, detail
+
+by bc31, sort: summarize bc110d if drugtx==1, detail
+ranksum bc110d if drugtx==1, by(bc31)
+by recent_incar_base, sort: summarize bc110d if drugtx==1, detail
+ranksum bc110d if drugtx==1, by(recent_incar_base)
+by bc29, sort: summarize bc110d if drugtx==1, detail
+ranksum bc110d if drugtx==1, by(bc29)
+
+*''Years of Regular Drug Use (Heroin and other pain-killers)''
+*    One subject is coded to have used heroin regularly for 55 years. However, the oldest subject in the study is 60. The
+*    oldest subject would have needed to start using at age 5 in order to be regularly using for 55 years. Recoding the 55
+*    observation as missing.
 
 clonevar yearsheroin = bc103y
+clonevar yearsmethadone = bc104y
 clonevar yearsotherpk = bc105y
+
 fre yearsheroin
+fre yearsmethadone
 fre yearsotherpk
-replace yearsheroin = . if bc103y==99
-replace yearsheroin = . if bc103y==55
-replace yearsotherpk = . if bc105y==88
 
-histogram yearsheroin if drugtx==1, by(bc31)
-histogram yearsotherpk if drugtx==1, by(bc31)
+recode yearsheroin 55=.a 99=.b
+recode yearsmethadone 88=.a
+recode yearsotherpk 88=.a
 
-by bc31, sort : summarize yearsheroin yearsotherpk if drugtx==1, detail
-by bc31, sort : summarize yearsotherpk yearsotherpk if drugtx==1, detail
+egen float years_any_opioid = rowmax(yearsheroin yearsmethadone yearsotherpk)
+list yearsheroin yearsmethadone yearsotherpk years_any_opioid if drugtx==1
+label variable years_any_opioid "Longest number of years using either heroin, methadone, or other opioids"
 
-ranksum yearsheroin if drugtx==1, by(bc31)
-median yearsheroin if drugtx==1, by(bc31) exact medianties(split)
-ranksum yearsotherpk if drugtx==1, by(bc31)
-median yearsotherpk if drugtx==1, by(bc31) exact medianties(split)
+histogram years_any_opioid if drugtx==1
 
-*Number of times overdosed on drugs
+summarize years_any_opioid if drugtx==1, detail
+by bc31, sort: summarize years_any_opioid if drugtx==1, detail
+ranksum years_any_opioid if drugtx==1, by(bc31)
+by recent_incar_base, sort: summarize years_any_opioid if drugtx==1, detail
+ranksum years_any_opioid if drugtx==1, by(recent_incar_base)
+by bc29, sort: summarize years_any_opioid if drugtx==1, detail
+ranksum years_any_opioid if drugtx==1, by(bc29)
+
+*''Number of times overdosed on drugs''
 
 fre bc115
-histogram bc115 if drugtx==1, by(bc31)
-ranksum bc115 if drugtx==1, by(bc31)
-median bc115 if drugtx==1, by(bc31) exact medianties(split)
-by bc31, sort : summarize bc115 if drugtx==1, detail
+histogram bc115 if drugtx==1
 
-*Number of times treated for drug abuse
+summarize bc115 if drugtx==1, detail
+by bc31, sort: summarize bc115 if drugtx==1, detail
+ranksum bc115 if drugtx==1, by(bc31)
+by recent_incar_base, sort: summarize bc115 if drugtx==1, detail
+ranksum bc115 if drugtx==1, by(recent_incar_base)
+by bc29, sort: summarize bc115 if drugtx==1, detail
+ranksum bc115 if drugtx==1, by(bc29)
+
+*''Number of times treated for drug abuse''
 
 fre bc118
 clonevar treatedfordrugs = bc118
-replace treatedfordrugs=. if bc118==999
-histogram treatedfordrugs if drugtx==1, by(bc31)
-by bc31, sort : summarize treatedfordrugs if drugtx==1, detail
+recode treatedfordrugs 999=.a
+histogram treatedfordrugs if drugtx==1
+
+summarize treatedfordrugs if drugtx==1, detail
+by bc31, sort: summarize treatedfordrugs if drugtx==1, detail
 ranksum treatedfordrugs if drugtx==1, by(bc31)
-median treatedfordrugs if drugtx==1, by(bc31) exact medianties(split)
+by recent_incar_base, sort: summarize treatedfordrugs if drugtx==1, detail
+ranksum treatedfordrugs if drugtx==1, by(recent_incar_base)
+by bc29, sort: summarize treatedfordrugs if drugtx==1, detail
+ranksum treatedfordrugs if drugtx==1, by(bc29)
 
-*Perception of importance of treatment for drug abuse
+*''Methadone treatment in prior three months''
 
-fre drugtximportant
-histogram drugtximportant if drugtx==1, by(bc31)
-by bc31, sort : summarize drugtximportant if drugtx==1, detail
-ranksum drugtximportant if drugtx==1, by(bc31)
-median drugtximportant if drugtx==1, by(bc31) exact medianties(split)
+fre bc144
+clonevar recentmethadonetx = bc144
+recode recentmethadonetx 8=.a
+
+tab recentmethadonetx if drugtx==1
+tab bc31 recentmethadonetx if drugtx==1, row chi2
+tab recent_incar_base recentmethadonetx if drugtx==1, row chi2
+tab bc29 recentmethadonetx if drugtx==1, row chi2

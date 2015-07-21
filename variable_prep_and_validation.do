@@ -29,6 +29,15 @@ replace retention4q=1 if dtxq1==1 & dtxq2==1 & dtxq3==1 & dtxq4==1
 replace retention4q=0 if dtxq1!=1 | dtxq2!=1 | dtxq3!=1 | dtxq4!=1
 replace retention4q=. if dtxq1==. | dtxq2==. | dtxq3==. | dtxq4==.
 
+*Visit quarter coding
+
+label variable visit_1 "Number of months since baseline for follow-up 1"
+label variable visit_2 "Number of months since baseline for follow-up 2"
+label variable visit_3 "Number of months since baseline for follow-up 3"
+label variable visit_4 "Number of months since baseline for follow-up 4"
+label variable visit_5 "Number of months since baseline for follow-up 5"
+label variable visit_6 "Number of months since baseline for follow-up 6"
+
 *Age
 
 clonevar age = bc2

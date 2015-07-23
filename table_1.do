@@ -25,17 +25,17 @@ ttest age recentincar_base, by(recentincar_base) unequal
 tab everincar_base white, row chi2
 tab everincar_base black, row chi2
 tab everincar_base latino, row chi2
-tab everincar_base asian_and_other, row chi2
+tab everincar_base asian_and_other, row chi2 exact
 
 tab recentincar_base white, row chi2
 tab recentincar_base black, row chi2
 tab recentincar_base latino, row chi2
-tab recentincar_base asian_and_other, row chi2
+tab recentincar_base asian_and_other, row chi2 exact
 
 tab parole_base white, row chi2
 tab parole_base black, row chi2
 tab parole_base latino, row chi2
-tab parole_base asian_and_other, row chi2
+tab parole_base asian_and_other, row chi2 exact
 
 *''English as primary language''
 
@@ -69,7 +69,7 @@ tab parole_base married, row chi2
 
 tab alone
 tab everincar_base alone, row chi2
-tab recentincar_base alone, row chi2
+tab recentincar_base alone, row chi2 exact
 tab parole_base alone, row chi2
 
 *''Self-reported homelessness''
@@ -90,7 +90,7 @@ tab parole_base hsdiploma, row chi2
 
 tab employed
 tab everincar_base employed, row chi2
-tab recentincar_base employed, row chi2
+tab recentincar_base employed, row chi2 exact
 tab parole_base employed, row chi2
 
 *''Years since HIV diagnosis''

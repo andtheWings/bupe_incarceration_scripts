@@ -1,3 +1,5 @@
+ssc install fre
+
 *Drug treatment
 
 label define drugtx 1 "Bupe" 2 "Methadone" 3 "Other Tx" 4 "Unknown"
@@ -24,9 +26,20 @@ replace parole_base=.a if bc29==8
 
 *Treatment retention
 
-generate retention4q = .
+gen retention = 0
+replace retention=1 if dtxq1==1 & dtxq2!=1 & dtxq3!=1 & dtxq4!=1
+replace retention=2 if dtxq1==1 & dtxq2==1 & dtxq3!=1 & dtxq4!=1
+replace retention=3 if dtxq1==1 & dtxq2==1 & dtxq3==1 & dtxq4!=1
+replace retention=4 if dtxq1==1 & dtxq2==1 & dtxq3==1 & dtxq4==1
+replace retention=. if dtxq1==. | dtxq2==. | dtxq3==. | dtxq4==.
+
+tab retention dtxq1, missing
+tab retention dtxq2, missing
+tab retention dtxq3, missing
+tab retention dtxq4, missing
+
+generate retention4q = 0
 replace retention4q=1 if dtxq1==1 & dtxq2==1 & dtxq3==1 & dtxq4==1
-replace retention4q=0 if dtxq1!=1 | dtxq2!=1 | dtxq3!=1 | dtxq4!=1
 replace retention4q=. if dtxq1==. | dtxq2==. | dtxq3==. | dtxq4==.
 
 *Visit quarter coding

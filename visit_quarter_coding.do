@@ -1,3 +1,5 @@
+ssc install fre
+
 fre visit_1
 fre visit_2
 fre visit_3
@@ -48,7 +50,7 @@ replace third_followup_quarter = 3 if visit_3==7
 replace third_followup_quarter = 2 if visit_3==7 & visit_3<visit_4 & visit_4<10
 replace third_followup_quarter = 3 if visit_3>7 & visit_3<10
 replace third_followup_quarter = 4 if visit_3==10
-replace third_followup_quarter = 3 if visit_3==10 & visit_3<visit_4 & visit_4<14
+replace third_followup_quarter = 3 if visit_3==10 & visit_3<visit_4 & visit_4<14 & visit_2!=8
 replace third_followup_quarter = 4 if visit_3>10 & visit_3<13
 replace third_followup_quarter = 4 if visit_3>10 & visit_3<14 & visit_2<11
 replace third_followup_quarter = 4 if visit_3>10 & visit_3<14 & visit_2==.

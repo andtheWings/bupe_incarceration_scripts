@@ -31,6 +31,11 @@ nestreg: logit retention4q (alone injectdrugs asidrugscore) recentincar_base
 nestreg: logit retention4q (alone injectdrugs everheroin) recentincar_base
 nestreg: logit retention4q (alone injectdrugs treatedfordrugs) recentincar_base
 
+logistic retention4q recentincar_base
+listcoef, percent
+nestreg: logistic retention4q (alone injectdrugs) recentincar_base
+listcoef, percent
+
 logit retention4q parole_base
 nestreg: logit retention4q parole_base
 nestreg: logit retention4q english parole_base
@@ -60,4 +65,9 @@ nestreg: logit retention4q (male asidrugscore years_any_opioid) parole_base
 nestreg: logit retention4q (male asidrugscore overdosed) parole_base
 nestreg: logit retention4q (male asidrugscore treatedfordrugs) parole_base
 nestreg: logit retention4q (male asidrugscore recentmethadonetx) parole_base
+
+logistic retention4q parole_base
+listcoef, percent
+nestreg: logistic retention4q (male asidrugscore) parole_base
+listcoef, percent
 

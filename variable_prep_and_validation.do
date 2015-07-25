@@ -1,4 +1,4 @@
-ssc install fre
+*ssc install fre
 
 *Drug treatment
 
@@ -16,17 +16,23 @@ label values qc16_3 no_yes
 label values qc16_4 no_yes
 
 clonevar everincar_base = bc31
+label variable everincar_base "Subject reported at baseline having ever been incarcerated for more than 3 days"
 
 generate recentincar_base=.
+label variable recentincar_base "Subject reported at baseline having been incarcerated in the past 30 days"
+label values recentincar_base
 replace recentincar_base=0 if bc32==0
 replace recentincar_base = 1 if bc32>0
 
+
 clonevar parole_base = bc29
+label variable parole_base "Subject reported at baseline he/she was currently on parole or probation"
 replace parole_base=.a if bc29==8
 
 *Treatment retention
 
 gen retention = 0
+label variable retention "Number of quarters subject was retained on bup/nx treatment"
 replace retention=1 if dtxq1==1 & dtxq2!=1 & dtxq3!=1 & dtxq4!=1
 replace retention=2 if dtxq1==1 & dtxq2==1 & dtxq3!=1 & dtxq4!=1
 replace retention=3 if dtxq1==1 & dtxq2==1 & dtxq3==1 & dtxq4!=1
@@ -39,17 +45,255 @@ tab retention dtxq3, missing
 tab retention dtxq4, missing
 
 generate retention4q = 0
+label variable retention4q "Subject was retained on bup/nx treatment for all four quarters"
 replace retention4q=1 if dtxq1==1 & dtxq2==1 & dtxq3==1 & dtxq4==1
 replace retention4q=. if dtxq1==. | dtxq2==. | dtxq3==. | dtxq4==.
 
 *Visit quarter coding
 
-label variable visit_1 "Number of months since baseline for follow-up 1"
-label variable visit_2 "Number of months since baseline for follow-up 2"
-label variable visit_3 "Number of months since baseline for follow-up 3"
-label variable visit_4 "Number of months since baseline for follow-up 4"
-label variable visit_5 "Number of months since baseline for follow-up 5"
-label variable visit_6 "Number of months since baseline for follow-up 6"
+rename visit_1 visit1
+rename visit_2 visit2
+rename visit_3 visit3
+rename visit_4 visit4
+rename visit_5 visit5
+rename visit_6 visit6
+
+label variable visit1 "Number of months since baseline for first follow-up visit"
+label variable visit2 "Number of months since baseline for second follow-up visit"
+label variable visit3 "Number of months since baseline for third follow-up visit"
+label variable visit4 "Number of months since baseline for fourth follow-up visit"
+label variable visit5 "Number of months since baseline for fifth follow-up visit"
+label variable visit6 "Number of months since baseline for sixth follow-up visit"
+
+fre visit1
+fre visit2
+fre visit3
+fre visit4
+fre visit5
+fre visit6
+
+replace visit1=.a if visit1<0
+
+generate visit1_q = .
+generate visit2_q = .
+generate visit3_q = .
+generate visit4_q = .
+generate visit5_q = .
+generate visit6_q = .
+
+label variable visit1_q "Quarter assignment for first follow-up visit"
+label variable visit2_q "Quarter assignment for second follow-up visit"
+label variable visit3_q "Quarter assignment for third follow-up visit"
+label variable visit4_q "Quarter assignment for fourth follow-up visit"
+label variable visit5_q "Quarter assignment for fifth follow-up visit"
+label variable visit6_q "Quarter assignment for sixth follow-up visit"
+
+replace visit1_q = 1 if visit1<4
+replace visit1_q = 2 if visit1==4
+replace visit1_q = 1 if visit1==4 & visit1<visit2 & visit2<7
+replace visit1_q = 1 if visit1==4 & visit1<visit2 & visit2<8 & visit2<visit3 & visit3<10
+replace visit1_q = 1 if visit1==4 & visit1<visit2 & visit2<8 & visit2<visit3 & visit3<11 & visit3<visit4 & visit4<14
+replace visit1_q = 2 if visit1>4 & visit1<7
+replace visit1_q = 2 if visit1==7 & visit2>visit1 & visit2<10
+replace visit1_q = 3 if visit1==7 & visit2>visit1 & visit2>9
+replace visit1_q = 3 if visit1>7 & visit1<10
+replace visit1_q = 3 if visit1==10 & visit1<visit2 & visit2<14
+replace visit1_q = 4 if visit1>10 & visit1<14
+
+replace visit2_q = 1 if visit2<4
+replace visit2_q = 2 if visit2==4 & visit1==.
+replace visit2_q = 2 if visit2==4 & visit1<visit2
+replace visit2_q = 2 if visit2>4 & visit2<7 & visit3>6
+replace visit2_q = 2 if visit2>4 & visit2<7 & visit3==.
+replace visit2_q = 3 if visit2==7
+replace visit2_q = 2 if visit2==7 & visit2<visit3 & visit3<10
+replace visit2_q = 2 if visit2==7 & visit2<visit3 & visit3<11 & visit3<visit4 & visit4<14
+replace visit2_q = 3 if visit2>7 & visit2<10
+replace visit2_q = 3 if visit2>7 & visit2<10 & visit3==.
+replace visit2_q = 4 if visit2==10 & visit3>12
+replace visit2_q = 3 if visit2==10 & visit2<visit3 & visit3<14
+replace visit2_q = 4 if visit2>10 & visit2<14
+
+replace visit3_q = 1 if visit3<4
+replace visit3_q = 2 if visit3==4 
+replace visit3_q = 2 if visit3>3 & visit3<7 & visit2==.
+replace visit3_q = 2 if visit3>4 & visit3<7
+replace visit3_q = 3 if visit3==7
+replace visit3_q = 2 if visit3==7 & visit3<visit4 & visit4<10
+replace visit3_q = 3 if visit3>7 & visit3<10
+replace visit3_q = 4 if visit3==10
+replace visit3_q = 3 if visit3==10 & visit3<visit4 & visit4<14 & visit2!=8
+replace visit3_q = 4 if visit3>10 & visit3<13
+replace visit3_q = 4 if visit3>10 & visit3<14 & visit2<11
+replace visit3_q = 4 if visit3>10 & visit3<14 & visit2==.
+
+replace visit4_q = 3 if visit4>7 & visit4<10 
+replace visit4_q = 4 if visit4==10 & visit3<visit4
+replace visit4_q = 4 if visit4==10 & visit3==.
+replace visit4_q = 4 if visit4>10 & visit4<14
+replace visit4_q = . if visit3>10 & visit3<13 & visit4==13
+
+replace visit5_q = 4 if visit5==12 | visit5==13
+
+replace visit6_q = 4 if visit6==12
+
+*list visit1 visit1_q visit2 visit2_q visit3 visit3_q visit4 visit4_q visit5 visit5_q visit6 visit6_q if drugtx==1
+*Quarters assignments were manually inspected for accuracy multiple times
+
+*Opioid Use per Visit
+
+egen float recentopioids_base = rowmax(bc103d bc104d bc105d)
+egen float recentopioids_v1 = rowmax(qc83d_1 qc84d_1 qc85d_1)
+egen float recentopioids_v2 = rowmax(qc83d_2 qc84d_2 qc85d_2)
+egen float recentopioids_v3 = rowmax(qc83d_3 qc84d_3 qc85d_3)
+egen float recentopioids_v4 = rowmax(qc83d_4 qc84d_4 qc85d_4)
+egen float recentopioids_v5 = rowmax(qc83d_5 qc84d_5 qc85d_5)
+egen float recentopioids_v6 = rowmax(qc83d_6 qc84d_6 qc85d_6)
+
+label variable recentopioids_base "Days of opioid use in 30 days before baseline"
+label variable recentopioids_v1 "Days of opioid use in 30 days before followup visit 1"
+label variable recentopioids_v2 "Days of opioid use in 30 days before followup visit 2"
+label variable recentopioids_v3 "Days of opioid use in 30 days before followup visit 3"
+label variable recentopioids_v4 "Days of opioid use in 30 days before followup visit 4"
+label variable recentopioids_v5 "Days of opioid use in 30 days before followup visit 5"
+label variable recentopioids_v6 "Days of opioid use in 30 days before followup visit 6"
+
+gen anyrecentopioids_base = 0
+gen anyrecentopioids_v1 = 0
+gen anyrecentopioids_v2 = 0
+gen anyrecentopioids_v3 = 0
+gen anyrecentopioids_v4 = 0
+gen anyrecentopioids_v5 = 0
+gen anyrecentopioids_v6 = 0
+
+replace anyrecentopioids_base=1 if recentopioids_base>0
+replace anyrecentopioids_v1=1 if recentopioids_v1>0
+replace anyrecentopioids_v2=1 if recentopioids_v2>0
+replace anyrecentopioids_v3=1 if recentopioids_v3>0
+replace anyrecentopioids_v4=1 if recentopioids_v4>0
+replace anyrecentopioids_v5=1 if recentopioids_v5>0
+replace anyrecentopioids_v6=1 if recentopioids_v6>0
+
+replace anyrecentopioids_base if recentopioids_base==.
+replace anyrecentopioids_v1=. if recentopioids_v1==.
+replace anyrecentopioids_v2=. if recentopioids_v2==.
+replace anyrecentopioids_v3=. if recentopioids_v3==.
+replace anyrecentopioids_v4=. if recentopioids_v4==.
+replace anyrecentopioids_v5=. if recentopioids_v5==.
+replace anyrecentopioids_v6=. if recentopioids_v6==.
+
+label variable anyrecentopioids_base "Any opioid use in 30 days before baseline"
+label variable anyrecentopioids_v1 "Any opioid use in 30 days before followup visit 1"
+label variable anyrecentopioids_v2 "Any opioid use in 30 days before followup visit 2"
+label variable anyrecentopioids_v3 "Any opioid use in 30 days before followup visit 3"
+label variable anyrecentopioids_v4 "Any opioid use in 30 days before followup visit 4"
+label variable anyrecentopioids_v5 "Any opioid use in 30 days before followup visit 5"
+label variable anyrecentopioids_v6 "Any opioid use in 30 days before followup visit 6"
+
+label values anyrecentopioids_base no_yes
+label values anyrecentopioids_v1 no_yes
+label values anyrecentopioids_v2 no_yes
+label values anyrecentopioids_v3 no_yes
+label values anyrecentopioids_v4 no_yes
+label values anyrecentopioids_v5 no_yes
+label values anyrecentopioids_v6 no_yes
+
+*Quarterly Opioid Use
+
+gen anyrecentopioids_q1 = 0
+gen anyrecentopioids_q2 = 0
+gen anyrecentopioids_q3 = 0
+gen anyrecentopioids_q4 = 0
+gen abstinentopioids = 0
+
+label variable anyrecentopioids_q1 "Subject reported using any opioids during quarter 1"
+label variable anyrecentopioids_q2 "Subject reported using any opioids during quarter 2"
+label variable anyrecentopioids_q3 "Subject reported using any opioids during quarter 3"
+label variable anyrecentopioids_q4 "Subject reported using any opioids during quarter 4"
+label variable abstinentopioids "Subject reported abstinence from all opioids during all four quarters"
+
+replace anyrecentopioids_q1=1 if visit1_q==1 & qc83d_1>0
+replace anyrecentopioids_q1=1 if visit1_q==1 & qc84d_1>0
+replace anyrecentopioids_q1=1 if visit1_q==1 & qc85d_1>0
+replace anyrecentopioids_q1=1 if visit2_q==1 & qc83d_2>0
+replace anyrecentopioids_q1=1 if visit2_q==1 & qc84d_2>0
+replace anyrecentopioids_q1=1 if visit2_q==1 & qc85d_2>0
+replace anyrecentopioids_q1=1 if visit3_q==1 & qc83d_3>0
+replace anyrecentopioids_q1=1 if visit3_q==1 & qc84d_3>0
+replace anyrecentopioids_q1=1 if visit3_q==1 & qc85d_3>0
+replace anyrecentopioids_q1=1 if visit4_q==1 & qc83d_4>0
+replace anyrecentopioids_q1=1 if visit4_q==1 & qc84d_4>0
+replace anyrecentopioids_q1=1 if visit4_q==1 & qc85d_4>0
+replace anyrecentopioids_q1=1 if visit5_q==1 & qc83d_5>0
+replace anyrecentopioids_q1=1 if visit5_q==1 & qc84d_5>0
+replace anyrecentopioids_q1=1 if visit5_q==1 & qc85d_5>0
+replace anyrecentopioids_q1=1 if visit6_q==1 & qc83d_6>0
+replace anyrecentopioids_q1=1 if visit6_q==1 & qc84d_6>0
+replace anyrecentopioids_q1=1 if visit6_q==1 & qc85d_6>0
+replace anyrecentopioids_q1=. if visit1_q != 1 & visit2_q != 1 & visit3_q != 1 & visit4_q != 1 & visit5_q != 1 & visit6_q != 1
+
+replace anyrecentopioids_q2=1 if visit1_q==2 & qc83d_1>0
+replace anyrecentopioids_q2=1 if visit1_q==2 & qc84d_1>0
+replace anyrecentopioids_q2=1 if visit1_q==2 & qc85d_1>0
+replace anyrecentopioids_q2=1 if visit2_q==2 & qc83d_2>0
+replace anyrecentopioids_q2=1 if visit2_q==2 & qc84d_2>0
+replace anyrecentopioids_q2=1 if visit2_q==2 & qc85d_2>0
+replace anyrecentopioids_q2=1 if visit3_q==2 & qc83d_3>0
+replace anyrecentopioids_q2=1 if visit3_q==2 & qc84d_3>0
+replace anyrecentopioids_q2=1 if visit3_q==2 & qc85d_3>0
+replace anyrecentopioids_q2=1 if visit4_q==2 & qc83d_4>0
+replace anyrecentopioids_q2=1 if visit4_q==2 & qc84d_4>0
+replace anyrecentopioids_q2=1 if visit4_q==2 & qc85d_4>0
+replace anyrecentopioids_q2=1 if visit5_q==2 & qc83d_5>0
+replace anyrecentopioids_q2=1 if visit5_q==2 & qc84d_5>0
+replace anyrecentopioids_q2=1 if visit5_q==2 & qc85d_5>0
+replace anyrecentopioids_q2=1 if visit6_q==2 & qc83d_6>0
+replace anyrecentopioids_q2=1 if visit6_q==2 & qc84d_6>0
+replace anyrecentopioids_q2=1 if visit6_q==2 & qc85d_6>0
+replace anyrecentopioids_q2=. if visit1_q != 2 & visit2_q != 2 & visit3_q != 2 & visit4_q != 2 & visit5_q != 2 & visit6_q != 2
+
+replace anyrecentopioids_q3=1 if visit1_q==3 & qc83d_1>0
+replace anyrecentopioids_q3=1 if visit1_q==3 & qc84d_1>0
+replace anyrecentopioids_q3=1 if visit1_q==3 & qc85d_1>0
+replace anyrecentopioids_q3=1 if visit2_q==3 & qc83d_2>0
+replace anyrecentopioids_q3=1 if visit2_q==3 & qc84d_2>0
+replace anyrecentopioids_q3=1 if visit2_q==3 & qc85d_2>0
+replace anyrecentopioids_q3=1 if visit3_q==3 & qc83d_3>0
+replace anyrecentopioids_q3=1 if visit3_q==3 & qc84d_3>0
+replace anyrecentopioids_q3=1 if visit3_q==3 & qc85d_3>0
+replace anyrecentopioids_q3=1 if visit4_q==3 & qc83d_4>0
+replace anyrecentopioids_q3=1 if visit4_q==3 & qc84d_4>0
+replace anyrecentopioids_q3=1 if visit4_q==3 & qc85d_4>0
+replace anyrecentopioids_q3=1 if visit5_q==3 & qc83d_5>0
+replace anyrecentopioids_q3=1 if visit5_q==3 & qc84d_5>0
+replace anyrecentopioids_q3=1 if visit5_q==3 & qc85d_5>0
+replace anyrecentopioids_q3=1 if visit6_q==3 & qc83d_6>0
+replace anyrecentopioids_q3=1 if visit6_q==3 & qc84d_6>0
+replace anyrecentopioids_q3=1 if visit6_q==3 & qc85d_6>0
+replace anyrecentopioids_q3=. if visit1_q != 3 & visit2_q != 3 & visit3_q != 3 & visit4_q != 3 & visit5_q != 3 & visit6_q != 3
+
+replace anyrecentopioids_q4=1 if visit1_q==4 & qc83d_1>0
+replace anyrecentopioids_q4=1 if visit1_q==4 & qc84d_1>0
+replace anyrecentopioids_q4=1 if visit1_q==4 & qc85d_1>0
+replace anyrecentopioids_q4=1 if visit2_q==4 & qc83d_2>0
+replace anyrecentopioids_q4=1 if visit2_q==4 & qc84d_2>0
+replace anyrecentopioids_q4=1 if visit2_q==4 & qc85d_2>0
+replace anyrecentopioids_q4=1 if visit3_q==4 & qc83d_3>0
+replace anyrecentopioids_q4=1 if visit3_q==4 & qc84d_3>0
+replace anyrecentopioids_q4=1 if visit3_q==4 & qc85d_3>0
+replace anyrecentopioids_q4=1 if visit4_q==4 & qc83d_4>0
+replace anyrecentopioids_q4=1 if visit4_q==4 & qc84d_4>0
+replace anyrecentopioids_q4=1 if visit4_q==4 & qc85d_4>0
+replace anyrecentopioids_q4=1 if visit5_q==4 & qc83d_5>0
+replace anyrecentopioids_q4=1 if visit5_q==4 & qc84d_5>0
+replace anyrecentopioids_q4=1 if visit5_q==4 & qc85d_5>0
+replace anyrecentopioids_q4=1 if visit6_q==4 & qc83d_6>0
+replace anyrecentopioids_q4=1 if visit6_q==4 & qc84d_6>0
+replace anyrecentopioids_q4=1 if visit6_q==4 & qc85d_6>0
+replace anyrecentopioids_q4=. if visit1_q != 4 & visit2_q != 4 & visit3_q != 4 & visit4_q != 4 & visit5_q != 4 & visit6_q != 4
+
+replace abstinentopioids=1 if anyrecentopioids_q1==0 & anyrecentopioids_q2==0 & anyrecentopioids_q3==0 & anyrecentopioids_q4==0
+replace abstinentopioids=. if anyrecentopioids_q1==. | anyrecentopioids_q2==. | anyrecentopioids_q3==. | anyrecentopioids_q4==.
 
 *Age
 
@@ -100,6 +344,7 @@ label values bc8 bc8
 fre bc8
 tab bc8, generate(gender)
 rename gender1 male
+label variable male "Subject is male"
 tab bc8 male
 
 *Sexual Orientation
@@ -204,6 +449,7 @@ label values sincediagnosis sincediagnosis
 clonevar mentaldiag = bc91
 fre mentaldiag
 recode mentaldiag 8=.a
+label values mentaldiag no_yes
 
 *Depression Scale
 *  Adjusted scale to values ranging from 0-3 as with CES-D and reversed questions 5 and 8.
@@ -342,7 +588,8 @@ replace asidrug14 = asidrug14/4
 egen float asidrugmissing = rowmiss(asidrug1 asidrug2 asidrug3 asidrug4 asidrug5 asidrug6 asidrug7 asidrug8 asidrug9 asidrug10 asidrug11 asidrug12 asidrug13 asidrug14)
 egen float asidrugscore = rowmean(asidrug1 asidrug2 asidrug3 asidrug4 asidrug5 asidrug6 asidrug7 asidrug8 asidrug9 asidrug10 asidrug11 asidrug12 asidrug13 asidrug14) if asidrugmissing<3
 replace asidrugscore = asidrugscore*100
-label variable asidrugscore "Composite score for drug use"
+label variable asidrugscore "Standardized composite score for drug use (out of 100)"
+
 
 *Inject drugs ever
 *	37 of 152 people who did not report injection as typical route of administration for drug
@@ -396,6 +643,7 @@ label variable numinjectdrugs "How many drugs does person inject?"
 
 recode numinjectdrugs (0 = 0) (1 =1) (2=1) (3=1) (4=1) (5=1), generate(injectdrugs)
 label variable injectdrugs "Does person inject any drugs?"
+label values injectdrugs no_yes
 
 tab injectdrugs bc40c
 replace injectdrugs=1 if bc40c==1
@@ -419,6 +667,8 @@ replace everalcintox = 1 if bc102y > 0
 
 replace everheroin = 0 if bc103y == 0
 replace everheroin = 1 if bc103y > 0
+label variable everheroin "Subject has ever used heroin"
+label values everheroin no_yes
 
 replace evermethadone = 0 if bc104y == 0
 replace evermethadone = 1 if bc104y > 0

@@ -137,8 +137,47 @@ replace visit5_q = 4 if visit5==12 | visit5==13
 
 replace visit6_q = 4 if visit6==12
 
-*list visit1 visit1_q visit2 visit2_q visit3 visit3_q visit4 visit4_q visit5 visit5_q visit6 visit6_q if drugtx==1
-*Quarters assignments were manually inspected for accuracy multiple times
+list pid visit1 visit1_q visit2 visit2_q visit3 visit3_q visit4 visit4_q visit5 visit5_q visit6 visit6_q if drugtx==1
+
+*Quarters assignments were manually inspected for accuracy
+*Spot-checking:
+replace visit1_q=1 if pid=="CC-010906027B"
+replace visit2_q=2 if pid=="CC-021407073B"
+replace visit3_q=3 if pid=="CC-021407073B"
+replace visit2_q=2 if pid=="CC-061906052B"
+replace visit1_q=1 if pid=="CC-090507084B"
+replace visit2_q=2 if pid=="CC-090507084B"
+replace visit3_q=3 if pid=="CC-090507084B"
+replace visit2_q=2 if pid=="ERIIAY006"
+replace visit2_q=2 if pid=="ERIIHN008"
+replace visit1_q=1 if pid=="ERINAY012"
+replace visit2_q=2 if pid=="ERINAY012"
+replace visit3_q=3 if pid=="ERINAY012"
+replace visit4_q=4 if pid=="ERINAY012"
+replace visit1_q=1 if pid=="JH-0358"
+replace visit1_q=1 if pid=="MH-IAUC25"
+replace visit2_q=2 if pid=="MH-IAUC25"
+replace visit1_q=1 if pid=="MH-IDAJ03"
+replace visit2_q=2 if pid=="MH-IDAJ03"
+replace visit3_q=3 if pid=="MH-IDAJ03"
+replace visit4_q=4 if pid=="MH-IDAJ03"
+replace visit1_q=1 if pid=="MH-IOUR21"
+replace visit2_q=2 if pid=="MH-IOUR21"
+replace visit3_q=3 if pid=="MH-IOUR21"
+replace visit4_q=4 if pid=="MH-IOUR21"
+replace visit2_q=. if pid=="MH-IRSG13"
+replace visit1_q=. if pid=="OH.PT002.2"
+replace visit1_q=1 if pid=="OH.PT003.4"
+replace visit2_q=2 if pid=="OH.PT003.4"
+replace visit2_q=3 if pid=="OH.PT011.3"
+replace visit2_q=3 if pid=="OH.PT013.2"
+replace visit3_q=4 if pid=="OH.PT013.2"
+replace visit2_q=2 if pid=="SF004"
+replace visit3_q=3 if pid=="SF004"
+replace visit3_q=1 if pid=="YA-AAD04"
+replace visit3_q=2 if pid=="YA-IOR21"
+replace visit4_q=3 if pid=="YA-IOR21"
+replace visit1_q=1 if pid=="YS-22022"
 
 *Opioid Use per Visit
 
@@ -174,7 +213,7 @@ replace anyrecentopioids_v4=1 if recentopioids_v4>0
 replace anyrecentopioids_v5=1 if recentopioids_v5>0
 replace anyrecentopioids_v6=1 if recentopioids_v6>0
 
-replace anyrecentopioids_base if recentopioids_base==.
+replace anyrecentopioids_base=. if recentopioids_base==.
 replace anyrecentopioids_v1=. if recentopioids_v1==.
 replace anyrecentopioids_v2=. if recentopioids_v2==.
 replace anyrecentopioids_v3=. if recentopioids_v3==.
@@ -200,100 +239,78 @@ label values anyrecentopioids_v6 no_yes
 
 *Quarterly Opioid Use
 
+gen recentopioids_q1=0
+gen recentopioids_q2=0
+gen recentopioids_q3=0
+gen recentopioids_q4=0
+
+replace recentopioids_q1=recentopioids_v1 if visit1_q==1
+replace recentopioids_q1=recentopioids_v2 if visit2_q==1
+replace recentopioids_q1=recentopioids_v3 if visit3_q==1
+replace recentopioids_q1=recentopioids_v4 if visit4_q==1
+replace recentopioids_q1=recentopioids_v5 if visit5_q==1
+replace recentopioids_q1=recentopioids_v6 if visit6_q==1
+replace recentopioids_q1=. if visit1_q != 1 & visit2_q != 1 & visit3_q != 1 & visit4_q != 1 & visit5_q != 1 & visit6_q != 1
+
+replace recentopioids_q2=recentopioids_v1 if visit1_q==2
+replace recentopioids_q2=recentopioids_v2 if visit2_q==2
+replace recentopioids_q2=recentopioids_v3 if visit3_q==2
+replace recentopioids_q2=recentopioids_v4 if visit4_q==2
+replace recentopioids_q2=recentopioids_v5 if visit5_q==2
+replace recentopioids_q2=recentopioids_v6 if visit6_q==2
+replace recentopioids_q2=. if visit1_q != 2 & visit2_q != 2 & visit3_q != 2 & visit4_q != 2 & visit5_q != 2 & visit6_q != 2
+
+replace recentopioids_q3=recentopioids_v1 if visit1_q==3
+replace recentopioids_q3=recentopioids_v2 if visit2_q==3
+replace recentopioids_q3=recentopioids_v3 if visit3_q==3
+replace recentopioids_q3=recentopioids_v4 if visit4_q==3
+replace recentopioids_q3=recentopioids_v5 if visit5_q==3
+replace recentopioids_q3=recentopioids_v6 if visit6_q==3
+replace recentopioids_q3=. if visit1_q != 3 & visit2_q != 3 & visit3_q != 3 & visit4_q != 3 & visit5_q != 3 & visit6_q != 3
+
+replace recentopioids_q4=recentopioids_v1 if visit1_q==4
+replace recentopioids_q4=recentopioids_v2 if visit2_q==4
+replace recentopioids_q4=recentopioids_v3 if visit3_q==4
+replace recentopioids_q4=recentopioids_v4 if visit4_q==4
+replace recentopioids_q4=recentopioids_v5 if visit5_q==4
+replace recentopioids_q4=recentopioids_v6 if visit6_q==4
+replace recentopioids_q4=. if visit1_q != 4 & visit2_q != 4 & visit3_q != 4 & visit4_q != 4 & visit5_q != 4 & visit6_q != 4
+
+label variable recentopioids_v1 "Days of opioid use in 30 days before followup in quarter 1"
+label variable recentopioids_v2 "Days of opioid use in 30 days before followup in quarter 2"
+label variable recentopioids_v3 "Days of opioid use in 30 days before followup in quarter 3"
+label variable recentopioids_v4 "Days of opioid use in 30 days before followup in quarter 4"
+
 gen anyrecentopioids_q1 = 0
 gen anyrecentopioids_q2 = 0
 gen anyrecentopioids_q3 = 0
 gen anyrecentopioids_q4 = 0
-gen abstinentopioids = 0
+
+replace anyrecentopioids_q1=1 if recentopioids_q1>0
+replace anyrecentopioids_q2=1 if recentopioids_q2>0
+replace anyrecentopioids_q3=1 if recentopioids_q3>0
+replace anyrecentopioids_q4=1 if recentopioids_q4>0
+
+replace anyrecentopioids_q1=. if recentopioids_q1==.
+replace anyrecentopioids_q2=. if recentopioids_q2==.
+replace anyrecentopioids_q3=. if recentopioids_q3==.
+replace anyrecentopioids_q4=. if recentopioids_q4==.
 
 label variable anyrecentopioids_q1 "Subject reported using any opioids during quarter 1"
 label variable anyrecentopioids_q2 "Subject reported using any opioids during quarter 2"
 label variable anyrecentopioids_q3 "Subject reported using any opioids during quarter 3"
 label variable anyrecentopioids_q4 "Subject reported using any opioids during quarter 4"
-label variable abstinentopioids "Subject reported abstinence from all opioids during all four quarters"
 
-replace anyrecentopioids_q1=1 if visit1_q==1 & qc83d_1>0
-replace anyrecentopioids_q1=1 if visit1_q==1 & qc84d_1>0
-replace anyrecentopioids_q1=1 if visit1_q==1 & qc85d_1>0
-replace anyrecentopioids_q1=1 if visit2_q==1 & qc83d_2>0
-replace anyrecentopioids_q1=1 if visit2_q==1 & qc84d_2>0
-replace anyrecentopioids_q1=1 if visit2_q==1 & qc85d_2>0
-replace anyrecentopioids_q1=1 if visit3_q==1 & qc83d_3>0
-replace anyrecentopioids_q1=1 if visit3_q==1 & qc84d_3>0
-replace anyrecentopioids_q1=1 if visit3_q==1 & qc85d_3>0
-replace anyrecentopioids_q1=1 if visit4_q==1 & qc83d_4>0
-replace anyrecentopioids_q1=1 if visit4_q==1 & qc84d_4>0
-replace anyrecentopioids_q1=1 if visit4_q==1 & qc85d_4>0
-replace anyrecentopioids_q1=1 if visit5_q==1 & qc83d_5>0
-replace anyrecentopioids_q1=1 if visit5_q==1 & qc84d_5>0
-replace anyrecentopioids_q1=1 if visit5_q==1 & qc85d_5>0
-replace anyrecentopioids_q1=1 if visit6_q==1 & qc83d_6>0
-replace anyrecentopioids_q1=1 if visit6_q==1 & qc84d_6>0
-replace anyrecentopioids_q1=1 if visit6_q==1 & qc85d_6>0
-replace anyrecentopioids_q1=. if visit1_q != 1 & visit2_q != 1 & visit3_q != 1 & visit4_q != 1 & visit5_q != 1 & visit6_q != 1
+label values anyrecentopioids_q1 no_yes
+label values anyrecentopioids_q2 no_yes
+label values anyrecentopioids_q3 no_yes
+label values anyrecentopioids_q4 no_yes
 
-replace anyrecentopioids_q2=1 if visit1_q==2 & qc83d_1>0
-replace anyrecentopioids_q2=1 if visit1_q==2 & qc84d_1>0
-replace anyrecentopioids_q2=1 if visit1_q==2 & qc85d_1>0
-replace anyrecentopioids_q2=1 if visit2_q==2 & qc83d_2>0
-replace anyrecentopioids_q2=1 if visit2_q==2 & qc84d_2>0
-replace anyrecentopioids_q2=1 if visit2_q==2 & qc85d_2>0
-replace anyrecentopioids_q2=1 if visit3_q==2 & qc83d_3>0
-replace anyrecentopioids_q2=1 if visit3_q==2 & qc84d_3>0
-replace anyrecentopioids_q2=1 if visit3_q==2 & qc85d_3>0
-replace anyrecentopioids_q2=1 if visit4_q==2 & qc83d_4>0
-replace anyrecentopioids_q2=1 if visit4_q==2 & qc84d_4>0
-replace anyrecentopioids_q2=1 if visit4_q==2 & qc85d_4>0
-replace anyrecentopioids_q2=1 if visit5_q==2 & qc83d_5>0
-replace anyrecentopioids_q2=1 if visit5_q==2 & qc84d_5>0
-replace anyrecentopioids_q2=1 if visit5_q==2 & qc85d_5>0
-replace anyrecentopioids_q2=1 if visit6_q==2 & qc83d_6>0
-replace anyrecentopioids_q2=1 if visit6_q==2 & qc84d_6>0
-replace anyrecentopioids_q2=1 if visit6_q==2 & qc85d_6>0
-replace anyrecentopioids_q2=. if visit1_q != 2 & visit2_q != 2 & visit3_q != 2 & visit4_q != 2 & visit5_q != 2 & visit6_q != 2
-
-replace anyrecentopioids_q3=1 if visit1_q==3 & qc83d_1>0
-replace anyrecentopioids_q3=1 if visit1_q==3 & qc84d_1>0
-replace anyrecentopioids_q3=1 if visit1_q==3 & qc85d_1>0
-replace anyrecentopioids_q3=1 if visit2_q==3 & qc83d_2>0
-replace anyrecentopioids_q3=1 if visit2_q==3 & qc84d_2>0
-replace anyrecentopioids_q3=1 if visit2_q==3 & qc85d_2>0
-replace anyrecentopioids_q3=1 if visit3_q==3 & qc83d_3>0
-replace anyrecentopioids_q3=1 if visit3_q==3 & qc84d_3>0
-replace anyrecentopioids_q3=1 if visit3_q==3 & qc85d_3>0
-replace anyrecentopioids_q3=1 if visit4_q==3 & qc83d_4>0
-replace anyrecentopioids_q3=1 if visit4_q==3 & qc84d_4>0
-replace anyrecentopioids_q3=1 if visit4_q==3 & qc85d_4>0
-replace anyrecentopioids_q3=1 if visit5_q==3 & qc83d_5>0
-replace anyrecentopioids_q3=1 if visit5_q==3 & qc84d_5>0
-replace anyrecentopioids_q3=1 if visit5_q==3 & qc85d_5>0
-replace anyrecentopioids_q3=1 if visit6_q==3 & qc83d_6>0
-replace anyrecentopioids_q3=1 if visit6_q==3 & qc84d_6>0
-replace anyrecentopioids_q3=1 if visit6_q==3 & qc85d_6>0
-replace anyrecentopioids_q3=. if visit1_q != 3 & visit2_q != 3 & visit3_q != 3 & visit4_q != 3 & visit5_q != 3 & visit6_q != 3
-
-replace anyrecentopioids_q4=1 if visit1_q==4 & qc83d_1>0
-replace anyrecentopioids_q4=1 if visit1_q==4 & qc84d_1>0
-replace anyrecentopioids_q4=1 if visit1_q==4 & qc85d_1>0
-replace anyrecentopioids_q4=1 if visit2_q==4 & qc83d_2>0
-replace anyrecentopioids_q4=1 if visit2_q==4 & qc84d_2>0
-replace anyrecentopioids_q4=1 if visit2_q==4 & qc85d_2>0
-replace anyrecentopioids_q4=1 if visit3_q==4 & qc83d_3>0
-replace anyrecentopioids_q4=1 if visit3_q==4 & qc84d_3>0
-replace anyrecentopioids_q4=1 if visit3_q==4 & qc85d_3>0
-replace anyrecentopioids_q4=1 if visit4_q==4 & qc83d_4>0
-replace anyrecentopioids_q4=1 if visit4_q==4 & qc84d_4>0
-replace anyrecentopioids_q4=1 if visit4_q==4 & qc85d_4>0
-replace anyrecentopioids_q4=1 if visit5_q==4 & qc83d_5>0
-replace anyrecentopioids_q4=1 if visit5_q==4 & qc84d_5>0
-replace anyrecentopioids_q4=1 if visit5_q==4 & qc85d_5>0
-replace anyrecentopioids_q4=1 if visit6_q==4 & qc83d_6>0
-replace anyrecentopioids_q4=1 if visit6_q==4 & qc84d_6>0
-replace anyrecentopioids_q4=1 if visit6_q==4 & qc85d_6>0
-replace anyrecentopioids_q4=. if visit1_q != 4 & visit2_q != 4 & visit3_q != 4 & visit4_q != 4 & visit5_q != 4 & visit6_q != 4
-
+gen abstinentopioids = 0
 replace abstinentopioids=1 if anyrecentopioids_q1==0 & anyrecentopioids_q2==0 & anyrecentopioids_q3==0 & anyrecentopioids_q4==0
 replace abstinentopioids=. if anyrecentopioids_q1==. | anyrecentopioids_q2==. | anyrecentopioids_q3==. | anyrecentopioids_q4==.
+label variable abstinentopioids "Subject reported abstinence from all opioids during all four quarters"
+label values abstinentopioids no_yes
 
 *Age
 

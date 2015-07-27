@@ -2,7 +2,7 @@ drop if drugtx!=1
 
 tab everincar_base retention4q if drugtx==1, chi2 row
 tab recentincar_base retention4q if drugtx==1, chi2 row
-tab everincar_base retention4q if drugtx==1, chi2 row
+tab parole_base retention4q if drugtx==1, chi2 row
 
 tab everincar_base abstinentopioids, chi2 row
 tab recentincar_base abstinentopioids, chi2 row
@@ -40,6 +40,7 @@ listcoef, percent
 nestreg: logistic retention4q (alone injectdrugs) recentincar_base
 listcoef, percent
 
+
 logit retention4q parole_base
 nestreg: logit retention4q parole_base
 nestreg: logit retention4q english parole_base
@@ -75,35 +76,7 @@ listcoef, percent
 nestreg: logistic retention4q (male asidrugscore) parole_base
 listcoef, percent
 
-logit abstinentopioids everincar_base
-nestreg: logit abstinentopioids male everincar_base
-nestreg: logit abstinentopioids hsdiploma everincar_base
-nestreg: logit abstinentopioids sincediagnosis everincar_base
-nestreg: logit abstinentopioids asidrugscore everincar_base
-nestreg: logit abstinentopioids injectdrugs everincar_base
-nestreg: logit abstinentopioids everalcintox everincar_base
-nestreg: logit abstinentopioids evermethadone everincar_base
-nestreg: logit abstinentopioids recentotherpk everincar_base
-nestreg: logit abstinentopioids recentmarijuana everincar_base
-nestreg: logit abstinentopioids years_any_opioid everincar_base
-nestreg: logit abstinentopioids overdosed everincar_base
-nestreg: logit abstinentopioids treatedfordrugs everincar_base
-nestreg: logit abstinentopioids (years_any_opioid male) everincar_base
-nestreg: logit abstinentopioids (years_any_opioid hsdiploma) everincar_base
-nestreg: logit abstinentopioids (years_any_opioid sincediagnosis) everincar_base
-nestreg: logit abstinentopioids (years_any_opioid asidrugscore) everincar_base
-nestreg: logit abstinentopioids (years_any_opioid injectdrugs) everincar_base
-nestreg: logit abstinentopioids (years_any_opioid everalcintox) everincar_base
-nestreg: logit abstinentopioids (years_any_opioid evermethadone) everincar_base
-nestreg: logit abstinentopioids (years_any_opioid recentotherpk) everincar_base
-nestreg: logit abstinentopioids (years_any_opioid recentmarijuana) everincar_base
-nestreg: logit abstinentopioids (years_any_opioid overdosed) everincar_base
-nestreg: logit abstinentopioids (years_any_opioid treatedfordrugs) everincar_base
-
-logistic abstinentopioids everincar_base
-listcoef, percent
-nestreg: logistic abstinentopioids years_any_opioid everincar_base
-listcoef, percent
+*Redo!!!
 
 logit abstinentopioids recentincar_base
 nestreg: logit abstinentopioids alone recentincar_base

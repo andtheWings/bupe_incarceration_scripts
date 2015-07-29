@@ -44,6 +44,21 @@ tab retention dtxq2, missing
 tab retention dtxq3, missing
 tab retention dtxq4, missing
 
+generate retention1q = 0
+label variable retention1q "Subject was retained on bup/nx treatment for one or more quarters"
+replace retention1q=1 if dtxq1==1  
+replace retention1q=. if dtxq1==.  
+
+generate retention2q = 0
+label variable retention2q "Subject was retained on bup/nx treatment for two or more quarters"
+replace retention2q=1 if dtxq1==1 & dtxq2==1 
+replace retention2q=. if dtxq1==. | dtxq2==. 
+
+generate retention3q = 0
+label variable retention3q "Subject was retained on bup/nx treatment for three or more quarters"
+replace retention3q=1 if dtxq1==1 & dtxq2==1 & dtxq3==1
+replace retention3q=. if dtxq1==. | dtxq2==. | dtxq3==.
+
 generate retention4q = 0
 label variable retention4q "Subject was retained on bup/nx treatment for all four quarters"
 replace retention4q=1 if dtxq1==1 & dtxq2==1 & dtxq3==1 & dtxq4==1

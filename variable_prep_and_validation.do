@@ -32,37 +32,44 @@ replace parole_base=.a if bc29==8
 *Treatment retention
 
 gen retention = 0
-label variable retention "Number of quarters subject was retained on bup/nx treatment"
-replace retention=1 if dtxq1==1 & dtxq2!=1 & dtxq3!=1 & dtxq4!=1
-replace retention=2 if dtxq1==1 & dtxq2==1 & dtxq3!=1 & dtxq4!=1
+label variable retention "Number of quarters in a row that subject was retained on bup/nx treatment"
+replace retention=1 if dtxq1==1 & dtxq2!=1 
+replace retention=2 if dtxq1==1 & dtxq2==1 & dtxq3!=1
 replace retention=3 if dtxq1==1 & dtxq2==1 & dtxq3==1 & dtxq4!=1
 replace retention=4 if dtxq1==1 & dtxq2==1 & dtxq3==1 & dtxq4==1
-replace retention=. if dtxq1==. | dtxq2==. | dtxq3==. | dtxq4==.
+replace retention=. if retention==1 & dtxq2==.
+replace retention=. if retention==2 & dtxq3==.
+replace retention=. if retention==3 & dtxq4==.
 
 tab retention dtxq1, missing
 tab retention dtxq2, missing
 tab retention dtxq3, missing
 tab retention dtxq4, missing
 
-generate retention1q = 0
-label variable retention1q "Subject was retained on bup/nx treatment for one or more quarters"
-replace retention1q=1 if dtxq1==1  
-replace retention1q=. if dtxq1==.  
+clonevar retention1q=retention
+recode retention1q 2/4=1
+label variable retention1q "Subject was retained on bup/nx treatment for one or more consecutive quarters"
+label values retention1q no_yes
 
-generate retention2q = 0
-label variable retention2q "Subject was retained on bup/nx treatment for two or more quarters"
-replace retention2q=1 if dtxq1==1 & dtxq2==1 
-replace retention2q=. if dtxq1==. | dtxq2==. 
+clonevar retention2q=retention
+recode retention2q 1=0 2/4=1
+label variable retention2q "Subject was retained on bup/nx treatment for two or more consecutive quarters"
+label values retention2q no_yes
 
-generate retention3q = 0
-label variable retention3q "Subject was retained on bup/nx treatment for three or more quarters"
-replace retention3q=1 if dtxq1==1 & dtxq2==1 & dtxq3==1
-replace retention3q=. if dtxq1==. | dtxq2==. | dtxq3==.
+clonevar retention3q=retention
+recode retention3q 1/2=0 3/4=1
+label variable retention3q "Subject was retained on bup/nx treatment for three or more consecutive quarters"
+label values retention3q no_yes
 
-generate retention4q = 0
-label variable retention4q "Subject was retained on bup/nx treatment for all four quarters"
-replace retention4q=1 if dtxq1==1 & dtxq2==1 & dtxq3==1 & dtxq4==1
-replace retention4q=. if dtxq1==. | dtxq2==. | dtxq3==. | dtxq4==.
+clonevar retention4q=retention
+recode retention4q 1/3=0 4=1
+label variable retention4q "Subject was retained on bup/nx treatment for four consecutive quarters"
+label values retention4q no_yes
+
+tab retention retention1q, missing
+tab retention retention2q, missing
+tab retention retention3q, missing
+tab retention retention4q, missing
 
 *Age
 

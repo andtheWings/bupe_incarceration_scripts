@@ -1,12 +1,6 @@
 drop if drugtx!=1
 
-tab everincar_base retention4q if drugtx==1, chi2 row
 tab recentincar_base retention4q if drugtx==1, chi2 row
-tab parole_base retention4q if drugtx==1, chi2 row
-
-tab everincar_base abstinentopioids, chi2 row
-tab recentincar_base abstinentopioids, chi2 row
-tab parole_base abstinentopioids, chi2 row
 
 logit retention4q recentincar_base
 nestreg: logit retention4q alone recentincar_base
@@ -40,6 +34,9 @@ listcoef, percent
 nestreg: logistic retention4q (alone injectdrugs) recentincar_base
 listcoef, percent
 
+***
+
+tab parole_base retention4q if drugtx==1, chi2 row
 
 logit retention4q parole_base
 nestreg: logit retention4q parole_base
@@ -77,6 +74,9 @@ nestreg: logistic retention4q (male asidrugscore) parole_base
 listcoef, percent
 
 *Redo!!!
+***
+
+tab recentincar_base abstinentopioids, chi2 row
 
 logit abstinentopioids recentincar_base
 nestreg: logit abstinentopioids alone recentincar_base

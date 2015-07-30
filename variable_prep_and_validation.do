@@ -1,76 +1,12 @@
 *ssc install fre
-drop if drugtx!=1
+
+label define no_yes 0 "no" 1 "yes" 8 "don't know" .a "don't know"
 
 *Drug treatment
 
 label define drugtx 1 "Bupe" 2 "Methadone" 3 "Other Tx" 4 "Unknown"
 label values drugtx drugtx
-
-*Criminal justice status
-
-label define no_yes 0 "no" 1 "yes" 8 "don't know" .a "don't know"
-label values bc29 no_yes
-label values bc31 no_yes
-label values qc16_1 no_yes
-label values qc16_2 no_yes
-label values qc16_3 no_yes
-label values qc16_4 no_yes
-
-clonevar everincar_base = bc31
-label variable everincar_base "Subject reported at baseline having ever been incarcerated for more than 3 days"
-
-generate recentincar_base=.
-label variable recentincar_base "Subject reported at baseline having been incarcerated in the past 30 days"
-label values recentincar_base
-replace recentincar_base=0 if bc32==0
-replace recentincar_base = 1 if bc32>0
-
-
-clonevar parole_base = bc29
-label variable parole_base "Subject reported at baseline he/she was currently on parole or probation"
-replace parole_base=.a if bc29==8
-
-*Treatment retention
-
-gen retention = 0
-label variable retention "Number of quarters in a row that subject was retained on bup/nx treatment"
-replace retention=1 if dtxq1==1 & dtxq2!=1 
-replace retention=2 if dtxq1==1 & dtxq2==1 & dtxq3!=1
-replace retention=3 if dtxq1==1 & dtxq2==1 & dtxq3==1 & dtxq4!=1
-replace retention=4 if dtxq1==1 & dtxq2==1 & dtxq3==1 & dtxq4==1
-replace retention=. if retention==1 & dtxq2==.
-replace retention=. if retention==2 & dtxq3==.
-replace retention=. if retention==3 & dtxq4==.
-
-tab retention dtxq1, missing
-tab retention dtxq2, missing
-tab retention dtxq3, missing
-tab retention dtxq4, missing
-
-clonevar retention1q=retention
-recode retention1q 2/4=1
-label variable retention1q "Subject was retained on bup/nx treatment for one or more consecutive quarters"
-label values retention1q no_yes
-
-clonevar retention2q=retention
-recode retention2q 1=0 2/4=1
-label variable retention2q "Subject was retained on bup/nx treatment for two or more consecutive quarters"
-label values retention2q no_yes
-
-clonevar retention3q=retention
-recode retention3q 1/2=0 3/4=1
-label variable retention3q "Subject was retained on bup/nx treatment for three or more consecutive quarters"
-label values retention3q no_yes
-
-clonevar retention4q=retention
-recode retention4q 1/3=0 4=1
-label variable retention4q "Subject was retained on bup/nx treatment for four consecutive quarters"
-label values retention4q no_yes
-
-tab retention retention1q, missing
-tab retention retention2q, missing
-tab retention retention3q, missing
-tab retention retention4q, missing
+drop if drugtx!=1
 
 *Visit quarter coding
 
@@ -202,6 +138,187 @@ replace visit3_q=2 if pid=="YA-IOR21"
 replace visit4_q=3 if pid=="YA-IOR21"
 replace visit1_q=1 if pid=="YS-22022"
 
+*Criminal justice status per visit 
+
+clonevar everincar_base = bc31
+label variable everincar_base "Subject reported at baseline having ever been incarcerated for more than 3 days"
+label values everincar_base no_yes
+
+clonevar recentincar_base=bc32
+clonevar recentincar_v1=qc17_1
+clonevar recentincar_v2=qc17_2
+clonevar recentincar_v3=qc17_3
+clonevar recentincar_v4=qc17_4
+clonevar recentincar_v5=qc17_5
+clonevar recentincar_v6=qc17_6
+
+recode recentincar_base 2/30=1
+recode recentincar_v1 2/120=1
+recode recentincar_v2 2/120=1
+recode recentincar_v3 2/120=1
+recode recentincar_v4 2/120=1
+recode recentincar_v5 2/120=1
+recode recentincar_v6 2/120=1
+
+label variable recentincar_base "Subject reported at baseline having been incarcerated in the past 30 days"
+label variable recentincar_v1 "Subject reported at visit 1 having been incarcerated since baseline"
+label variable recentincar_v2 "Subject reported at visit 2 having been incarcerated since visit 1"
+label variable recentincar_v3 "Subject reported at visit 3 having been incarcerated since visit 2"
+label variable recentincar_v4 "Subject reported at visit 4 having been incarcerated since visit 3"
+label variable recentincar_v5 "Subject reported at visit 5 having been incarcerated since visit 4"
+label variable recentincar_v6 "Subject reported at visit 6 having been incarcerated since visit 5"
+
+label values recentincar_base no_yes
+label values recentincar_v1 no_yes
+label values recentincar_v2 no_yes
+label values recentincar_v3 no_yes
+label values recentincar_v4 no_yes
+label values recentincar_v5 no_yes
+label values recentincar_v6 no_yes
+
+clonevar parole_base = bc29
+clonevar parole_v1 = qc14_1
+clonevar parole_v2 = qc14_2
+clonevar parole_v3 = qc14_3
+clonevar parole_v4 = qc14_4
+clonevar parole_v5 = qc14_5
+clonevar parole_v6 = qc14_6
+
+replace parole_base=.a if bc29==8
+
+label variable parole_base "Subject reported at baseline he/she was currently on parole or probation"
+label variable parole_v1 "Subject reported at visit 1 he/she was currently on parole or probation"
+label variable parole_v2 "Subject reported at visit 2 he/she was currently on parole or probation"
+label variable parole_v3 "Subject reported at visit 3 he/she was currently on parole or probation"
+label variable parole_v4 "Subject reported at visit 4 he/she was currently on parole or probation"
+label variable parole_v5 "Subject reported at visit 5 he/she was currently on parole or probation"
+label variable parole_v6 "Subject reported at visit 6 he/she was currently on parole or probation"
+
+label values parole_base no_yes
+label values parole_v1 no_yes
+label values parole_v2 no_yes
+label values parole_v3 no_yes
+label values parole_v4 no_yes
+label values parole_v5 no_yes
+label values parole_v6 no_yes
+
+*Criminal justice status per quarter 
+
+gen recentincar_q1=.
+gen recentincar_q2=.
+gen recentincar_q3=.
+gen recentincar_q4=.
+
+replace recentincar_q1=recentincar_v1 if visit1_q==1
+replace recentincar_q1=recentincar_v2 if visit2_q==1
+replace recentincar_q1=recentincar_v3 if visit3_q==1
+replace recentincar_q1=recentincar_v4 if visit4_q==1
+replace recentincar_q1=recentincar_v5 if visit5_q==1
+replace recentincar_q1=recentincar_v6 if visit6_q==1
+
+fre recentincar_q1
+*no=169, yes=11
+fre recentincar_v1 if visit1_q==1
+fre recentincar_v2 if visit2_q==1
+fre recentincar_v3 if visit3_q==1
+fre recentincar_v4 if visit4_q==1
+fre recentincar_v5 if visit5_q==1
+fre recentincar_v6 if visit6_q==1
+*no=169, yes=11
+
+replace recentincar_q2=recentincar_v1 if visit1_q==2
+replace recentincar_q2=recentincar_v2 if visit2_q==2
+replace recentincar_q2=recentincar_v3 if visit3_q==2
+replace recentincar_q2=recentincar_v4 if visit4_q==2
+replace recentincar_q2=recentincar_v5 if visit5_q==2
+replace recentincar_q2=recentincar_v6 if visit6_q==2
+
+fre recentincar_q2
+*no=148, yes=27
+fre recentincar_v1 if visit1_q==2
+fre recentincar_v2 if visit2_q==2
+fre recentincar_v3 if visit3_q==2
+fre recentincar_v4 if visit4_q==2
+fre recentincar_v5 if visit5_q==2
+fre recentincar_v6 if visit6_q==2
+*no=148, yes=27
+
+replace recentincar_q3=recentincar_v1 if visit1_q==3
+replace recentincar_q3=recentincar_v2 if visit2_q==3
+replace recentincar_q3=recentincar_v3 if visit3_q==3
+replace recentincar_q3=recentincar_v4 if visit4_q==3
+replace recentincar_q3=recentincar_v5 if visit5_q==3
+replace recentincar_q3=recentincar_v6 if visit6_q==3
+
+fre recentincar_q3
+*no=153, yes=14
+fre recentincar_v1 if visit1_q==3
+fre recentincar_v2 if visit2_q==3
+fre recentincar_v3 if visit3_q==3
+fre recentincar_v4 if visit4_q==3
+fre recentincar_v5 if visit5_q==3
+fre recentincar_v6 if visit6_q==3
+*no=153, yes=14
+
+replace recentincar_q4=recentincar_v1 if visit1_q==4
+replace recentincar_q4=recentincar_v2 if visit2_q==4
+replace recentincar_q4=recentincar_v3 if visit3_q==4
+replace recentincar_q4=recentincar_v4 if visit4_q==4
+replace recentincar_q4=recentincar_v5 if visit5_q==4
+replace recentincar_q4=recentincar_v6 if visit6_q==4
+
+fre recentincar_q4
+*no=150, yes=22
+fre recentincar_v1 if visit1_q==4
+fre recentincar_v2 if visit2_q==4
+fre recentincar_v3 if visit3_q==4
+fre recentincar_v4 if visit4_q==4
+fre recentincar_v5 if visit5_q==4
+fre recentincar_v6 if visit6_q==4
+*no=150, yes=22
+
+*Treatment retention
+
+gen retention = 0
+label variable retention "Number of quarters in a row that subject was retained on bup/nx treatment"
+replace retention=1 if dtxq1==1 & dtxq2!=1 
+replace retention=2 if dtxq1==1 & dtxq2==1 & dtxq3!=1
+replace retention=3 if dtxq1==1 & dtxq2==1 & dtxq3==1 & dtxq4!=1
+replace retention=4 if dtxq1==1 & dtxq2==1 & dtxq3==1 & dtxq4==1
+replace retention=. if retention==1 & dtxq2==.
+replace retention=. if retention==2 & dtxq3==.
+replace retention=. if retention==3 & dtxq4==.
+
+tab retention dtxq1, missing
+tab retention dtxq2, missing
+tab retention dtxq3, missing
+tab retention dtxq4, missing
+
+clonevar retention1q=retention
+recode retention1q 2/4=1
+label variable retention1q "Subject was retained on bup/nx treatment for one or more consecutive quarters"
+label values retention1q no_yes
+
+clonevar retention2q=retention
+recode retention2q 1=0 2/4=1
+label variable retention2q "Subject was retained on bup/nx treatment for two or more consecutive quarters"
+label values retention2q no_yes
+
+clonevar retention3q=retention
+recode retention3q 1/2=0 3/4=1
+label variable retention3q "Subject was retained on bup/nx treatment for three or more consecutive quarters"
+label values retention3q no_yes
+
+clonevar retention4q=retention
+recode retention4q 1/3=0 4=1
+label variable retention4q "Subject was retained on bup/nx treatment for four consecutive quarters"
+label values retention4q no_yes
+
+tab retention retention1q, missing
+tab retention retention2q, missing
+tab retention retention3q, missing
+tab retention retention4q, missing
+
 *Opioid Use per Visit
 
 egen float recentopioids_base = rowmax(bc103d bc104d bc105d)
@@ -273,7 +390,7 @@ replace recentopioids_q1=recentopioids_v3 if visit3_q==1
 replace recentopioids_q1=recentopioids_v4 if visit4_q==1
 replace recentopioids_q1=recentopioids_v5 if visit5_q==1
 replace recentopioids_q1=recentopioids_v6 if visit6_q==1
-*replace recentopioids_q1 = . if visit1_q != 1 & visit2_q != 1 & visit3_q != 1 & visit4_q != 1 & visit5_q != 1 & visit6_q != 1
+replace recentopioids_q1 = . if visit1_q != 1 & visit2_q != 1 & visit3_q != 1 & visit4_q != 1 & visit5_q != 1 & visit6_q != 1
 
 *fre recentopioids_q1 
 **0=114, total non-missing=199

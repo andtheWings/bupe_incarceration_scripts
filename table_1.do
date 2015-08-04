@@ -4,7 +4,11 @@
 *by whether individuals had ever been incarcerated greater than 3 days 
 *before or during the study.
 
-drop if drugtx!=1
+*''BHIVES Site''
+
+*tab site everincar_base, chi2 row
+*tab site recentincar_base, chi2 row
+*tab site parole_base, chi2 row
 
 *''Age''
 

@@ -36,6 +36,37 @@ listcoef, percent
 
 ***
 
+tab parole_base retention3q if drugtx==1, chi2 row
+
+logit retention3q parole_base
+nestreg: logit retention3q english parole_base
+nestreg: logit retention3q male parole_base
+nestreg: logit retention3q asidrugscore parole_base
+nestreg: logit retention3q injectdrugs parole_base
+nestreg: logit retention3q everheroin parole_base
+nestreg: logit retention3q evermethadone parole_base
+nestreg: logit retention3q years_any_opioid parole_base
+nestreg: logit retention3q overdosed parole_base
+nestreg: logit retention3q treatedfordrugs parole_base
+nestreg: logit retention3q recentmethadonetx parole_base
+nestreg: logit retention3q (asidrugscore injectdrugs) parole_base
+nestreg: logit retention3q (asidrugscore injectdrugs english) parole_base
+nestreg: logit retention3q (asidrugscore injectdrugs male) parole_base
+nestreg: logit retention3q (asidrugscore injectdrugs everheroin) parole_base
+nestreg: logit retention3q (asidrugscore injectdrugs evermethadone) parole_base
+nestreg: logit retention3q (asidrugscore injectdrugs years_any_opioid) parole_base
+nestreg: logit retention3q (asidrugscore injectdrugs overdosed) parole_base
+nestreg: logit retention3q (asidrugscore injectdrugs treatedfordrugs) parole_base
+nestreg: logit retention3q (asidrugscore injectdrugs recentmethadone) parole_base
+nestreg: logit retention3q (asidrugscore injectdrugs evermethadone recentmethadone) parole_base
+
+logistic retention3q parole_base
+listcoef, percent
+nestreg: logistic retention3q (asidrugscore injectdrugs) parole_base
+listcoef, percent
+
+***
+
 tab parole_base retention4q if drugtx==1, chi2 row
 
 logit retention4q parole_base

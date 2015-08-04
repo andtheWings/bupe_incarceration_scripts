@@ -1,5 +1,4 @@
-*To install the "fre" command type "search fre" --> find the "fre" command in the 
-*pop-up window --> click on the link --> click on "click here to install"
+*ssc install fre
 
 *Start with longitudinal data and work backwards to identify the subjects in the 
 *study who were assigned to treatment with buprenorphine at baseline.

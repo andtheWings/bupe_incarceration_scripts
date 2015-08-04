@@ -6,7 +6,10 @@ label define no_yes 0 "no" 1 "yes" 8 "don't know" .a "don't know"
 
 label define drugtx 1 "Bupe" 2 "Methadone" 3 "Other Tx" 4 "Unknown"
 label values drugtx drugtx
+
 drop if drugtx!=1
+*list pid drugtx if dtxq1==11 & dtxq2==11 & dtxq3==11 & dtxq4==11
+*drop if pid=="JH-0618" | pid=="JH-0658" | pid=="JH-0664"
 
 *Visit quarter coding
 

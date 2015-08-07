@@ -425,6 +425,11 @@ gen recentopioids_q2=.
 gen recentopioids_q3=.
 gen recentopioids_q4=.
 
+gen recentopioids_qu1=.
+gen recentopioids_qu2=.
+gen recentopioids_qu3=.
+gen recentopioids_qu4=.
+
 replace recentopioids_q1=recentopioids_v1 if visit1_q==1
 replace recentopioids_q1=recentopioids_v2 if visit2_q==1
 replace recentopioids_q1=recentopioids_v3 if visit3_q==1
@@ -432,6 +437,14 @@ replace recentopioids_q1=recentopioids_v4 if visit4_q==1
 replace recentopioids_q1=recentopioids_v5 if visit5_q==1
 replace recentopioids_q1=recentopioids_v6 if visit6_q==1
 replace recentopioids_q1 = . if visit1_q != 1 & visit2_q != 1 & visit3_q != 1 & visit4_q != 1 & visit5_q != 1 & visit6_q != 1
+
+replace recentopioids_qu1=recentopioids_v1 if visit1_qu==1
+replace recentopioids_qu1=recentopioids_v2 if visit2_qu==1
+replace recentopioids_qu1=recentopioids_v3 if visit3_qu==1
+replace recentopioids_qu1=recentopioids_v4 if visit4_qu==1
+replace recentopioids_qu1=recentopioids_v5 if visit5_qu==1
+replace recentopioids_qu1=recentopioids_v6 if visit6_qu==1
+replace recentopioids_qu1 = . if visit1_qu != 1 & visit2_qu != 1 & visit3_qu != 1 & visit4_qu != 1 & visit5_qu != 1 & visit6_qu != 1
 
 *fre recentopioids_q1 
 **0=114, total non-missing=199
@@ -451,6 +464,14 @@ replace recentopioids_q2=recentopioids_v5 if visit5_q==2
 replace recentopioids_q2=recentopioids_v6 if visit6_q==2
 replace recentopioids_q2=. if visit1_q != 2 & visit2_q != 2 & visit3_q != 2 & visit4_q != 2 & visit5_q != 2 & visit6_q != 2
 
+replace recentopioids_qu2=recentopioids_v1 if visit1_qu==2
+replace recentopioids_qu2=recentopioids_v2 if visit2_qu==2
+replace recentopioids_qu2=recentopioids_v3 if visit3_qu==2
+replace recentopioids_qu2=recentopioids_v4 if visit4_qu==2
+replace recentopioids_qu2=recentopioids_v5 if visit5_qu==2
+replace recentopioids_qu2=recentopioids_v6 if visit6_qu==2
+replace recentopioids_qu2 = . if visit1_qu != 2 & visit2_qu != 2 & visit3_qu != 2 & visit4_qu != 2 & visit5_qu != 2 & visit6_qu != 2
+
 *fre recentopioids_q2 
 **0=119, total non-missing=193
 *fre recentopioids_v1 if visit1_q==2
@@ -469,6 +490,14 @@ replace recentopioids_q3=recentopioids_v5 if visit5_q==3
 replace recentopioids_q3=recentopioids_v6 if visit6_q==3
 replace recentopioids_q3=. if visit1_q != 3 & visit2_q != 3 & visit3_q != 3 & visit4_q != 3 & visit5_q != 3 & visit6_q != 3
 
+replace recentopioids_qu3=recentopioids_v1 if visit1_qu==3
+replace recentopioids_qu3=recentopioids_v2 if visit2_qu==3
+replace recentopioids_qu3=recentopioids_v3 if visit3_qu==3
+replace recentopioids_qu3=recentopioids_v4 if visit4_qu==3
+replace recentopioids_qu3=recentopioids_v5 if visit5_qu==3
+replace recentopioids_qu3=recentopioids_v6 if visit6_qu==3
+replace recentopioids_qu3 = . if visit1_qu != 3 & visit2_qu != 3 & visit3_qu != 3 & visit4_qu != 3 & visit5_qu != 3 & visit6_qu != 3
+
 *fre recentopioids_q3
 **0=100, total non-missing=179
 *fre recentopioids_v1 if visit1_q==3
@@ -486,6 +515,14 @@ replace recentopioids_q4=recentopioids_v4 if visit4_q==4
 replace recentopioids_q4=recentopioids_v5 if visit5_q==4
 replace recentopioids_q4=recentopioids_v6 if visit6_q==4
 replace recentopioids_q4=. if visit1_q != 4 & visit2_q != 4 & visit3_q != 4 & visit4_q != 4 & visit5_q != 4 & visit6_q != 4
+
+replace recentopioids_qu4=recentopioids_v1 if visit1_qu==4
+replace recentopioids_qu4=recentopioids_v2 if visit2_qu==4
+replace recentopioids_qu4=recentopioids_v3 if visit3_qu==4
+replace recentopioids_qu4=recentopioids_v4 if visit4_qu==4
+replace recentopioids_qu4=recentopioids_v5 if visit5_qu==4
+replace recentopioids_qu4=recentopioids_v6 if visit6_qu==4
+replace recentopioids_qu4 = . if visit1_qu != 4 & visit2_qu != 4 & visit3_qu != 4 & visit4_qu != 4 & visit5_qu != 4 & visit6_qu != 4
 
 *fre recentopioids_q4
 **0=106, total non-missing=185
@@ -507,25 +544,45 @@ gen anyrecentopioids_q2 = 0
 gen anyrecentopioids_q3 = 0
 gen anyrecentopioids_q4 = 0
 
+gen anyrecentopioids_qu1 = 0
+gen anyrecentopioids_qu2 = 0
+gen anyrecentopioids_qu3 = 0
+gen anyrecentopioids_qu4 = 0
+
 replace anyrecentopioids_q1=1 if recentopioids_q1>0
 replace anyrecentopioids_q2=1 if recentopioids_q2>0
 replace anyrecentopioids_q3=1 if recentopioids_q3>0
 replace anyrecentopioids_q4=1 if recentopioids_q4>0
 
-replace anyrecentopioids_q1=. if recentopioids_q1==.
-replace anyrecentopioids_q2=. if recentopioids_q2==.
-replace anyrecentopioids_q3=. if recentopioids_q3==.
-replace anyrecentopioids_q4=. if recentopioids_q4==.
+replace anyrecentopioids_qu1=1 if recentopioids_qu1>0
+replace anyrecentopioids_qu2=1 if recentopioids_qu2>0
+replace anyrecentopioids_qu3=1 if recentopioids_qu3>0
+replace anyrecentopioids_qu4=1 if recentopioids_qu4>0
+
+replace anyrecentopioids_qu1=. if recentopioids_qu1==.
+replace anyrecentopioids_qu2=. if recentopioids_qu2==.
+replace anyrecentopioids_qu3=. if recentopioids_qu3==.
+replace anyrecentopioids_qu4=. if recentopioids_qu4==.
 
 label variable anyrecentopioids_q1 "Subject reported using any opioids during quarter 1"
 label variable anyrecentopioids_q2 "Subject reported using any opioids during quarter 2"
 label variable anyrecentopioids_q3 "Subject reported using any opioids during quarter 3"
 label variable anyrecentopioids_q4 "Subject reported using any opioids during quarter 4"
 
+label variable anyrecentopioids_qu1 "Subject reported using any opioids during quarter 1"
+label variable anyrecentopioids_qu2 "Subject reported using any opioids during quarter 2"
+label variable anyrecentopioids_qu3 "Subject reported using any opioids during quarter 3"
+label variable anyrecentopioids_qu4 "Subject reported using any opioids during quarter 4"
+
 label values anyrecentopioids_q1 no_yes
 label values anyrecentopioids_q2 no_yes
 label values anyrecentopioids_q3 no_yes
 label values anyrecentopioids_q4 no_yes
+
+label values anyrecentopioids_qu1 no_yes
+label values anyrecentopioids_qu2 no_yes
+label values anyrecentopioids_qu3 no_yes
+label values anyrecentopioids_qu4 no_yes
 
 *fre anyrecentopioids_q1
 **0=114, 1=85

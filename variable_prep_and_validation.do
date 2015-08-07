@@ -43,12 +43,26 @@ generate visit4_q = .
 generate visit5_q = .
 generate visit6_q = .
 
+generate visit1_qu = .
+generate visit2_qu = .
+generate visit3_qu = .
+generate visit4_qu = .
+generate visit5_qu = .
+generate visit6_qu = .
+
 label variable visit1_q "Quarter assignment for first follow-up visit"
 label variable visit2_q "Quarter assignment for second follow-up visit"
 label variable visit3_q "Quarter assignment for third follow-up visit"
 label variable visit4_q "Quarter assignment for fourth follow-up visit"
 label variable visit5_q "Quarter assignment for fifth follow-up visit"
 label variable visit6_q "Quarter assignment for sixth follow-up visit"
+
+label variable visit1_q "Stricter quarter assignment for first follow-up visit"
+label variable visit2_q "Stricter quarter assignment for second follow-up visit"
+label variable visit3_q "Stricter quarter assignment for third follow-up visit"
+label variable visit4_q "Stricter quarter assignment for fourth follow-up visit"
+label variable visit5_q "Stricter quarter assignment for fifth follow-up visit"
+label variable visit6_q "Stricter quarter assignment for sixth follow-up visit"
 
 replace visit1_q = 1 if visit1<4
 replace visit1_q = 2 if visit1==4
@@ -61,6 +75,11 @@ replace visit1_q = 3 if visit1==7 & visit2>visit1 & visit2>9
 replace visit1_q = 3 if visit1>7 & visit1<10
 replace visit1_q = 3 if visit1==10 & visit1<visit2 & visit2<14
 replace visit1_q = 4 if visit1>10 & visit1<14
+
+replace visit1_qu = 1 if visit1<4
+replace visit1_qu = 2 if visit1>3 & visit1<7
+replace visit1_qu = 3 if visit1>6 & visit1<10
+replace visit1_qu = 4 if visit1>9 & visit1<13
 
 replace visit2_q = 1 if visit2<4
 replace visit2_q = 2 if visit2==4 & visit1==.
@@ -76,6 +95,11 @@ replace visit2_q = 4 if visit2==10 & visit3>12
 replace visit2_q = 3 if visit2==10 & visit2<visit3 & visit3<14
 replace visit2_q = 4 if visit2>10 & visit2<14
 
+replace visit2_qu = 1 if visit2<4
+replace visit2_qu = 2 if visit2>3 & visit2<7
+replace visit2_qu = 3 if visit2>6 & visit2<10
+replace visit2_qu = 4 if visit2>9 & visit2<13
+
 replace visit3_q = 1 if visit3<4
 replace visit3_q = 2 if visit3==4 
 replace visit3_q = 2 if visit3>3 & visit3<7 & visit2==.
@@ -89,15 +113,29 @@ replace visit3_q = 4 if visit3>10 & visit3<13
 replace visit3_q = 4 if visit3>10 & visit3<14 & visit2<11
 replace visit3_q = 4 if visit3>10 & visit3<14 & visit2==.
 
+replace visit3_qu = 1 if visit3<4
+replace visit3_qu = 2 if visit3>3 & visit3<7
+replace visit3_qu = 3 if visit3>6 & visit3<10
+replace visit3_qu = 4 if visit3>9 & visit3<13
+
 replace visit4_q = 3 if visit4>7 & visit4<10 
 replace visit4_q = 4 if visit4==10 & visit3<visit4
 replace visit4_q = 4 if visit4==10 & visit3==.
 replace visit4_q = 4 if visit4>10 & visit4<14
 replace visit4_q = . if visit3>10 & visit3<13 & visit4==13
 
+replace visit4_qu = 1 if visit4<4
+replace visit4_qu = 2 if visit4>3 & visit4<7
+replace visit4_qu = 3 if visit4>6 & visit4<10
+replace visit4_qu = 4 if visit4>9 & visit4<13
+
 replace visit5_q = 4 if visit5==12 | visit5==13
 
+replace visit5_qu = 4 if visit5>9 & visit5<13
+
 replace visit6_q = 4 if visit6==12
+
+replace visit6_qu = 4 if visit6>9 & visit6<13
 
 *list pid visit1 visit1_q visit2 visit2_q visit3 visit3_q visit4 visit4_q visit5 visit5_q visit6 visit6_q if drugtx==1
 

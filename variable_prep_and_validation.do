@@ -250,12 +250,24 @@ gen recentincar_q2=.
 gen recentincar_q3=.
 gen recentincar_q4=.
 
+gen recentincar_qu1=.
+gen recentincar_qu2=.
+gen recentincar_qu3=.
+gen recentincar_qu4=.
+
 replace recentincar_q1=recentincar_v1 if visit1_q==1
 replace recentincar_q1=recentincar_v2 if visit2_q==1
 replace recentincar_q1=recentincar_v3 if visit3_q==1
 replace recentincar_q1=recentincar_v4 if visit4_q==1
 replace recentincar_q1=recentincar_v5 if visit5_q==1
 replace recentincar_q1=recentincar_v6 if visit6_q==1
+
+replace recentincar_qu1=recentincar_v1 if visit1_qu==1
+replace recentincar_qu1=recentincar_v2 if visit2_qu==1
+replace recentincar_qu1=recentincar_v3 if visit3_qu==1
+replace recentincar_qu1=recentincar_v4 if visit4_qu==1
+replace recentincar_qu1=recentincar_v5 if visit5_qu==1
+replace recentincar_qu1=recentincar_v6 if visit6_qu==1
 
 fre recentincar_q1
 *no=169, yes=11
@@ -274,6 +286,13 @@ replace recentincar_q2=recentincar_v4 if visit4_q==2
 replace recentincar_q2=recentincar_v5 if visit5_q==2
 replace recentincar_q2=recentincar_v6 if visit6_q==2
 
+replace recentincar_qu2=recentincar_v1 if visit1_qu==2
+replace recentincar_qu2=recentincar_v2 if visit2_qu==2
+replace recentincar_qu2=recentincar_v3 if visit3_qu==2
+replace recentincar_qu2=recentincar_v4 if visit4_qu==2
+replace recentincar_qu2=recentincar_v5 if visit5_qu==2
+replace recentincar_qu2=recentincar_v6 if visit6_qu==2
+
 fre recentincar_q2
 *no=148, yes=27
 fre recentincar_v1 if visit1_q==2
@@ -290,6 +309,13 @@ replace recentincar_q3=recentincar_v3 if visit3_q==3
 replace recentincar_q3=recentincar_v4 if visit4_q==3
 replace recentincar_q3=recentincar_v5 if visit5_q==3
 replace recentincar_q3=recentincar_v6 if visit6_q==3
+
+replace recentincar_qu3=recentincar_v1 if visit1_qu==3
+replace recentincar_qu3=recentincar_v2 if visit2_qu==3
+replace recentincar_qu3=recentincar_v3 if visit3_qu==3
+replace recentincar_qu3=recentincar_v4 if visit4_qu==3
+replace recentincar_qu3=recentincar_v5 if visit5_qu==3
+replace recentincar_qu3=recentincar_v6 if visit6_qu==3
 
 fre recentincar_q3
 *no=153, yes=14
@@ -308,6 +334,13 @@ replace recentincar_q4=recentincar_v4 if visit4_q==4
 replace recentincar_q4=recentincar_v5 if visit5_q==4
 replace recentincar_q4=recentincar_v6 if visit6_q==4
 
+replace recentincar_qu4=recentincar_v1 if visit1_qu==4
+replace recentincar_qu4=recentincar_v2 if visit2_qu==4
+replace recentincar_qu4=recentincar_v3 if visit3_qu==4
+replace recentincar_qu4=recentincar_v4 if visit4_qu==4
+replace recentincar_qu4=recentincar_v5 if visit5_qu==4
+replace recentincar_qu4=recentincar_v6 if visit6_qu==4
+
 fre recentincar_q4
 *no=150, yes=22
 fre recentincar_v1 if visit1_q==4
@@ -317,6 +350,92 @@ fre recentincar_v4 if visit4_q==4
 fre recentincar_v5 if visit5_q==4
 fre recentincar_v6 if visit6_q==4
 *no=150, yes=22
+
+label variable recentincar_q1 "Subject reported being incarcerated in 30 days before (loose) quarter one visit"
+label variable recentincar_q2 "Subject reported being incarcerated in 30 days before (loose) quarter two visit"
+label variable recentincar_q3 "Subject reported being incarcerated in 30 days before (loose) quarter three visit"
+label variable recentincar_q4 "Subject reported being incarcerated in 30 days before (loose) quarter four visit"
+
+label variable recentincar_qu1 "Subject reported being incarcerated in 30 days before (strict) quarter one visit"
+label variable recentincar_qu2 "Subject reported being incarcerated in 30 days before (strict) quarter two visit"
+label variable recentincar_qu3 "Subject reported being incarcerated in 30 days before (strict) quarter three visit"
+label variable recentincar_qu4 "Subject reported being incarcerated in 30 days before (strict) quarter four visit"
+
+label values recentincar_q1 no_yes
+label values recentincar_q2 no_yes
+label values recentincar_q3 no_yes
+label values recentincar_q4 no_yes
+
+label values recentincar_qu1 no_yes
+label values recentincar_qu2 no_yes
+label values recentincar_qu3 no_yes
+label values recentincar_qu4 no_yes
+
+gen parole_q1=.
+gen parole_q2=.
+gen parole_q3=.
+gen parole_q4=.
+
+gen parole_qu1=.
+gen parole_qu2=.
+gen parole_qu3=.
+gen parole_qu4=.
+
+replace parole_q1=parole_v1 if visit1_q==1
+replace parole_q1=parole_v2 if visit2_q==1
+replace parole_q1=parole_v3 if visit3_q==1
+replace parole_q1=parole_v4 if visit4_q==1
+replace parole_q1=parole_v5 if visit5_q==1
+replace parole_q1=parole_v6 if visit6_q==1
+
+replace parole_qu1=parole_v1 if visit1_qu==1
+replace parole_qu1=parole_v1 if visit2_qu==1
+replace parole_qu1=parole_v1 if visit3_qu==1
+replace parole_qu1=parole_v1 if visit4_qu==1
+replace parole_qu1=parole_v1 if visit5_qu==1
+replace parole_qu1=parole_v1 if visit6_qu==1
+
+replace parole_q2=parole_v1 if visit1_q==2
+replace parole_q2=parole_v2 if visit2_q==2
+replace parole_q2=parole_v3 if visit3_q==2
+replace parole_q2=parole_v4 if visit4_q==2
+replace parole_q2=parole_v5 if visit5_q==2
+replace parole_q2=parole_v6 if visit6_q==2
+
+replace parole_qu2=parole_v1 if visit1_qu==2
+replace parole_qu2=parole_v1 if visit2_qu==2
+replace parole_qu2=parole_v1 if visit3_qu==2
+replace parole_qu2=parole_v1 if visit4_qu==2
+replace parole_qu2=parole_v1 if visit5_qu==2
+replace parole_qu2=parole_v1 if visit6_qu==2
+
+replace parole_q3=parole_v1 if visit1_q==3
+replace parole_q3=parole_v2 if visit2_q==3
+replace parole_q3=parole_v3 if visit3_q==3
+replace parole_q3=parole_v4 if visit4_q==3
+replace parole_q3=parole_v5 if visit5_q==3
+replace parole_q3=parole_v6 if visit6_q==3
+
+replace parole_qu3=parole_v1 if visit1_qu==3
+replace parole_qu3=parole_v1 if visit2_qu==3
+replace parole_qu3=parole_v1 if visit3_qu==3
+replace parole_qu3=parole_v1 if visit4_qu==3
+replace parole_qu3=parole_v1 if visit5_qu==3
+replace parole_qu3=parole_v1 if visit6_qu==3
+
+replace parole_q4=parole_v1 if visit1_q==4
+replace parole_q4=parole_v2 if visit2_q==4
+replace parole_q4=parole_v3 if visit3_q==4
+replace parole_q4=parole_v4 if visit4_q==4
+replace parole_q4=parole_v5 if visit5_q==4
+replace parole_q4=parole_v6 if visit6_q==4
+
+replace parole_qu4=parole_v1 if visit1_qu==4
+replace parole_qu4=parole_v1 if visit2_qu==4
+replace parole_qu4=parole_v1 if visit3_qu==4
+replace parole_qu4=parole_v1 if visit4_qu==4
+replace parole_qu4=parole_v1 if visit5_qu==4
+replace parole_qu4=parole_v1 if visit6_qu==4
 
 *Treatment retention
 

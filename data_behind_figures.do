@@ -16,13 +16,21 @@ tab parole_base retention4q, row chi2
 *How criminal justice at quarter affects retention
 
 tab recentincar_q1 retention1q, row chi2
+tab recentincar_qu1 retention1q, row chi2
 tab recentincar_q2 retention2q, row chi2
+tab recentincar_qu2 retention2q, row chi2
 tab recentincar_q3 retention3q, row chi2
+tab recentincar_qu3 retention3q, row chi2
 tab recentincar_q4 retention4q, row chi2
+tab recentincar_qu4 retention4q, row chi2
 tab parole_q1 retention1q, row chi2
+tab parole_qu1 retention1q, row chi2
 tab parole_q2 retention2q, row chi2
+tab parole_qu2 retention2q, row chi2
 tab parole_q3 retention3q, row chi2
+tab parole_qu3 retention3q, row chi2
 tab parole_q4 retention4q, row chi2
+tab parole_qu4 retention4q, row chi2
 
 *How criminal justice at baseline affects opioid use in retained quarters
 

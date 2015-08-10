@@ -1,5 +1,5 @@
 *Make graphs reporting quarterly retention from baseline criminal justice
-use "C:\Users\riggins\Documents\einstein_materials\Summer Research Fellowship\figures\retention_from_baseline_criminal_justice.dta", clear
+use "C:\Users\riggins\Documents\einstein_materials\Summer Research Fellowship\bupe_incarceration_scripts\retention_from_baseline_criminal_justice.dta", clear
 
 *Quarterly rentention grouped by ever incarcerated at baseline
 graph bar (asis) everincar  neverincar, over(quarter) bar(1, fcolor(ltblue)) bar(2, fcolor(lavender) lcolor(black)) blabel(bar) title("Percent retained on buprenorphine", color(black)) yscale(range(0 100)) ylabel(#5) legend(on title("Ever been incarcerated > 3 days", size(medsmall) color(black)))

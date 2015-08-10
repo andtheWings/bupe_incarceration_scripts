@@ -1,5 +1,5 @@
-quarter,neverincar,everincar,norecentincar,recentincar
-1,79.7,72.7,74.1,74.4
-2,71.9,64.9,66.2,66.7
-3,64.1,56.2,59.0,51.3
-4,53.3,46.7,49.6,38.5
+quarter,neverincar,everincar,everincar_p,norecentincar,recentincar
+1,79.7,72.7,,74.1,74.4
+2,71.9,64.9,,66.2,66.7
+3,64.1,56.2,,59,51.3
+4,53.3,46.7,,49.6,38.5

@@ -15,6 +15,7 @@ tab parole_base retention4q, row chi2
 
 *How criminal justice at baseline affects any quarterly opioid use
 
+tab everincar_base anyrecentopioids_base, row chi2
 tab everincar_base anyrecentopioids_q1, row chi2
 tab everincar_base anyrecentopioids_qu1, row chi2
 tab everincar_base anyrecentopioids_q2, row chi2
@@ -24,6 +25,7 @@ tab everincar_base anyrecentopioids_qu3, row chi2
 tab everincar_base anyrecentopioids_q4, row chi2
 tab everincar_base anyrecentopioids_qu4, row chi2
 
+tab recentincar_base anyrecentopioids_base, row chi2
 tab recentincar_base anyrecentopioids_q1, row chi2
 tab recentincar_base anyrecentopioids_qu1, row chi2
 tab recentincar_base anyrecentopioids_q2, row chi2
@@ -33,6 +35,7 @@ tab recentincar_base anyrecentopioids_qu3, row chi2
 tab recentincar_base anyrecentopioids_q4, row chi2
 tab recentincar_base anyrecentopioids_qu4, row chi2
 
+tab parole_base anyrecentopioids_base, row chi2
 tab parole_base anyrecentopioids_q1, row chi2
 tab parole_base anyrecentopioids_qu1, row chi2
 tab parole_base anyrecentopioids_q2, row chi2
@@ -79,5 +82,52 @@ ranksum recentopioids_q4, by(parole_base)
 ranksum recentopioids_qu4, by(parole_base)
 *p-value = 0.03
 
+*How retention for 3 or 4 quarters correlates with quarterly recent incarceration
 
+tab retention1q recentincar_base, row chi2
+tab retention1q recentincar_q1, row chi2
+tab retention1q recentincar_q2, row chi2
+tab retention1q recentincar_q3, row chi2
+tab retention1q recentincar_q4, row chi2
 
+tab retention2q recentincar_base, row chi2
+tab retention2q recentincar_q1, row chi2
+tab retention2q recentincar_q2, row chi2
+tab retention2q recentincar_q3, row chi2
+tab retention2q recentincar_q4, row chi2
+
+tab retention3q recentincar_base, row chi2
+tab retention3q recentincar_q1, row chi2
+tab retention3q recentincar_q2, row chi2
+tab retention3q recentincar_q3, row chi2
+tab retention3q recentincar_q4, row chi2
+
+tab retention4q recentincar_base, row chi2
+tab retention4q recentincar_q1, row chi2
+tab retention4q recentincar_q2, row chi2
+tab retention4q recentincar_q3, row chi2
+tab retention4q recentincar_q4, row chi2
+
+tab retention1q recentincar_base, row chi2
+tab retention1q recentincar_qu1, row chi2
+tab retention1q recentincar_qu2, row chi2
+tab retention1q recentincar_qu3, row chi2
+tab retention1q recentincar_qu4, row chi2
+
+tab retention2q recentincar_base, row chi2
+tab retention2q recentincar_qu1, row chi2
+tab retention2q recentincar_qu2, row chi2
+tab retention2q recentincar_qu3, row chi2
+tab retention2q recentincar_qu4, row chi2
+
+tab retention3q recentincar_base, row chi2
+tab retention3q recentincar_qu1, row chi2
+tab retention3q recentincar_qu2, row chi2
+tab retention3q recentincar_qu3, row chi2
+tab retention3q recentincar_qu4, row chi2
+
+tab retention4q recentincar_base, row chi2
+tab retention4q recentincar_qu1, row chi2
+tab retention4q recentincar_qu2, row chi2
+tab retention4q recentincar_qu3, row chi2
+tab retention4q recentincar_qu4, row chi2

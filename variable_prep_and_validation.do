@@ -489,6 +489,9 @@ egen float recentopioids_v4 = rowmax(qc83d_4 qc84d_4 qc85d_4)
 egen float recentopioids_v5 = rowmax(qc83d_5 qc84d_5 qc85d_5)
 egen float recentopioids_v6 = rowmax(qc83d_6 qc84d_6 qc85d_6)
 
+*fre recentopioids_base
+replace recentopioids_base=.a if recentopioids_base==92
+
 label variable recentopioids_base "Days of opioid use in 30 days before baseline"
 label variable recentopioids_v1 "Days of opioid use in 30 days before followup visit 1"
 label variable recentopioids_v2 "Days of opioid use in 30 days before followup visit 2"

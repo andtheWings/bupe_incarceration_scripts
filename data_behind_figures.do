@@ -44,6 +44,8 @@ tab parole_base anyrecentopioids_qu4, row chi2
 
 *How baseline criminal justice affects amount of quarterly opioid use 
 
+ranksum recentopioids_base, by(everincar_base)
+*p-vale = 0.05
 ranksum recentopioids_q1, by(everincar_base)
 ranksum recentopioids_qu1, by(everincar_base)
 ranksum recentopioids_q2, by(everincar_base)
@@ -52,7 +54,10 @@ ranksum recentopioids_q3, by(everincar_base)
 ranksum recentopioids_qu3, by(everincar_base)
 ranksum recentopioids_q4, by(everincar_base)
 ranksum recentopioids_qu4, by(everincar_base)
+*No other significant results
 
+ranksum recentopioids_base, by(recentincar_base)
+*p-value = 0.01
 ranksum recentopioids_q1, by(recentincar_base)
 ranksum recentopioids_qu1, by(recentincar_base)
 ranksum recentopioids_q2, by(recentincar_base)
@@ -61,7 +66,9 @@ ranksum recentopioids_q3, by(recentincar_base)
 ranksum recentopioids_qu3, by(recentincar_base)
 ranksum recentopioids_q4, by(recentincar_base)
 ranksum recentopioids_qu4, by(recentincar_base)
+*No other significant results
 
+ranksum recentopioids_base, by(parole_base)
 ranksum recentopioids_q1, by(parole_base)
 ranksum recentopioids_qu1, by(parole_base)
 ranksum recentopioids_q2, by(parole_base)
@@ -70,5 +77,7 @@ ranksum recentopioids_q3, by(parole_base)
 ranksum recentopioids_qu3, by(parole_base)
 ranksum recentopioids_q4, by(parole_base)
 ranksum recentopioids_qu4, by(parole_base)
+*p-value = 0.03
+
 
 

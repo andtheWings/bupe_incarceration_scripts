@@ -653,10 +653,10 @@ replace recentopioids_qu4 = . if visit1_qu != 4 & visit2_qu != 4 & visit3_qu != 
 *fre recentopioids_v6 if visit6_q==4
 **0=106, total non-missing=185
 
-label variable recentopioids_v1 "Days of opioid use in 30 days before followup in quarter 1"
-label variable recentopioids_v2 "Days of opioid use in 30 days before followup in quarter 2"
-label variable recentopioids_v3 "Days of opioid use in 30 days before followup in quarter 3"
-label variable recentopioids_v4 "Days of opioid use in 30 days before followup in quarter 4"
+label variable recentopioids_q1 "Days of opioid use in 30 days before followup in quarter 1"
+label variable recentopioids_q2 "Days of opioid use in 30 days before followup in quarter 2"
+label variable recentopioids_q3 "Days of opioid use in 30 days before followup in quarter 3"
+label variable recentopioids_q4 "Days of opioid use in 30 days before followup in quarter 4"
 
 gen anyrecentopioids_q1 = 0
 gen anyrecentopioids_q2 = 0
@@ -743,11 +743,54 @@ label values anyrecentopioids_qu4 no_yes
 *fre anyrecentopioids_v6 if visit6_q==4
 **0=106, 1=79
 
-gen abstinentopioids = 0
-replace abstinentopioids=1 if anyrecentopioids_q1==0 & anyrecentopioids_q2==0 & anyrecentopioids_q3==0 & anyrecentopioids_q4==0
-replace abstinentopioids=. if anyrecentopioids_q1==. | anyrecentopioids_q2==. | anyrecentopioids_q3==. | anyrecentopioids_q4==.
-label variable abstinentopioids "Subject reported abstinence from all opioids during all four quarters"
-label values abstinentopioids no_yes
+gen abstinentopioids_q1 = 0
+gen abstinentopioids_q2 = 0
+gen abstinentopioids_q3 = 0
+gen abstinentopioids_q4 = 0
+
+gen abstinentopioids_qu1 = 0
+gen abstinentopioids_qu2 = 0
+gen abstinentopioids_qu3 = 0
+gen abstinentopioids_qu4 = 0
+
+replace abstinentopioids_q1=1 if anyrecentopioids_q1==0 
+replace abstinentopioids_q2=1 if anyrecentopioids_q1==0 & anyrecentopioids_q2==0
+replace abstinentopioids_q3=1 if anyrecentopioids_q1==0 & anyrecentopioids_q2==0 & anyrecentopioids_q3==0
+replace abstinentopioids_q4=1 if anyrecentopioids_q1==0 & anyrecentopioids_q2==0 & anyrecentopioids_q3==0 & anyrecentopioids_q4==0
+
+replace abstinentopioids_qu1=1 if anyrecentopioids_qu1==0 
+replace abstinentopioids_qu2=1 if anyrecentopioids_qu1==0 & anyrecentopioids_qu2==0
+replace abstinentopioids_qu3=1 if anyrecentopioids_qu1==0 & anyrecentopioids_qu2==0 & anyrecentopioids_qu3==0
+replace abstinentopioids_qu4=1 if anyrecentopioids_qu1==0 & anyrecentopioids_qu2==0 & anyrecentopioids_qu3==0 & anyrecentopioids_qu4==0
+
+replace abstinentopioids_q1=. if anyrecentopioids_q1==. 
+replace abstinentopioids_q2=. if anyrecentopioids_q1==. | anyrecentopioids_q2==.
+replace abstinentopioids_q3=. if anyrecentopioids_q1==. | anyrecentopioids_q2==. | anyrecentopioids_q3==.
+replace abstinentopioids_q4=. if anyrecentopioids_q1==. | anyrecentopioids_q2==. | anyrecentopioids_q3==. | anyrecentopioids_q4==.
+
+replace abstinentopioids_qu1=. if anyrecentopioids_qu1==. 
+replace abstinentopioids_qu2=. if anyrecentopioids_qu1==. | anyrecentopioids_qu2==.
+replace abstinentopioids_qu3=. if anyrecentopioids_qu1==. | anyrecentopioids_qu2==. | anyrecentopioids_qu3==.
+replace abstinentopioids_qu4=. if anyrecentopioids_qu1==. | anyrecentopioids_qu2==. | anyrecentopioids_qu3==. | anyrecentopioids_qu4==.
+
+label variable abstinentopioids_q1 "Subject reported abstinence from all opioids for one loose quarter"
+label variable abstinentopioids_q2 "Subject reported abstinence from all opioids for two consecutive loose quarters"
+label variable abstinentopioids_q3 "Subject reported abstinence from all opioids for three consecutive loose quarters"
+label variable abstinentopioids_q4 "Subject reported abstinence from all opioids for four consecutive loose quarters"
+
+label variable abstinentopioids_qu1 "Subject reported abstinence from all opioids for one strict quarter"
+label variable abstinentopioids_qu2 "Subject reported abstinence from all opioids for two consecutive strict quarters"
+label variable abstinentopioids_qu3 "Subject reported abstinence from all opioids for three consecutive strict quarters"
+label variable abstinentopioids_qu4 "Subject reported abstinence from all opioids for four consecutive strict quarters"
+
+label values abstinentopioids_q1 no_yes
+label values abstinentopioids_q2 no_yes
+label values abstinentopioids_q3 no_yes
+label values abstinentopioids_q4 no_yes
+label values abstinentopioids_qu1 no_yes
+label values abstinentopioids_qu2 no_yes
+label values abstinentopioids_qu3 no_yes
+label values abstinentopioids_qu4 no_yes
 
 *Age
 

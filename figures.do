@@ -49,3 +49,13 @@ graph bar (asis) recentincar  norecentincar, over(quarter) bar(1, fcolor(ltblue)
 
 *Quarterly self-reported opioid use grouped by baseline parole status
 graph bar (asis) parole  noparole, over(quarter) bar(1, fcolor(ltblue)) bar(2, fcolor(lavender) lcolor(black)) blabel(bar) yscale(range(0 100)) ylabel(#5) title("Percent of those who reported recent opioid use", color(black)) note("*Strict quarter assignment") legend(on title("Subject was on parole or probation at baseline", size(medsmall) color(black)))
+
+*Make graphs reporting strict quarterly recent incarceration from treatment retention
+
+import delimited "C:\Users\riggins\Documents\einstein_materials\Summer Research Fellowship\bupe_incarceration_scripts\strict_recentincar_from_retention.csv", clear
+label define quarter 0 "Baseline" 1 "Quarter 1" 2 "Quarter 2" 3 "Quarter 3" 4 "Quarter 4"
+label values quarter quarter
+label variable noreten1q "No"
+label variable reten1q "Yes"
+
+graph bar (asis) reten1q noreten1q, over(quarter) bar(1, fcolor(ltblue)) bar(2, fcolor(lavender) lcolor(black)) blabel(bar) yscale(range(0 100)) ylabel(#5) title("Percent who reported recent incarceration", color(black)) note("*Strict quarter assignment") legend(on title("Subject was retained for one or more quarters of treatment", size(medsmall) color(black)))

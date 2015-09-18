@@ -1,5 +1,5 @@
-quarter,neverincar,everincar,everincar_p,norecentincar,recentincar,recentincar_p,noparole,parole,parole_p
-1,,,0.95,,,0.96,,,0.73
-2,,,0.88,,,0.68,,,0.78
-3,,,0.29,,,0.67,,,0.89
-4,,,0.72,,,0.78,,,0.18
+quarter,everincar_p_value,recentincar_p_loose,parole_p_loose
+1,0.95,0.96,0.73
+2,0.88,0.68,0.78
+3,0.29,0.67,0.89
+4,0.72,0.78,0.18

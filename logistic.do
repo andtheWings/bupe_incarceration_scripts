@@ -1,6 +1,6 @@
 drop if drugtx!=1
 
-tab recentincar_base retention4q if drugtx==1, chi2 row
+tab recentincar_base retention4q, chi2 row
 
 logit retention4q recentincar_base
 nestreg: logit retention4q alone recentincar_base

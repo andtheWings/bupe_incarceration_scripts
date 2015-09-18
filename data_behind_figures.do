@@ -82,13 +82,14 @@ ranksum recentopioids_q4, by(parole_base)
 ranksum recentopioids_qu4, by(parole_base)
 *p-value = 0.03
 
-*How retention for 3 or 4 quarters correlates with quarterly recent incarceration
+*How retention for 1, 2, 3, or 4 quarters correlates with quarterly recent incarceration
 
 tab retention1q recentincar_base, row chi2
 tab retention1q recentincar_q1, row chi2
 tab retention1q recentincar_q2, row chi2
 tab retention1q recentincar_q3, row chi2
 tab retention1q recentincar_q4, row chi2
+tab retention1q recentincar_allq, row chi2
 
 tab retention2q recentincar_base, row chi2
 tab retention2q recentincar_q1, row chi2
@@ -113,6 +114,7 @@ tab retention1q recentincar_qu1, row chi2
 tab retention1q recentincar_qu2, row chi2
 tab retention1q recentincar_qu3, row chi2
 tab retention1q recentincar_qu4, row chi2
+tab retention1q recentincar_allqu, row chi2
 
 tab retention2q recentincar_base, row chi2
 tab retention2q recentincar_qu1, row chi2

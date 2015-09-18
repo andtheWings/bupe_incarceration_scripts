@@ -351,25 +351,37 @@ fre recentincar_v5 if visit5_q==4
 fre recentincar_v6 if visit6_q==4
 *no=150, yes=22
 
+gen recentincar_allq = 0
+replace recentincar_allq = 1 if recentincar_q1==1 | recentincar_q2==1 | recentincar_q3==1 | recentincar_q4==1
+replace recentincar_allq = . if recentincar_q1==. & recentincar_q2==. & recentincar_q3==. & recentincar_q4==.
+
+gen recentincar_allqu = 0
+replace recentincar_allqu = 1 if recentincar_qu1==1 | recentincar_qu2==1 | recentincar_qu3==1 | recentincar_qu4==1
+replace recentincar_allqu = . if recentincar_qu1==. & recentincar_qu2==. & recentincar_qu3==. & recentincar_qu4==.
+
 label variable recentincar_q1 "Subject reported being incarcerated in 30 days before (loose) quarter one visit"
 label variable recentincar_q2 "Subject reported being incarcerated in 30 days before (loose) quarter two visit"
 label variable recentincar_q3 "Subject reported being incarcerated in 30 days before (loose) quarter three visit"
 label variable recentincar_q4 "Subject reported being incarcerated in 30 days before (loose) quarter four visit"
+label variable recentincar_allq "Subject reported being incarcerated in 30 days before any of the (loose) quarterly visits"
 
 label variable recentincar_qu1 "Subject reported being incarcerated in 30 days before (strict) quarter one visit"
 label variable recentincar_qu2 "Subject reported being incarcerated in 30 days before (strict) quarter two visit"
 label variable recentincar_qu3 "Subject reported being incarcerated in 30 days before (strict) quarter three visit"
 label variable recentincar_qu4 "Subject reported being incarcerated in 30 days before (strict) quarter four visit"
+label variable recentincar_allqu "Subject reported being incarcerated in 30 days before any of the (strict) quarterly visits"
 
 label values recentincar_q1 no_yes
 label values recentincar_q2 no_yes
 label values recentincar_q3 no_yes
 label values recentincar_q4 no_yes
+label values recentincar_allq no_yes
 
 label values recentincar_qu1 no_yes
 label values recentincar_qu2 no_yes
 label values recentincar_qu3 no_yes
 label values recentincar_qu4 no_yes
+label values recentincar_allqu no_yes
 
 gen parole_q1=.
 gen parole_q2=.

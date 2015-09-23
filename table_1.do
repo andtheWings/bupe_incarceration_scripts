@@ -24,6 +24,12 @@ ttest age recentincar_base, by(parole_base) unequal
 histogram age recentincar_base, by(recentincar_base)
 ttest age recentincar_base, by(recentincar_base) unequal
 
+*''Site''
+
+tab everincar_base site, row chi2
+tab recentincar_base site, row chi2
+tab parole_base site, row chi2
+
 *''Race/Ethnicity''
 
 tab everincar_base white, row chi2

@@ -12,6 +12,8 @@ nestreg: logit retention4q asidrugscore recentincar_base
 nestreg: logit retention4q injectdrugs recentincar_base
 nestreg: logit retention4q everheroin recentincar_base
 nestreg: logit retention4q treatedfordrugs recentincar_base
+nestreg: logit retention4q site recentincar_base
+
 nestreg: logit retention4q (alone injectdrugs) recentincar_base
 nestreg: logit retention4q (alone homeless) recentincar_base
 nestreg: logit retention4q (alone employed) recentincar_base
@@ -21,6 +23,8 @@ nestreg: logit retention4q (alone asidrugscore) recentincar_base
 nestreg: logit retention4q (alone injectdrugs) recentincar_base
 nestreg: logit retention4q (alone everheroin) recentincar_base
 nestreg: logit retention4q (alone treatedfordrugs) recentincar_base
+nestreg: logit retention4q (alone site) recentincar_base
+
 nestreg: logit retention4q (alone injectdrugs homeless) recentincar_base
 nestreg: logit retention4q (alone injectdrugs employed) recentincar_base
 nestreg: logit retention4q (alone injectdrugs mentaldiag) recentincar_base
@@ -28,6 +32,7 @@ nestreg: logit retention4q (alone injectdrugs asialcscore) recentincar_base
 nestreg: logit retention4q (alone injectdrugs asidrugscore) recentincar_base
 nestreg: logit retention4q (alone injectdrugs everheroin) recentincar_base
 nestreg: logit retention4q (alone injectdrugs treatedfordrugs) recentincar_base
+nestreg: logit retention4q (alone injectdrugs site) recentincar_base
 
 logistic retention4q recentincar_base
 listcoef, percent

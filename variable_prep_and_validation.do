@@ -137,10 +137,10 @@ replace visit6_q = 4 if visit6==12
 
 replace visit6_qu = 4 if visit6>9 & visit6<13
 
-*list pid visit1 visit1_q visit2 visit2_q visit3 visit3_q visit4 visit4_q visit5 visit5_q visit6 visit6_q if drugtx==1
+**list pid visit1 visit1_q visit2 visit2_q visit3 visit3_q visit4 visit4_q visit5 visit5_q visit6 visit6_q if drugtx==1
 
-*Quarters assignments were manually inspected for accuracy
-*Spot-checking:
+**Quarter assignments were manually inspected for accuracy
+**Spot-checking:
 replace visit1_q=1 if pid=="CC-010906027B"
 replace visit2_q=2 if pid=="CC-021407073B"
 replace visit3_q=3 if pid=="CC-021407073B"
@@ -948,6 +948,7 @@ generate sincediagnosis=bcidy-bc39y
 replace sincediagnosis=.a if sincediagnosis<0
 label define sincediagnosis .a "don't know"
 label values sincediagnosis sincediagnosis
+label variable sincediagnosis "Number of years since diagnosis with HIV"
 
 *Lowest CD4 count
 *  **Note** this must be evaluated in the master baseline dataset
@@ -1154,7 +1155,7 @@ generate numinjectdrugs =  injectheroin1+ injectheroin2+ injectmethadone+ inject
 label variable numinjectdrugs "How many drugs does person inject?"
 
 recode numinjectdrugs (0 = 0) (1 =1) (2=1) (3=1) (4=1) (5=1), generate(injectdrugs)
-label variable injectdrugs "Does person inject any drugs?"
+label variable injectdrugs "Has person injected any drugs before?"
 label values injectdrugs no_yes
 
 tab injectdrugs bc40c

@@ -1,3 +1,6 @@
+*Dependency:
+**net install collin.pkg
+
 *Chi-squared tests of treament retention from baseline criminal justice status
 
 tab everincar_base retention1q, row chi2
@@ -64,6 +67,15 @@ logistic retention4q everincar_base
 listcoef, percent
 nestreg: logistic retention4q (sincediagnosis years_any_opioid male injectdrugs asidrugscore recentotherpk) everincar_base
 listcoef, percent
+
+*Evaluating for collinearity 
+**collin sincediagnosis years_any_opioid male injectdrugs asidrugscore recentotherpk everincar_base
+
+*Evaluating with step-wise subtraction
+**nestreg: logistic retention4q (years_any_opioid male injectdrugs asidrugscore recentotherpk) everincar_base
+**nestreg: logistic retention4q (sincediagnosis years_any_opioid male injectdrugs recentotherpk) everincar_base
+**nestreg: logistic retention4q (years_any_opioid male injectdrugs recentotherpk) everincar_base
+
 
 **4 quarters retention from recent incarceration at baseline
 logit retention4q recentincar_base

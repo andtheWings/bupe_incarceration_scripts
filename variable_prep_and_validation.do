@@ -1,4 +1,5 @@
-*ssc install fre
+*Dependency:
+**ssc install fre
 
 label define no_yes 0 "no" 1 "yes" 8 "don't know" .a "don't know"
 

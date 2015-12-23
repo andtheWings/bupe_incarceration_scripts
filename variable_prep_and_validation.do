@@ -593,14 +593,16 @@ list abstinentopioids_qu4 anyrecentopioids_qu1 anyrecentopioids_qu2 anyrecentopi
 *Age
 
 clonevar age = bc2
+
 fre age
-replace bc2=. if bc2==99
+replace bc2=.a if bc2==99
 
 *Race/ethnicity
 
 fre racemd
 tab racemd bc3
 tab racemd, generate(ethrace)
+
 tab racemd ethrace1
 tab racemd ethrace2
 tab racemd ethrace3
@@ -617,8 +619,18 @@ generate asian_and_other = .
 replace asian_and_other = 1 if asian==1 | otherrace==1
 replace asian_and_other = 0 if asian==0 & otherrace==0
 
+label variable white "Subject identifies as non-hispanic/non-latino white"
+label variable black "Subject identifies as African-American/black"
+label variable latino "Subject identifies as hispanic/latino white"
+label variable asian_and_other "Subject does not identify as white or African-American/black"
+
+label values white no_yes
+label values black no_yes
+label values latino no_yes
+label values asian_and_other no_yes
+
 *Primary language
-* About half of latinos claim Spanish as primary language and other half claim English.
+**About half of latinos claim Spanish as primary language and other half claim English.
 
 label define bc6 1 "english" 2 "spanish"
 label values bc6 bc6
@@ -631,6 +643,9 @@ drop english2
 rename english1 english
 tab english bc6
 
+label variable english "Subject speaks English as primary language"
+label values english no_yes
+
 *Gender
 
 label define bc8 1 "male" 2 "female" 3 "transgender"
@@ -640,6 +655,7 @@ fre bc8
 tab bc8, generate(gender)
 rename gender1 male
 label variable male "Subject is male"
+label values male no_yes
 tab bc8 male
 
 *Sexual Orientation
@@ -656,6 +672,9 @@ tab bc9 bc40b if gender2==1
 tabulate bc9, generate(heterosexual)
 drop heterosexual2 heterosexual3 heterosexual4 
 rename heterosexual1 heterosexual
+
+label variable heterosexual "Subject describes sexual orientation as straight/heterosexual"
+label values heterosexual no_yes
 tab heterosexual bc9
 
 *Married
@@ -671,6 +690,9 @@ tab bc7 bc18b
 tab bc7, generate(married)
 drop married1 married3 married4 married5 
 rename married2 married
+
+label variable married "Subject describes current marital status as married or living with partner"
+label values married no_yes
 tab married bc7
 
 *Lives alone
@@ -684,6 +706,9 @@ tab bc20 bc18a
 
 clonevar alone = bc18a
 recode alone 8=.
+
+label variable alone "Subject reports living alone"
+label values alone no_yes
 tab alone bc15
 
 *Homelessness
@@ -709,6 +734,7 @@ label values bc10 bc10
 fre bc10
 recode bc10 1/2=0 3/6=1, generate(hsdiploma)
 label variable hsdiploma "Does person have at a least a high school diploma or equivalent?"
+label values hsdiploma no_yes
 tab bc10 hsdiploma
 
 *Employed
@@ -724,28 +750,17 @@ list pid if bc12==7 & bc11==1
 tabulate bc11, generate(employed)
 drop employed1 
 rename employed2 employed
-
-*Years since HIV diagnosis
-
-generate sincediagnosis=bcidy-bc39y
-replace sincediagnosis=.a if sincediagnosis<0
-label define sincediagnosis .a "don't know"
-label values sincediagnosis sincediagnosis
-label variable sincediagnosis "Number of years since diagnosis with HIV"
-
-*Lowest CD4 count
-*  **Note** this must be evaluated in the master baseline dataset
-
-*clonevar lowestcd4 = BC41
-*fre lowestcd4
-*recode lowestcd4 8=.a 9=.b
+label variable employed "Subject works for pay"
+label values employed no_yes
+fre employed
 
 *Ever diagnosed with mental illness
 
 clonevar mentaldiag = bc91
+label values mentaldiag no_yes
 fre mentaldiag
 recode mentaldiag 8=.a
-label values mentaldiag no_yes
+
 
 *Depression Scale
 *  Adjusted scale to values ranging from 0-3 as with CES-D and reversed questions 5 and 8.
@@ -772,11 +787,6 @@ egen float cesdmissing = rowmiss(depression1 depression2 depression3 depression4
 egen float cesdmean = rowmean(depression1 depression2 depression3 depression4 depression5 depression6 depression7 depression8 depression9 depression10) if cesdmissing < 3
 generate cesdstandardmean = cesdmean/3*100
 label variable cesdstandardmean "Standardized depression score, 0 = minimally depressed and 100 = very depressed"
-
-*Ready to make change in heroin use
-
-*clonevar readytochange = bc100
-*replace readytochange = . if bc100==88 | bc100==80 | bc100==65
 
 *Alcohol use composite score
 *  Cloned questions pertaining to the ASI composite score for alcohol use
@@ -810,6 +820,8 @@ replace asialc5 = asialc5/4
 egen float asialcmissing = rowmiss(asialc1 asialc2 asialc3 asialc4 asialc5)
 egen float asialcscore = rowmean(asialc1 asialc2 asialc3 asialc4 asialc5) if asialcmissing<3 
 replace asialcscore = asialcscore*100
+label variable cesdstandardmean "Standardized composite score for alcohol use (out of 100)"
+fre asialcscore
 
 *Drug use composite score
 *  Cloned questions pertaining to the ASI composite score for drug use
@@ -885,6 +897,7 @@ egen float asidrugmissing = rowmiss(asidrug1 asidrug2 asidrug3 asidrug4 asidrug5
 egen float asidrugscore = rowmean(asidrug1 asidrug2 asidrug3 asidrug4 asidrug5 asidrug6 asidrug7 asidrug8 asidrug9 asidrug10 asidrug11 asidrug12 asidrug13 asidrug14) if asidrugmissing<3
 replace asidrugscore = asidrugscore*100
 label variable asidrugscore "Standardized composite score for drug use (out of 100)"
+fre asidrugscore
 
 
 *Inject drugs ever
@@ -960,6 +973,8 @@ generate everanyopioid = .
 
 replace everalcintox = 0 if bc102y == 0
 replace everalcintox = 1 if bc102y > 0
+label variable everalcintox "Subject has ever drunk alcohol to intoxication"
+label values everalcintox no_yes
 
 replace everheroin = 0 if bc103y == 0
 replace everheroin = 1 if bc103y > 0
@@ -968,21 +983,34 @@ label values everheroin no_yes
 
 replace evermethadone = 0 if bc104y == 0
 replace evermethadone = 1 if bc104y > 0
+label variable evermethadone "Subject has ever used methadone"
+label values evermethadone no_yes
 
 replace everotherpk = 0 if bc105y == 0
 replace everotherpk = 1 if bc105y > 0
+label variable everotherpk "Subject has ever used other opioids or analgesics"
+label values everotherpk no_yes
 
-replace everanyopioid=0 if everheroin==0 & evermethadone==0 & everotherpk==0
-replace everanyopioid=1 if everheroin==1 | evermethadone==1 | everotherpk==1
+replace everanyopioid=0 if everheroin==0 & evermethadone==0 
+replace everanyopioid=1 if everheroin==1 | evermethadone==1
+label variable everanyopioid "Subject has ever used heroin or methadone"
+label values everanyopioid no_yes
 
 replace eversedative = 0 if bc107y == 0
 replace eversedative = 1 if bc107y > 0
+label variable eversedative "Subject has ever used sedatives"
+label values eversedative no_yes
 
 replace evercocaine = 0 if bc108y == 0
 replace evercocaine = 1 if bc108y > 0
+label variable evercocaine "Subject has ever used cocaine"
+label values evercocaine no_yes
 
 replace evermarijuana = 0 if bc110y == 0
 replace evermarijuana = 1 if bc110y > 0
+label variable evermarijuana "Subject has ever used marijuana"
+label values evermarijuana no_yes
+
 
 *Recent drug use
 *	12.5% of those who reported zero years of regular alcohol use to intoxication, reported recent alcohol use to intoxication
@@ -1005,27 +1033,42 @@ replace recentalcintox = .a if bc102d==98
 replace recentalcintox = .b if bc102d==99
 replace recentalcintox = 0 if bc102d == 0
 replace recentalcintox = 1 if bc102d > 0
+label variable recentalcintox "Subject has used alcohol to intoxication in the last 30 days"
+label values recentalcintox no_yes
+
 
 replace recentheroin = .a if bc103d == 92
 replace recentheroin = 0 if bc103d == 0
 replace recentheroin = 1 if bc103d > 0
+label variable recentheroin "Subject has used heroin in the past 30 days"
+label values recentheroin no_yes
 
 replace recentmethadone = 0 if bc104d == 0
 replace recentmethadone = 0 if bc104d == 0
 replace recentmethadone = 1 if bc104d > 0
+label variable recentmethadone "Subject has used methadone in the past 30 days"
+label values recentmethadone no_yes
 
 replace recentotherpk = 0 if bc105d == 0
 replace recentotherpk = 1 if bc105d > 0
+label variable recentotherpk "Subject has used other opioids or analgesics in the past 30 days"
+label values recentotherpk no_yes
 
 replace recentsedative = .a if bc107d == 98
 replace recentsedative = 0 if bc107d == 0
 replace recentsedative = 1 if bc107d > 0
+label variable recentsedative "Subject has used sedatives in the past 30 days"
+label values recentsedative no_yes
 
 replace recentcocaine = 0 if bc108d == 0
 replace recentcocaine = 1 if bc108d > 0
+label variable recentcocaine "Subject has used cocaine in the past 30 days"
+label values recentcocaine no_yes
 
 replace recentmarijuana = 0 if bc110d == 0
 replace recentmarijuana = 1 if bc110d > 0
+label variable recentmarijuana "Subject has used marijuana in the past 30 days"
+label values recentmarijuana no_yes
 
 *Years of regular drug use
 *    One subject is coded to have used heroin regularly for 55 years. However, the oldest subject in the study is 60. The
@@ -1034,19 +1077,16 @@ replace recentmarijuana = 1 if bc110d > 0
 
 clonevar yearsheroin = bc103y
 clonevar yearsmethadone = bc104y
-clonevar yearsotherpk = bc105y
 
 fre yearsheroin
 fre yearsmethadone
-fre yearsotherpk
 
 recode yearsheroin 55=.a 99=.b
 recode yearsmethadone 88=.a
-recode yearsotherpk 88=.a
 
-egen float years_any_opioid = rowmax(yearsheroin yearsmethadone yearsotherpk)
-list yearsheroin yearsmethadone yearsotherpk years_any_opioid recentincar_base
-label variable years_any_opioid "Longest number of years using either heroin, methadone, or other opioids"
+egen float years_any_opioid = rowmax(yearsheroin yearsmethadone)
+list yearsheroin yearsmethadone years_any_opioid recentincar_base
+label variable years_any_opioid "Longest number of years using either heroin or methadone"
 
 *Number of times overdosed on drugs
 
@@ -1058,9 +1098,11 @@ fre overdosed
 fre bc118
 clonevar treatedfordrugs = bc118
 recode treatedfordrugs 999=.a
+label variable years_any_opioid "Number of times treated for drug abuse"
 
 *Methadone treatment in previous three months
 
 fre bc144
 clonevar recentmethadonetx = bc144
 recode recentmethadonetx 8=.a
+label values recentmethadonetx no_yes

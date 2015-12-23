@@ -748,3 +748,24 @@ label values abstinentopioids_qu1 no_yes
 label values abstinentopioids_qu2 no_yes
 label values abstinentopioids_qu3 no_yes
 label values abstinentopioids_qu4 no_yes
+
+*Years since HIV diagnosis
+
+generate sincediagnosis=bcidy-bc39y
+replace sincediagnosis=.a if sincediagnosis<0
+label define sincediagnosis .a "don't know"
+label values sincediagnosis sincediagnosis
+label variable sincediagnosis "Number of years since diagnosis with HIV"
+
+*Lowest CD4 count
+*  **Note** this must be evaluated in the master baseline dataset
+
+clonevar lowestcd4 = BC41
+fre lowestcd4
+recode lowestcd4 8=.a 9=.b
+
+*Ready to make change in heroin use
+
+clonevar readytochange = bc100
+replace readytochange = . if bc100==88 | bc100==80 | bc100==65
+

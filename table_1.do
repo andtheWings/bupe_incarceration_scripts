@@ -4,25 +4,19 @@
 *by whether individuals had ever been incarcerated greater than 3 days 
 *before or during the study.
 
-*''BHIVES Site''
-
-*tab site everincar_base, chi2 row
-*tab site recentincar_base, chi2 row
-*tab site parole_base, chi2 row
-
 *''Age''
 
 histogram age 
 summarize age
 
-histogram age recentincar_base, by(everincar_base)
-ttest age recentincar_base, by(everincar_base) unequal
+histogram age, by(everincar_base)
+ttest age, by(everincar_base)
 
-histogram age recentincar_base, by(parole_base)
-ttest age recentincar_base, by(parole_base) unequal
+histogram age, by(parole_base)
+ttest age, by(parole_base) 
 
-histogram age recentincar_base, by(recentincar_base)
-ttest age recentincar_base, by(recentincar_base) unequal
+histogram age, by(recentincar_base)
+ttest age, by(recentincar_base) 
 
 *''Site''
 
@@ -31,6 +25,11 @@ tab recentincar_base site, row chi2
 tab parole_base site, row chi2
 
 *''Race/Ethnicity''
+
+fre white
+fre black
+fre latino
+fre asian_and_other
 
 tab everincar_base white, row chi2
 tab everincar_base black, row chi2
@@ -49,35 +48,35 @@ tab parole_base asian_and_other, row chi2 exact
 
 *''English as primary language''
 
-tab english
+fre english
 tab everincar_base english, row chi2
 tab recentincar_base english, row chi2
 tab parole_base english, row chi2
 
 *''Male''
 
-tab male
+fre male
 tab everincar_base male, row chi2
 tab recentincar_base male, row chi2
 tab parole_base male, row chi2
 
 *''Heterosexual''
 
-tab heterosexual
+fre heterosexual
 tab everincar_base heterosexual, row chi2
 tab recentincar_base heterosexual, row chi2
 tab parole_base heterosexual, row chi2
 
 *''Married''
 
-tab married
+fre married
 tab everincar_base married, row chi2
 tab recentincar_base married, row chi2
 tab parole_base married, row chi2
 
 *''Lives alone''
 
-tab alone
+fre alone
 tab everincar_base alone, row chi2
 tab recentincar_base alone, row chi2 exact
 tab parole_base alone, row chi2
@@ -91,46 +90,46 @@ tab parole_base homeless, row chi2
 
 *''High school diploma or equivalency''
 
-tab hsdiploma
+fre hsdiploma
 tab everincar_base hsdiploma, row chi2
 tab recentincar_base hsdiploma, row chi2
 tab parole_base hsdiploma, row chi2
 
 *''Employed''
 
-tab employed
+fre employed
 tab everincar_base employed, row chi2
 tab recentincar_base employed, row chi2 exact
 tab parole_base employed, row chi2
 
 *''Years since HIV diagnosis''
 
-histogram sincediagnosis
-summarize sincediagnosis, detail
+*histogram sincediagnosis
+*summarize sincediagnosis, detail
 
-by everincar_base, sort: summarize sincediagnosis, detail
-ranksum sincediagnosis, by(everincar_base)
-by recentincar_base, sort: summarize sincediagnosis, detail
-ranksum sincediagnosis, by(recentincar_base)
-by parole_base, sort: summarize sincediagnosis, detail
-ranksum sincediagnosis, by(parole_base)
+*by everincar_base, sort: summarize sincediagnosis, detail
+*ranksum sincediagnosis, by(everincar_base)
+*by recentincar_base, sort: summarize sincediagnosis, detail
+*ranksum sincediagnosis, by(recentincar_base)
+*by parole_base, sort: summarize sincediagnosis, detail
+*ranksum sincediagnosis, by(parole_base)
 
 *Lowest CD4 count
 *  **Note** this must be evaluated in the master baseline dataset
 
-histogram lowestcd4
-summarize lowestcd4, detail
+*histogram lowestcd4
+*summarize lowestcd4, detail
 
-by everincar_base, sort: summarize lowestcd4, detail
-ranksum lowestcd4, by(everincar_base)
-by recentincar_base, sort: summarize lowestcd4, detail
-ranksum lowestcd4, by(recentincar_base)
-by parole_base, sort: summarize lowestcd4, detail
-ranksum lowestcd4, by(parole_base)
+*by everincar_base, sort: summarize lowestcd4, detail
+*ranksum lowestcd4, by(everincar_base)
+*by recentincar_base, sort: summarize lowestcd4, detail
+*ranksum lowestcd4, by(recentincar_base)
+*by parole_base, sort: summarize lowestcd4, detail
+*ranksum lowestcd4, by(parole_base)
 
 *Ever diagnosed with mental illness
 
-tab mentaldiag
+fre mentaldiag
 tab everincar_base mentaldiag, row chi2
 tab recentincar_base mentaldiag, row chi2
 tab parole_base mentaldiag, row chi2
@@ -186,86 +185,86 @@ ttest asidrugscore, by(parole_base) unequal
 
 *Inject drugs ever?
 
-tab injectdrugs
+fre injectdrugs
 tab everincar_base injectdrugs, row chi2
 tab recentincar_base injectdrugs, row chi2
 tab parole_base injectdrugs, row chi2
 
 *Ever use specific drugs?
 
-tab everalcintox
+fre everalcintox
 tab everincar_base everalcintox, row chi2
 tab recentincar_base everalcintox, row chi2
 tab parole_base everalcintox, row chi2
 
-tab everheroin
+fre everheroin
 tab everincar_base everheroin, row chi2
 tab recentincar_base everheroin, row chi2
 tab parole_base everheroin, row chi2
 
-tab evermethadone
+fre evermethadone
 tab everincar_base evermethadone, row chi2
 tab recentincar_base evermethadone, row chi2
 tab parole_base evermethadone, row chi2
 
-tab everotherpk
+fre everotherpk
 tab everincar_base everotherpk, row chi2
 tab recentincar_base everotherpk, row chi2
 tab parole_base everotherpk, row chi2
 
-tab everanyopioid
+fre everanyopioid
 tab everincar_base everanyopioid, row chi2
 tab recentincar_base everanyopioid, row chi2
 tab parole_base everanyopioid, row chi2
 
-tab eversedative
+fre eversedative
 tab everincar_base eversedative, row chi2
 tab recentincar_base eversedative, row chi2
 tab parole_base eversedative, row chi2
 
-tab evercocaine
+fre evercocaine
 tab everincar_base evercocaine, row chi2
 tab recentincar_base evercocaine, row chi2
 tab parole_base evercocaine, row chi2
 
-tab evermarijuana
+fre evermarijuana
 tab everincar_base evermarijuana, row chi2
 tab recentincar_base evermarijuana, row chi2
 tab parole_base evermarijuana, row chi2
 
 *''Recent drug use:''
 
-tab recentalcintox
+fre recentalcintox
 tab everincar_base recentalcintox, row chi2
 tab recentincar_base recentalcintox, row chi2
 tab parole_base recentalcintox, row chi2
 
-tab recentheroin
+fre recentheroin
 tab everincar_base recentheroin, row chi2
 tab recentincar_base recentheroin, row chi2
 tab parole_base recentheroin, row chi2
 
-tab recentmethadone
+fre recentmethadone
 tab everincar_base recentmethadone, row chi2
 tab recentincar_base recentmethadone, row chi2
 tab parole_base recentmethadone, row chi2
 
-tab recentotherpk
+fre recentotherpk
 tab everincar_base recentotherpk, row chi2
 tab recentincar_base recentotherpk, row chi2
 tab parole_base recentotherpk, row chi2
 
-tab recentsedative
+fre recentsedative
 tab everincar_base recentsedative, row chi2
 tab recentincar_base recentsedative, row chi2
 tab parole_base recentsedative, row chi2
 
-tab recentcocaine
+fre recentcocaine
 tab everincar_base recentcocaine, row chi2
 tab recentincar_base recentcocaine, row chi2
 tab parole_base recentcocaine, row chi2
 
-tab recentmarijuana
+fre recentmarijuana
 tab everincar_base recentmarijuana, row chi2
 tab recentincar_base recentmarijuana, row chi2
 tab parole_base recentmarijuana, row chi2
@@ -396,14 +395,14 @@ summarize treatedfordrugs, detail
 
 by everincar_base, sort: summarize treatedfordrugs, detail
 ranksum treatedfordrugs, by(everincar_base)
-by recentincar, sort: summarize treatedfordrugs, detail
-ranksum treatedfordrugs, by(recentincar)
+by recentincar_base, sort: summarize treatedfordrugs, detail
+ranksum treatedfordrugs, by(recentincar_base)
 by parole_base, sort: summarize treatedfordrugs, detail
 ranksum treatedfordrugs, by(parole_base)
 
 *''Methadone treatment in prior three months''
 
-tab recentmethadonetx
+fre recentmethadonetx
 tab everincar_base recentmethadonetx, row chi2
 tab recentincar_base recentmethadonetx, row chi2
 tab parole_base recentmethadonetx, row chi2

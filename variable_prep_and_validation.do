@@ -1,7 +1,7 @@
 *Dependency:
 **ssc install fre
 
-label define no_yes 0 "no" 1 "yes" 8 "don't know" .a "don't know"
+label define no_yes 0 "no" 1 "yes" .a "don't know" .b "refused"
 
 *Drug treatment
 
@@ -51,7 +51,7 @@ fre visit4since
 fre visit5since
 fre visit6since
 **Cannot use a visit if it supposedly took place before the baseline
-replace visit1since=.a if visit1since<0
+replace visit1since=. if visit1since<0
 
 generate visit1_qu = .
 generate visit2_qu = .
@@ -429,7 +429,7 @@ fre recentopioids_v4
 fre recentopioids_v5
 fre recentopioids_v6
 **Maximum value possible is 30 days
-replace recentopioids_base=.a if recentopioids_base==92
+replace recentopioids_base=. if recentopioids_base==92
 
 list recentopioids_base bc103d bc104d
 list recentopioids_v1 qc83d_1 qc84d_1
@@ -595,7 +595,7 @@ list abstinentopioids_qu4 anyrecentopioids_qu1 anyrecentopioids_qu2 anyrecentopi
 clonevar age = bc2
 
 fre age
-replace bc2=.a if bc2==99
+replace bc2=. if bc2==99
 
 *Race/ethnicity
 
@@ -705,7 +705,7 @@ tab bc15 bc18a
 tab bc20 bc18a
 
 clonevar alone = bc18a
-recode alone 8=.
+recode alone 8=.a
 
 label variable alone "Subject reports living alone"
 label values alone no_yes
@@ -760,6 +760,7 @@ clonevar mentaldiag = bc91
 label values mentaldiag no_yes
 fre mentaldiag
 recode mentaldiag 8=.a
+**.a == "don't know"
 
 
 *Depression Scale
@@ -1097,7 +1098,7 @@ fre overdosed
 
 fre bc118
 clonevar treatedfordrugs = bc118
-recode treatedfordrugs 999=.a
+recode treatedfordrugs 999=.b
 label variable years_any_opioid "Number of times treated for drug abuse"
 
 *Methadone treatment in previous three months

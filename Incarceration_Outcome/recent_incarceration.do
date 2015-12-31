@@ -1,3 +1,10 @@
+*Percent incarcerated per quarter
+**Q1 4.25%, Q2 8.5%, Q3 4.3%, Q4 6.5%
+fre recentincar_qu1
+fre recentincar_qu2
+fre recentincar_qu3
+fre recentincar_qu4
+
 *Chi-squared tests of quarterly recent incarceration from quarterly treatment retention:
 
 tab retention1q recentincar_qu1, row chi2

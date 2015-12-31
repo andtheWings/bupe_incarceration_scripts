@@ -1,6 +1,12 @@
 *Dependency:
 **net install collin.pkg
 
+*Percent retained per quarter
+fre retention1q
+fre retention2q
+fre retention3q
+fre retention4q
+
 *Chi-squared tests of treament retention from baseline criminal justice status
 
 tab everincar_base retention1q, row chi2

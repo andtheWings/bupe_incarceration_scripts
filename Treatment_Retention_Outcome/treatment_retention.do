@@ -59,6 +59,7 @@ logit retention1q treatedfordrugs
 logit retention1q recentmethadonetx
 logit retention1q everincar_base
 logit retention1q recentincar_base
+logit retention1q recentincar_qu1
 **recentcocaine
 
 *Simple logistic regressions of 2 quarter treatment retention
@@ -98,7 +99,9 @@ logit retention2q treatedfordrugs
 logit retention2q recentmethadonetx
 logit retention2q everincar_base
 logit retention2q recentincar_base
-**recentcocaine, recentmethadone
+logit retention2q recentincar_qu1
+logit retention2q recentincar_qu2
+**recentcocaine, recentmethadone, recentincar_qu2
 
 *Simple logistic regressions of 3 quarter treatment retention
 logit retention3q age
@@ -137,7 +140,10 @@ logit retention3q treatedfordrugs
 logit retention3q recentmethadonetx
 logit retention3q everincar_base
 logit retention3q recentincar_base
-**recentalcintox, black, white, age
+logit retention3q recentincar_qu1
+logit retention3q recentincar_qu2
+logit retention3q recentincar_qu3
+**recentalcintox, black, white, age, recentincar_qu2
 
 *Simple logistic regressions of 4 quarter treatment retention
 logit retention4q age
@@ -176,7 +182,11 @@ logit retention4q treatedfordrugs
 logit retention4q recentmethadonetx
 logit retention4q everincar_base
 logit retention4q recentincar_base
-**male, black, white, age
+logit retention4q recentincar_qu1
+logit retention4q recentincar_qu2
+logit retention4q recentincar_qu3
+logit retention4q recentincar_qu4
+**male, black, white, age, recentincar_qu2, recentincar_qu4
 
 *Multiple Logistic Regression of treatment retention from baseline criminal justice status
 

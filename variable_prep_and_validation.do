@@ -3,16 +3,14 @@
 
 label define no_yes 0 "no" 1 "yes" .a "don't know" .b "refused"
 
-*Drug treatment
+*Drug treatment:
 
 label define drugtx 1 "Bupe" 2 "Methadone" 3 "Other Tx" 4 "Unknown"
 label values drugtx drugtx
 
 drop if drugtx!=1
-**list pid drugtx if dtxq1==11 & dtxq2==11 & dtxq3==11 & dtxq4==11
-**drop if pid=="JH-0618" | pid=="JH-0658" | pid=="JH-0664"
 
-*Visit quarter coding
+*Visit quarter coding:
 
 rename visitdate visitbasedate
 rename visitdate_1 visit1date
@@ -90,7 +88,7 @@ replace visit5_qu = 4 if visit5since>315 & visit5since<406
 
 replace visit6_qu = 4 if visit6since>315 & visit6since<406 
 
-**Checking for duplicates of coded visit quarters, there are lots, but I am choosing to keep all these duplicates as they are
+**Checking for duplicates of coded visit quarters: 
 list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit1_qu==visit2_qu 
 list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit1_qu==visit3_qu 
 list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit1_qu==visit4_qu 
@@ -106,10 +104,11 @@ list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit3_q
 list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit4_qu==visit5_qu 
 list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit4_qu==visit6_qu 
 list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit5_qu==visit6_qu
+**There are lots of duplicates, but I am choosing to keep all these duplicates as they are
 
-*Criminal justice status per visit 
+*Criminal justice status per visit:
 
-**Ever incarcerated at baseline
+**Ever incarcerated at baseline:
 
 clonevar everincar_base = bc31
 label variable everincar_base "Subject reported at baseline having ever been incarcerated for more than 3 days"
@@ -159,7 +158,7 @@ fre recentincar_v4
 fre recentincar_v5
 fre recentincar_v6
 
-**Probation/parole status per visit
+**Probation/parole status per visit:
 
 clonevar parole_base = bc29
 clonevar parole_v1 = qc14_1
@@ -195,9 +194,9 @@ fre parole_v6
 ***One person at baseline stated they "didn't know" if they were on parole or probation
 replace parole_base=.a if bc29==8
 
-*Criminal justice status per quarter 
+*Criminal justice status per quarter:
 
-**Recent incarceration per quarter
+**Recent incarceration per quarter:
 
 gen recentincar_qu1=.
 gen recentincar_qu2=.
@@ -286,7 +285,7 @@ replace recentincar_allqu = 1 if recentincar_qu1==1 | recentincar_qu2==1 | recen
 
 list recentincar_allqu recentincar_qu1 recentincar_qu2 recentincar_qu3 recentincar_qu4
 
-**Parole/probation per quarter
+**Parole/probation per quarter:
 
 gen parole_qu1=.
 gen parole_qu2=.
@@ -370,7 +369,7 @@ replace parole_qu4=1 if visit6_qu==4 & parole_v6==1
 
 list parole_qu4 parole_v1 visit1_qu parole_v2 visit2_qu parole_v3 visit3_qu parole_v4 visit4_qu parole_v5 visit5_qu parole_v6 visit6_qu
 
-*Treatment retention
+*Treatment retention:
 
 gen retention = 0
 label variable retention "Number of quarters in a row that subject was retained on bup/nx treatment"
@@ -403,7 +402,7 @@ label values retention4q no_yes
 
 list retention retention1q retention2q retention3q retention4q
 
-*Opioid Use per Visit
+*Opioid Use per Visit:
 
 egen float recentopioids_base = rowmax(bc103d bc104d)
 egen float recentopioids_v1 = rowmax(qc83d_1 qc84d_1)
@@ -479,7 +478,7 @@ list anyrecentopioids_v4 recentopioids_v4
 list anyrecentopioids_v5 recentopioids_v5
 list anyrecentopioids_v6 recentopioids_v6
 
-*Quarterly Opioid Use
+*Quarterly Opioid Use:
 
 gen anyrecentopioids_qu1=.
 gen anyrecentopioids_qu2=.
@@ -590,14 +589,14 @@ list abstinentopioids_qu2 anyrecentopioids_qu1 anyrecentopioids_qu2
 list abstinentopioids_qu3 anyrecentopioids_qu1 anyrecentopioids_qu2 anyrecentopioids_qu3
 list abstinentopioids_qu4 anyrecentopioids_qu1 anyrecentopioids_qu2 anyrecentopioids_qu3 anyrecentopioids_qu4
 
-*Age
+*Age:
 
 clonevar age = bc2
 
 fre age
 replace bc2=. if bc2==99
 
-*Race/ethnicity
+*Race/ethnicity:
 
 fre racemd
 tab racemd bc3
@@ -629,14 +628,14 @@ label values black no_yes
 label values latino no_yes
 label values asian_and_other no_yes
 
-*Primary language
-**About half of latinos claim Spanish as primary language and other half claim English.
+*Primary language:
 
 label define bc6 1 "english" 2 "spanish"
 label values bc6 bc6
 
 fre bc6
 tab bc6 bc3
+**About half of latinos claim Spanish as primary language and other half claim English.
 
 tab bc6, generate(english)
 drop english2 
@@ -646,7 +645,7 @@ tab english bc6
 label variable english "Subject speaks English as primary language"
 label values english no_yes
 
-*Gender
+*Gender:
 
 label define bc8 1 "male" 2 "female" 3 "transgender"
 label values bc8 bc8
@@ -658,16 +657,16 @@ label variable male "Subject is male"
 label values male no_yes
 tab bc8 male
 
-*Sexual Orientation
-* Majority of heterosexual men said they did not get HIV from sex with men (5/254 said they did)
-* Majority of heterosexual women said they did not get HIV from sex with women (3/113 said they did)
+*Sexual Orientation:
 
 label define bc9 1 "straight/heterosexual" 2 "gay/lesbian/homosexual" 3 "bisexual" 8 "don't know"
 label values bc9 bc9
 
 fre bc9
 tab bc9 bc40a if male==1
+**Majority of heterosexual men said they did not get HIV from sex with men (5/254 said they did)
 tab bc9 bc40b if gender2==1
+**Majority of heterosexual women said they did not get HIV from sex with women (3/113 said they did)
 
 tabulate bc9, generate(heterosexual)
 drop heterosexual2 heterosexual3 heterosexual4 
@@ -677,15 +676,16 @@ label variable heterosexual "Subject describes sexual orientation as straight/he
 label values heterosexual no_yes
 tab heterosexual bc9
 
-*Married
-*  Some people "married or living with partner" say they are not living with partner
-*  Small amount of people "separate" or "divorced" say they are living with partner
+*Married:
 
 label define bc7 1 "never married" 2 "married or living with partner" 3 "separated" 4 "divorced" 5 "widowed"
 label values bc7 bc7
 
 fre bc7
 tab bc7 bc18b
+**Some people "married or living with partner" say they are not living with partner
+**Small amount of people "separate" or "divorced" say they are living with partner
+
 
 tab bc7, generate(married)
 drop married1 married3 married4 married5 
@@ -695,14 +695,12 @@ label variable married "Subject describes current marital status as married or l
 label values married no_yes
 tab married bc7
 
-*Lives alone
-* 	2 of 109 people who reported living alone (bc18) said they stayed with family/friends
-*	These individuals kept in alone category.
-*	3 of 113 people who reported living alone (bc18) said they were responsible
-*	for daily care of children. Individuals kept in alone category.
+*Lives alone:
 
 tab bc15 bc18a
+**2 of 109 people who reported living alone (bc18) said they stayed with family/friends. These individuals kept in alone category.
 tab bc20 bc18a
+**3 of 113 people who reported living alone (bc18) said they were responsible for daily care of children. Individuals kept in alone category.
 
 clonevar alone = bc18a
 recode alone 8=.a
@@ -711,9 +709,7 @@ label variable alone "Subject reports living alone"
 label values alone no_yes
 tab alone bc15
 
-*Homelessness
-*	9 of 112 people who reported they were homeless (bc14) also reported that they
-*	rented an apartment or house. Individuals kept in homeless category.
+*Homelessness:
 
 label values bc14 no_yes
 clonevar homeless = bc14
@@ -725,8 +721,9 @@ replace bc15=.a if bc15==88
 replace bc15=.b if bc15==99
 
 tab homeless bc15
+**9 of 112 people who reported they were homeless (bc14) also reported that they rented an apartment or house. Individuals kept in homeless category.
 
-*High school diploma or more
+*High school diploma or more:
 
 label define bc10 1 "8th grade or less" 2 "some high school" 3 "GED" 4 "high school graduate" 5 "some college" 6 "college graduate"
 label values bc10 bc10
@@ -737,15 +734,14 @@ label variable hsdiploma "Does person have at a least a high school diploma or e
 label values hsdiploma no_yes
 tab bc10 hsdiploma
 
-*Employed
-*	1 of 103 people who reported they were employed (bc11) was listed as "does not apply"
-*	under variable for type of paid work (bc12). Individual kept in.
+*Employed:
 
 label define bc12 1 "full-time (35 hours/week or more)" 2 "part-time (less than 35 hours/week, on regular basis)" 3 "occasional work" 7 "does not apply" 9 "refused"
 label values bc12 bc12
 
 tab bc11 bc12
 list pid if bc12==7 & bc11==1
+**1 of 103 people who reported they were employed (bc11) was listed as "does not apply" under variable for type of paid work (bc12). Individual kept in.
 
 tabulate bc11, generate(employed)
 drop employed1 
@@ -754,7 +750,7 @@ label variable employed "Subject works for pay"
 label values employed no_yes
 fre employed
 
-*Ever diagnosed with mental illness
+*Ever diagnosed with mental illness:
 
 clonevar mentaldiag = bc91
 label values mentaldiag no_yes
@@ -763,10 +759,7 @@ recode mentaldiag 8=.a
 **.a == "don't know"
 
 
-*Depression Scale
-*  Adjusted scale to values ranging from 0-3 as with CES-D and reversed questions 5 and 8.
-*  Counted number of missing answers in order to exclude those that had more than 20% missing.
-*  Took average of depression question responses and standardized to a 0-100 scale.
+*Depression Scale:
 
 clonevar depression1 = bc81
 clonevar depression2 = bc82
@@ -779,22 +772,24 @@ clonevar depression8 = bc88
 clonevar depression9 = bc89
 clonevar depression10 = bc90
 
+**Adjusted scale to values ranging from 0-3 as with CES-D and reversed questions 5 and 8:
 recode depression1 depression2 depression3 depression4 depression6 depression7 depression9 depression10 (1=0)(2=1)(3=2)(4=3)
 tab depression1 bc81
 recode depression5 depression8 (4=0)(3=1)(2=2)(1=3)
 tab depression5 bc85
 
+**Counted number of missing answers in order to exclude those that had more than 20% missing:
 egen float cesdmissing = rowmiss(depression1 depression2 depression3 depression4 depression5 depression6 depression7 depression8 depression9 depression10)
+
+**Took average of depression question responses and standardized to a 0-100 scale:
 egen float cesdmean = rowmean(depression1 depression2 depression3 depression4 depression5 depression6 depression7 depression8 depression9 depression10) if cesdmissing < 3
 generate cesdstandardmean = cesdmean/3*100
 label variable cesdstandardmean "Standardized depression score, 0 = minimally depressed and 100 = very depressed"
 
-*Alcohol use composite score
-*  Cloned questions pertaining to the ASI composite score for alcohol use
-*  Divided question scores by their highest possible answers
-*  Counted number of missing answers for each subject in order to exclude those that had more than 40% answers missing
-*  Took average of alcohol question scores and standardized to a 0-100 scale
+*Alcohol use composite score:
 
+**Cloned questions pertaining to the ASI composite score for alcohol use:
+**Divided question scores by their highest possible answers:
 clonevar asialc1 = bc101d
 fre asialc1
 replace asialc1 = asialc1/30
@@ -818,18 +813,19 @@ fre asialc5
 recode asialc5 (1=0)(2=1)(3=2)(4=3)(5=4)(7=.)(9=.)(.=.)
 replace asialc5 = asialc5/4
 
+**Counted number of missing answers for each subject in order to exclude those that had more than 40% answers missing:
 egen float asialcmissing = rowmiss(asialc1 asialc2 asialc3 asialc4 asialc5)
+
+**Took average of alcohol question scores and standardized to a 0-100 scale:
 egen float asialcscore = rowmean(asialc1 asialc2 asialc3 asialc4 asialc5) if asialcmissing<3 
 replace asialcscore = asialcscore*100
 label variable cesdstandardmean "Standardized composite score for alcohol use (out of 100)"
 fre asialcscore
 
-*Drug use composite score
-*  Cloned questions pertaining to the ASI composite score for drug use
-*  Divided question scores by their highest possible answers
-*  Counted number of missing answers for each subject in order to exclude those that had more than 20% answers missing
-*  Took average of drug question scores and standardized to a 0-100 scale
+*Drug use composite score:
 
+**Cloned questions pertaining to the ASI composite score for drug use:
+**Divided question scores by their highest possible answers:
 clonevar asidrug1 = bc103d
 fre asidrug1 
 replace asidrug1 = . if bc103d==92
@@ -894,20 +890,16 @@ fre asidrug14
 recode asidrug14 (1=0)(2=1)(3=2)(4=3)(5=4)(7=.)(9=.)(.=.)
 replace asidrug14 = asidrug14/4
 
+**Counted number of missing answers for each subject in order to exclude those that had more than 20% answers missing:
 egen float asidrugmissing = rowmiss(asidrug1 asidrug2 asidrug3 asidrug4 asidrug5 asidrug6 asidrug7 asidrug8 asidrug9 asidrug10 asidrug11 asidrug12 asidrug13 asidrug14)
+
+**Took average of drug question scores and standardized to a 0-100 scale:
 egen float asidrugscore = rowmean(asidrug1 asidrug2 asidrug3 asidrug4 asidrug5 asidrug6 asidrug7 asidrug8 asidrug9 asidrug10 asidrug11 asidrug12 asidrug13 asidrug14) if asidrugmissing<3
 replace asidrugscore = asidrugscore*100
 label variable asidrugscore "Standardized composite score for drug use (out of 100)"
 fre asidrugscore
 
-
-*Inject drugs ever
-*	37 of 152 people who did not report injection as typical route of administration for drug
-*	use reported that injecting drugs was likely reason for acquiring HIV (bc40C). These people were
-*	added to the "injectdrugs" variable.
-*		27 of 115 people who did not report injection as typical route of administration
-*		and did not report injecting drugs as likely means of acquiring HIV,
-*		reported sharing a needle (ShareNd). These people were added to the injectdrugs variable.
+*Ever injected drugs:
 
 tab bc103r, generate(injectheroin)
 drop injectheroin1 injectheroin2 injectheroin3 injectheroin6 injectheroin7
@@ -955,13 +947,14 @@ recode numinjectdrugs (0 = 0) (1 =1) (2=1) (3=1) (4=1) (5=1), generate(injectdru
 label variable injectdrugs "Has person injected any drugs before?"
 label values injectdrugs no_yes
 
+**27 of 115 people who did not report injection as typical route of administration and did not report injecting drugs as likely means of acquiring HIV, reported sharing a needle (ShareNd). These people were added to the injectdrugs variable:
 tab injectdrugs bc40c
 replace injectdrugs=1 if bc40c==1
 
 tab injectdrugs sharend
 replace injectdrugs=1 if sharend==1
 
-*Ever use specific drugs
+*Ever used specific drugs:
 
 generate everalcintox = .
 generate everheroin = .
@@ -1013,14 +1006,7 @@ label variable evermarijuana "Subject has ever used marijuana"
 label values evermarijuana no_yes
 
 
-*Recent drug use
-*	12.5% of those who reported zero years of regular alcohol use to intoxication, reported recent alcohol use to intoxication
-*	15% of those who reported zero years of regular heroin use, reported recent heroin use
-*	13.5% of those who reported zero years of regular methadone use, reported recent methadone use
-*	11.0% of those who reported zero years of regular other painkiller use, reported recent other painkiller use
-*	6.5% of those who reported zero years of regular sedative use, reported recent sedative use
-*	12.1% of those who reported zero years of regular cocaine use, reported recent cocaine use
-*	7.0% of those who reported zero years of regular marijuana use, reported recent marijuana use
+*Recent drug use:
 
 generate recentalcintox = .
 generate recentheroin = .
@@ -1036,45 +1022,48 @@ replace recentalcintox = 0 if bc102d == 0
 replace recentalcintox = 1 if bc102d > 0
 label variable recentalcintox "Subject has used alcohol to intoxication in the last 30 days"
 label values recentalcintox no_yes
-
+**12.5% of those who reported zero years of regular alcohol use to intoxication, reported recent alcohol use to intoxication
 
 replace recentheroin = .a if bc103d == 92
 replace recentheroin = 0 if bc103d == 0
 replace recentheroin = 1 if bc103d > 0
 label variable recentheroin "Subject has used heroin in the past 30 days"
 label values recentheroin no_yes
+**15% of those who reported zero years of regular heroin use, reported recent heroin use
 
 replace recentmethadone = 0 if bc104d == 0
 replace recentmethadone = 0 if bc104d == 0
 replace recentmethadone = 1 if bc104d > 0
 label variable recentmethadone "Subject has used methadone in the past 30 days"
 label values recentmethadone no_yes
+**13.5% of those who reported zero years of regular methadone use, reported recent methadone use
 
 replace recentotherpk = 0 if bc105d == 0
 replace recentotherpk = 1 if bc105d > 0
 label variable recentotherpk "Subject has used other opioids or analgesics in the past 30 days"
 label values recentotherpk no_yes
+**11.0% of those who reported zero years of regular other painkiller use, reported recent other painkiller use
 
 replace recentsedative = .a if bc107d == 98
 replace recentsedative = 0 if bc107d == 0
 replace recentsedative = 1 if bc107d > 0
 label variable recentsedative "Subject has used sedatives in the past 30 days"
 label values recentsedative no_yes
+**6.5% of those who reported zero years of regular sedative use, reported recent sedative use
 
 replace recentcocaine = 0 if bc108d == 0
 replace recentcocaine = 1 if bc108d > 0
 label variable recentcocaine "Subject has used cocaine in the past 30 days"
 label values recentcocaine no_yes
+**12.1% of those who reported zero years of regular cocaine use, reported recent cocaine use
 
 replace recentmarijuana = 0 if bc110d == 0
 replace recentmarijuana = 1 if bc110d > 0
 label variable recentmarijuana "Subject has used marijuana in the past 30 days"
 label values recentmarijuana no_yes
+**7.0% of those who reported zero years of regular marijuana use, reported recent marijuana use
 
-*Years of regular drug use
-*    One subject is coded to have used heroin regularly for 55 years. However, the oldest subject in the study is 60. The
-*    oldest subject would have needed to start using at age 5 in order to be regularly using for 55 years. Recoding the 55
-*    observation as missing.
+*Years of regular drug use:
 
 clonevar yearsheroin = bc103y
 clonevar yearsmethadone = bc104y
@@ -1082,26 +1071,27 @@ clonevar yearsmethadone = bc104y
 fre yearsheroin
 fre yearsmethadone
 
-recode yearsheroin 55=.a 99=.b
-recode yearsmethadone 88=.a
+**One subject is coded to have used heroin regularly for 55 years. However, the oldest subject in the study is 60. The oldest subject would have needed to start using at age 5 in order to be regularly using for 55 years. Recoding the 55 observation as missing:
+recode yearsheroin 55=. 99=.b
+recode yearsmethadone 88=.
 
 egen float years_any_opioid = rowmax(yearsheroin yearsmethadone)
 list yearsheroin yearsmethadone years_any_opioid recentincar_base
 label variable years_any_opioid "Longest number of years using either heroin or methadone"
 
-*Number of times overdosed on drugs
+*Number of times overdosed on drugs:
 
 clonevar overdosed = bc115
 fre overdosed
 
-*Number of times treated for drug use
+*Number of times treated for drug use:
 
 fre bc118
 clonevar treatedfordrugs = bc118
 recode treatedfordrugs 999=.b
 label variable years_any_opioid "Number of times treated for drug abuse"
 
-*Methadone treatment in previous three months
+*Methadone treatment in previous three months:
 
 fre bc144
 clonevar recentmethadonetx = bc144

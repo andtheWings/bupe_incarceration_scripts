@@ -1,11 +1,13 @@
-*Percent incarcerated per quarter
-**Q1 4.25%, Q2 8.5%, Q3 4.3%, Q4 6.5%
+*Percent incarcerated per quarter:
+
 fre recentincar_qu1
 fre recentincar_qu2
 fre recentincar_qu3
 fre recentincar_qu4
+**Q1 4.25%, Q2 8.5%, Q3 4.3%, Q4 6.5%
 
-*Simple logistic regressions of 1st quarter recent incarceration
+*Simple logistic regressions of 1st quarter recent incarceration:
+
 logit recentincar_qu1 age
 logit recentincar_qu1 white
 logit recentincar_qu1 black
@@ -45,7 +47,8 @@ logit recentincar_qu1 recentincar_base
 logit recentincar_qu1 retention1q
 **asian_and_other, homeless, recentheroin, recentsedative, recentincar_base
 
-*Simple logistic regressions of 2nd quarter recent incarceration
+*Simple logistic regressions of 2nd quarter recent incarceration:
+
 logit recentincar_qu2 age
 logit recentincar_qu2 white
 logit recentincar_qu2 black
@@ -82,11 +85,11 @@ logit recentincar_qu2 treatedfordrugs
 logit recentincar_qu2 recentmethadonetx
 logit recentincar_qu2 everincar_base
 logit recentincar_qu2 recentincar_base
-logit recentincar_qu2 retention1q
 logit recentincar_qu2 retention2q
-**male, recentcocaine, recentmarijuana, retention1q, retention2q
+**male, recentcocaine, recentmarijuana, retention2q
 
-*Simple logistic regressions of 3rd quarter recent incarceration
+*Simple logistic regressions of 3rd quarter recent incarceration:
+
 logit recentincar_qu3 age
 logit recentincar_qu3 white
 logit recentincar_qu3 black
@@ -123,12 +126,11 @@ logit recentincar_qu3 treatedfordrugs
 logit recentincar_qu3 recentmethadonetx
 logit recentincar_qu3 everincar_base
 logit recentincar_qu3 recentincar_base
-logit recentincar_qu3 retention1q
-logit recentincar_qu3 retention2q
 logit recentincar_qu3 retention3q
 **asian_and_other, english, everheroin
 
-*Simple logistic regressions of 4th quarter recent incarceration
+*Simple logistic regressions of 4th quarter recent incarceration:
+
 logit recentincar_qu4 age
 logit recentincar_qu4 white
 logit recentincar_qu4 black
@@ -165,11 +167,8 @@ logit recentincar_qu4 treatedfordrugs
 logit recentincar_qu4 recentmethadonetx
 logit recentincar_qu4 everincar_base
 logit recentincar_qu4 recentincar_base
-logit recentincar_qu4 retention1q
-logit recentincar_qu4 retention2q
-logit recentincar_qu4 retention3q
 logit recentincar_qu4 retention4q
-**recentcocaine, years_any_opioid, retention1q, retention2q, retention3q, retention4q
+**recentcocaine, years_any_opioid, retention4q
 
 *Chi-squared tests of quarterly recent incarceration from quarterly treatment retention:
 

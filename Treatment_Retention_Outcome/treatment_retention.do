@@ -22,6 +22,12 @@ tab parole_base retention2q, row chi2
 tab parole_base retention3q, row chi2
 tab parole_base retention4q, row chi2
 
+**By quarterly criminal justice status:
+tab recentincar_qu1 retention1q, row chi2
+tab recentincar_qu2 retention2q, row chi2
+tab recentincar_qu3 retention3q, row chi2
+tab recentincar_qu4 retention4q, row chi2
+
 *Simple logistic regressions of 1 quarter treatment retention
 logit retention1q age
 logit retention1q white
@@ -308,4 +314,10 @@ graph bar (asis) recentincar  norecentincar, over(quarter) bar(1, fcolor(ltblue)
 
 **Quarterly retention grouped by baseline parole status
 graph bar (asis) parole noparole, over(quarter) bar(1, fcolor(ltblue)) bar(2, fcolor(lavender) lcolor(black)) blabel(bar) title("Percent retained on buprenorphine", color(black)) yscale(range(0 100)) ylabel(#5) legend(on title("On parole or probation at baseline", size(medsmall) color(black)))
+
+*Make graphs reporting quarterly retention from baseline criminal justice
+use "C:\Users\riggins\Documents\einstein_materials\Summer Research Fellowship\bupe_incarceration_scripts\Treatment_Retention_Outcome\retention_from_quarterly_criminal_justice.dta", clear
+
+**Quarterly retention grouped by quarterly incarceration
+graph bar (asis) recentincar  norecentincar, over(quarter) bar(1, fcolor(ltblue)) bar(2, fcolor(lavender) lcolor(black)) blabel(bar) title("Percent retained in BMT if recently incarcerated", color(black)) yscale(range(0 100)) ylabel(#5) legend(on title("Incarcerated in 3 months before each visit:", size(medsmall) color(black)))
 

@@ -302,6 +302,8 @@ listcoef, percent
 nestreg: logistic retention4q (alone injectdrugs mentaldiag) recentincar_base
 listcoef, percent
 
+logistic retention4q injectdrugs mentaldiag recentincar_base
+
 *Make graphs reporting quarterly retention from baseline criminal justice
 use "C:\Users\riggins\Documents\einstein_materials\Summer Research Fellowship\bupe_incarceration_scripts\Treatment Retention Outcome\retention_from_baseline_criminal_justice.dta", clear
 

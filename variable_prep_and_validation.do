@@ -480,6 +480,64 @@ list anyrecentopioids_v6 recentopioids_v6
 
 *Quarterly Opioid Use:
 
+gen recentopioids_qu1=.
+gen recentopioids_qu2=.
+gen recentopioids_qu3=.
+gen recentopioids_qu4=.
+
+label variable recentopioids_qu1 "Days of heroin or methadone use in 30 days before followup in quarter 1"
+label variable recentopioids_qu2 "Days of heroin or methadone use in 30 days before followup in quarter 2"
+label variable recentopioids_qu3 "Days of heroin or methadone use in 30 days before followup in quarter 3"
+label variable recentopioids_qu4 "Days of heroin or methadone use in 30 days before followup in quarter 4"
+
+replace recentopioids_qu1=recentopioids_v1 if visit1_qu==1 & recentopioids_v1!=.
+replace recentopioids_qu1=recentopioids_v2 if visit2_qu==1 & recentopioids_v2!=. & recentopioids_qu1==.
+replace recentopioids_qu1=recentopioids_v2 if visit2_qu==1 & recentopioids_v2>recentopioids_qu1 & recentopioids_v2!=.
+replace recentopioids_qu1=recentopioids_v3 if visit3_qu==1 & recentopioids_v3!=. & recentopioids_qu1==.
+replace recentopioids_qu1=recentopioids_v3 if visit3_qu==1 & recentopioids_v3>recentopioids_qu1 & recentopioids_v3!=.
+replace recentopioids_qu1=recentopioids_v4 if visit4_qu==1 & recentopioids_v4!=. & recentopioids_qu1==.
+replace recentopioids_qu1=recentopioids_v4 if visit4_qu==1 & recentopioids_v4>recentopioids_qu1 & recentopioids_v4!=.
+replace recentopioids_qu1=recentopioids_v5 if visit5_qu==1 & recentopioids_v5!=. & recentopioids_qu1==.
+replace recentopioids_qu1=recentopioids_v5 if visit5_qu==1 & recentopioids_v5>recentopioids_qu1 & recentopioids_v5!=.
+replace recentopioids_qu1=recentopioids_v6 if visit6_qu==1 & recentopioids_v6!=. & recentopioids_qu1==.
+replace recentopioids_qu1=recentopioids_v6 if visit6_qu==1 & recentopioids_v6>recentopioids_qu1 & recentopioids_v6!=.
+
+replace recentopioids_qu2=recentopioids_v1 if visit1_qu==2 & recentopioids_v1!=.
+replace recentopioids_qu2=recentopioids_v2 if visit2_qu==2 & recentopioids_v2!=. & recentopioids_qu2==.
+replace recentopioids_qu2=recentopioids_v2 if visit2_qu==2 & recentopioids_v2>recentopioids_qu2 & recentopioids_v2!=.
+replace recentopioids_qu2=recentopioids_v3 if visit3_qu==2 & recentopioids_v3!=. & recentopioids_qu2==.
+replace recentopioids_qu2=recentopioids_v3 if visit3_qu==2 & recentopioids_v3>recentopioids_qu2 & recentopioids_v3!=.
+replace recentopioids_qu2=recentopioids_v4 if visit4_qu==2 & recentopioids_v4!=. & recentopioids_qu2==.
+replace recentopioids_qu2=recentopioids_v4 if visit4_qu==2 & recentopioids_v4>recentopioids_qu2 & recentopioids_v4!=.
+replace recentopioids_qu2=recentopioids_v5 if visit5_qu==2 & recentopioids_v5!=. & recentopioids_qu2==.
+replace recentopioids_qu2=recentopioids_v5 if visit5_qu==2 & recentopioids_v5>recentopioids_qu2 & recentopioids_v5!=.
+replace recentopioids_qu2=recentopioids_v6 if visit6_qu==2 & recentopioids_v6!=. & recentopioids_qu2==.
+replace recentopioids_qu2=recentopioids_v6 if visit6_qu==2 & recentopioids_v6>recentopioids_qu2 & recentopioids_v6!=.
+
+replace recentopioids_qu3=recentopioids_v1 if visit1_qu==3 & recentopioids_v1!=.
+replace recentopioids_qu3=recentopioids_v2 if visit2_qu==3 & recentopioids_v2!=. & recentopioids_qu3==.
+replace recentopioids_qu3=recentopioids_v2 if visit2_qu==3 & recentopioids_v2>recentopioids_qu3 & recentopioids_v2!=.
+replace recentopioids_qu3=recentopioids_v3 if visit3_qu==3 & recentopioids_v3!=. & recentopioids_qu3==.
+replace recentopioids_qu3=recentopioids_v3 if visit3_qu==3 & recentopioids_v3>recentopioids_qu3 & recentopioids_v3!=.
+replace recentopioids_qu3=recentopioids_v4 if visit4_qu==3 & recentopioids_v4!=. & recentopioids_qu3==.
+replace recentopioids_qu3=recentopioids_v4 if visit4_qu==3 & recentopioids_v4>recentopioids_qu3 & recentopioids_v4!=.
+replace recentopioids_qu3=recentopioids_v5 if visit5_qu==3 & recentopioids_v5!=. & recentopioids_qu3==.
+replace recentopioids_qu3=recentopioids_v5 if visit5_qu==3 & recentopioids_v5>recentopioids_qu3 & recentopioids_v5!=.
+replace recentopioids_qu3=recentopioids_v6 if visit6_qu==3 & recentopioids_v6!=. & recentopioids_qu3==.
+replace recentopioids_qu3=recentopioids_v6 if visit6_qu==3 & recentopioids_v6>recentopioids_qu3 & recentopioids_v6!=.
+
+replace recentopioids_qu4=recentopioids_v1 if visit1_qu==4 & recentopioids_v1!=.
+replace recentopioids_qu4=recentopioids_v2 if visit2_qu==4 & recentopioids_v2!=. & recentopioids_qu4==.
+replace recentopioids_qu4=recentopioids_v2 if visit2_qu==4 & recentopioids_v2>recentopioids_qu4 & recentopioids_v2!=.
+replace recentopioids_qu4=recentopioids_v3 if visit3_qu==4 & recentopioids_v3!=. & recentopioids_qu4==.
+replace recentopioids_qu4=recentopioids_v3 if visit3_qu==4 & recentopioids_v3>recentopioids_qu4 & recentopioids_v3!=.
+replace recentopioids_qu4=recentopioids_v4 if visit4_qu==4 & recentopioids_v4!=. & recentopioids_qu4==.
+replace recentopioids_qu4=recentopioids_v4 if visit4_qu==4 & recentopioids_v4>recentopioids_qu4 & recentopioids_v4!=.
+replace recentopioids_qu4=recentopioids_v5 if visit5_qu==4 & recentopioids_v5!=. & recentopioids_qu4==.
+replace recentopioids_qu4=recentopioids_v5 if visit5_qu==4 & recentopioids_v5>recentopioids_qu4 & recentopioids_v5!=.
+replace recentopioids_qu4=recentopioids_v6 if visit6_qu==4 & recentopioids_v6!=. & recentopioids_qu4==.
+replace recentopioids_qu4=recentopioids_v6 if visit6_qu==4 & recentopioids_v6>recentopioids_qu4 & recentopioids_v6!=.
+
 gen anyrecentopioids_qu1=.
 gen anyrecentopioids_qu2=.
 gen anyrecentopioids_qu3=.

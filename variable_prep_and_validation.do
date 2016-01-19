@@ -1155,3 +1155,5 @@ fre bc144
 clonevar recentmethadonetx = bc144
 recode recentmethadonetx 8=.a
 label values recentmethadonetx no_yes
+
+*export delimited everincar_base recentincar_base recentincar_qu1 recentincar_qu2 recentincar_qu3 recentincar_qu4 retention1q retention2q retention3q retention4q anyrecentopioids_base anyrecentopioids_qu1 anyrecentopioids_qu2 anyrecentopioids_qu3 anyrecentopioids_qu4 age white black latino asian_and_other english male heterosexual married alone homeless hsdiploma employed mentaldiag asialcscore asidrugscore injectdrugs everalcintox everheroin evermethadone everotherpk eversedative evercocaine evermarijuana everanyopioid recentalcintox recentheroin recentmethadone recentotherpk recentsedative recentcocaine recentmarijuana years_any_opioid overdosed treatedfordrugs recentmethadonetx using "C:\Users\riggins\Documents\einstein_materials\Summer Research Fellowship\longitudinal_wide3_riggins160118.csv", replace

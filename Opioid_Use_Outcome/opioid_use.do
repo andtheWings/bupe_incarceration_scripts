@@ -49,5 +49,10 @@ tab parole_base abstinentopioids_qu2, row chi2
 tab parole_base abstinentopioids_qu3, row chi2
 tab parole_base abstinentopioids_qu4, row chi2
 
+*Figures for quarterly any heroin or methadone use from baseline recent incarceration:
+
+use "C:\Users\riggins\Documents\einstein_materials\Summer Research Fellowship\bupe_incarceration_scripts\Opioid_Use_Outcome\quarterly_any_opioid_use_from_base_recent_incar.dta"
+graph bar (asis) recentincar  norecentincar, over(quarter) bar(1, fcolor(ltblue)) bar(2, fcolor(lavender) lcolor(black)) blabel(bar) title("Percent using opioids if recently incarcerated", color(black)) yscale(range(0 100)) ylabel(#5) legend(on title("Incarcerated in 30 days before baseline:", size(medsmall) color(black)))
+
 
 

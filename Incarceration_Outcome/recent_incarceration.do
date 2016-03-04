@@ -177,6 +177,12 @@ tab retention2q recentincar_qu2, row chi2
 tab retention3q recentincar_qu3, row chi2
 tab retention4q recentincar_qu4, row chi2
 
+*Chi-squared tests of quarterly recent incarceration (self-reported or chart review) from previous visit retention
+
+tab retention1q recentincar_q2, row chi2 exact
+tab retention2q recentincar_q3, row chi2 exact
+tab retention3q recentincar_q4, row chi2 exact
+
 *Figures for quarterly recent incarceration from quarterly treatment retention:
 
 import delimited "C:\Users\riggins\Documents\einstein_materials\Summer Research Fellowship\bupe_incarceration_scripts\Incarceration_Outcome\recentincar_from_quarterly_retention.csv", clear

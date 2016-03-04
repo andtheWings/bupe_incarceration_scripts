@@ -1,15 +1,14 @@
-*Modify "don't know" and "refused" missing values to generic missing values
-recode alone .a=.
+*Modify "don't know" and "refused" missing values to generic missing values:
 recode mentaldiag .a=.
 recode treatedfordrugs .b=.
 recode recentmethadonetx .a=.
 
-*Summarize missingness of variables
-misstable summarize age white black latino asian_and_other english male heterosexual married alone homeless hsdiploma employed mentaldiag injectdrugs everalcintox everheroin evermethadone everotherpk eversedative evercocaine evermarijuana everanyopioid recentalcintox recentheroin recentmethadone recentotherpk recentsedative recentcocaine recentmarijuana years_any_opioid overdosed treatedfordrugs recentmethadonetx retention1q retention2q retention3q retention4q everincar_base recentincar_base
+*Summarize missingness of variables:
+**misstable summarize age white black latino asian_and_other english male heterosexual married alone homeless hsdiploma employed mentaldiag injectdrugs everalcintox everheroin evermethadone everotherpk eversedative evercocaine evermarijuana everanyopioid recentalcintox recentheroin recentmethadone recentotherpk recentsedative recentcocaine recentmarijuana years_any_opioid overdosed treatedfordrugs recentmethadonetx retention1q retention2q retention3q retention4q everincar_base recentincar_base
 
-*Look for patterns
-misstable patterns age white black latino asian_and_other english male heterosexual married alone homeless hsdiploma employed mentaldiag injectdrugs everalcintox everheroin evermethadone everotherpk eversedative evercocaine evermarijuana everanyopioid recentalcintox recentheroin recentmethadone recentotherpk recentsedative recentcocaine recentmarijuana years_any_opioid overdosed treatedfordrugs recentmethadonetx retention1q retention2q retention3q retention4q everincar_base recentincar_base 
-**No obvious patterns observed
+*Look for patterns:
+**misstable patterns age white black latino asian_and_other english male heterosexual married alone homeless hsdiploma employed mentaldiag injectdrugs everalcintox everheroin evermethadone everotherpk eversedative evercocaine evermarijuana everanyopioid recentalcintox recentheroin recentmethadone recentotherpk recentsedative recentcocaine recentmarijuana years_any_opioid overdosed treatedfordrugs recentmethadonetx retention1q retention2q retention3q retention4q everincar_base recentincar_base 
+***No obvious patterns observed
 
 *Identify variables that predict missingness of age
 
@@ -53,23 +52,33 @@ misstable patterns age white black latino asian_and_other english male heterosex
 *Imputation set-up
 mi set flong
 mi register imputed age
-mi register regular white black latino heterosexual alone injectdrugs everheroin everotherpk eversedative recentmarijuana years_any_opioid overdosed male homeless mentaldiag asidrugscore
+mi register regular white black latino heterosexual alone hsdiploma employed injectdrugs everheroin everotherpk eversedative recentmarijuana years_any_opioid overdosed male homeless mentaldiag asidrugscore treatedfordrugs
 
 *Imputation performed 50 times with 5 nearest neighbors
-mi impute pmm age white black latino heterosexual alone injectdrugs everheroin everotherpk eversedative recentmarijuana years_any_opioid overdosed male homeless mentaldiag asidrugscore, add(50) knn(5) rseed(4450) force
+mi impute pmm age white black latino heterosexual alone hsdiploma employed injectdrugs everheroin everotherpk eversedative recentmarijuana years_any_opioid overdosed male homeless mentaldiag asidrugscore treatedfordrugs, add(50) knn(5) rseed(4450) force
 
-*Logistic modeling of 2 and 4 quarter retention
+*Logistic modeling of 2 quarter retention:
 
-**Full model (backwards stepwise method):
-***mi estimate: logistic retention2q age white male homeless mentaldiag asidrugscore injectdrugs everheroin recentincar_base
-***mi estimate: logistic retention4q age white male homeless mentaldiag asidrugscore injectdrugs everheroin recentincar_base
+**mi estimate: logistic retention2q homeless hsdiploma employed mentaldiag asidrugscore treatedfordrugs age white male injectdrugs everheroin recentincar_base
+**mi estimate: logistic retention2q homeless hsdiploma employed mentaldiag treatedfordrugs age white male injectdrugs everheroin recentincar_base
+**mi estimate: logistic retention2q homeless hsdiploma employed treatedfordrugs age white male injectdrugs everheroin recentincar_base
+**mi estimate: logistic retention2q homeless hsdiploma treatedfordrugs age white male injectdrugs everheroin recentincar_base
+**mi estimate: logistic retention2q homeless treatedfordrugs age white male injectdrugs everheroin recentincar_base
+**mi estimate: logistic retention2q homeless age white male injectdrugs everheroin recentincar_base
+**mi estimate: logistic retention2q age white male injectdrugs everheroin recentincar_base
+mi estimate: logistic retention2q age white male injectdrugs recentincar_base
+**No significant predictive variables
 
-***mi estimate: logistic retention2q age white male homeless mentaldiag injectdrugs everheroin recentincar_base
-***mi estimate: logistic retention4q age white male homeless asidrugscore injectdrugs everheroin recentincar_base
+*Logistic modeling of 4 quarter retention:
 
-***mi estimate: logistic retention2q age white male homeless injectdrugs everheroin recentincar_base
-***mi estimate: logistic retention4q age white male asidrugscore injectdrugs everheroin recentincar_base
+**mi estimate: logistic retention4q homeless hsdiploma employed mentaldiag asidrugscore treatedfordrugs age white male injectdrugs everheroin recentincar_base
+**mi estimate: logistic retention4q homeless hsdiploma employed asidrugscore treatedfordrugs age white male injectdrugs everheroin recentincar_base
+**mi estimate: logistic retention4q hsdiploma employed asidrugscore treatedfordrugs age white male injectdrugs everheroin recentincar_base
+**mi estimate: logistic retention4q hsdiploma asidrugscore treatedfordrugs age white male injectdrugs everheroin recentincar_base
+**mi estimate: logistic retention4q hsdiploma asidrugscore age white male injectdrugs everheroin recentincar_base
+**mi estimate: logistic retention4q hsdiploma age white male injectdrugs everheroin recentincar_base
+mi estimate: logistic retention4q age white male injectdrugs recentincar_base
+**Significant variables = age, being white, and being male
 
-mi estimate: logistic retention2q age white male injectdrugs everheroin recentincar_base
-mi estimate: logistic retention4q age white male injectdrugs everheroin recentincar_base
-
+*Check for collinearity:
+**collin age white male injectdrugs recentincar_base

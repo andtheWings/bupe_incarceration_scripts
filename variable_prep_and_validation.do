@@ -285,6 +285,22 @@ replace recentincar_allqu = 1 if recentincar_qu1==1 | recentincar_qu2==1 | recen
 
 list recentincar_allqu recentincar_qu1 recentincar_qu2 recentincar_qu3 recentincar_qu4
 
+gen recentincar_q2 = recentincar_qu2
+gen recentincar_q3 = recentincar_qu3
+gen recentincar_q4 = recentincar_qu4
+
+label variable recentincar_q2 "Reported incarceration before quarter two visit or missed tx b/c incarcerated"
+label variable recentincar_q3 "Reported incarceration before quarter two visit or missed tx b/c incarcerated"
+label variable recentincar_q4 "Reported incarceration before quarter four visit or missed tx b/c incarcerated"
+
+label values recentincar_q2 no_yes
+label values recentincar_q3 no_yes
+label values recentincar_q4 no_yes
+
+replace recentincar_q2 = 1 if dtxq2==7
+replace recentincar_q3 = 1 if dtxq2==7
+replace recentincar_q4 = 1 if dtxq4==7
+
 **Parole/probation per quarter:
 
 gen parole_qu1=.
@@ -369,6 +385,19 @@ replace parole_qu4=1 if visit6_qu==4 & parole_v6==1
 
 list parole_qu4 parole_v1 visit1_qu parole_v2 visit2_qu parole_v3 visit3_qu parole_v4 visit4_qu parole_v5 visit5_qu parole_v6 visit6_qu
 
+*Recent criminal justice involvement
+
+gen recentcj_base=.
+label variable recentcj_base "Patient reported incarceration in past 30 days or current parole/probation status at baseline"
+label values recentcj_base no_yes
+
+replace recentcj_base=1 if recentincar_base==1 | parole_base==1
+replace recentcj_base=0 if recentincar_base==0 & parole_base==0
+
+*fre recentcj_base
+*tab recentcj_base recentincar_base
+*tab recentcj_base parole_base
+
 *Treatment retention:
 
 gen retention = 0
@@ -404,21 +433,21 @@ list retention retention1q retention2q retention3q retention4q
 
 *Opioid Use per Visit:
 
-egen float recentopioids_base = rowmax(bc103d bc104d)
-egen float recentopioids_v1 = rowmax(qc83d_1 qc84d_1)
-egen float recentopioids_v2 = rowmax(qc83d_2 qc84d_2)
-egen float recentopioids_v3 = rowmax(qc83d_3 qc84d_3)
-egen float recentopioids_v4 = rowmax(qc83d_4 qc84d_4)
-egen float recentopioids_v5 = rowmax(qc83d_5 qc84d_5)
-egen float recentopioids_v6 = rowmax(qc83d_6 qc84d_6)
+egen float recentopioids_base = rowmax(bc103d bc104d bc105d)
+egen float recentopioids_v1 = rowmax(qc83d_1 qc84d_1 qc85d_1)
+egen float recentopioids_v2 = rowmax(qc83d_2 qc84d_2 qc85d_2)
+egen float recentopioids_v3 = rowmax(qc83d_3 qc84d_3 qc85d_3)
+egen float recentopioids_v4 = rowmax(qc83d_4 qc84d_4 qc85d_4)
+egen float recentopioids_v5 = rowmax(qc83d_5 qc84d_5 qc85d_5)
+egen float recentopioids_v6 = rowmax(qc83d_6 qc84d_6 qc85d_6)
 
-label variable recentopioids_base "Days of heroin or methadone use in 30 days before baseline"
-label variable recentopioids_v1 "Days of heroin or methadone use in 30 days before followup visit 1"
-label variable recentopioids_v2 "Days of heroin or methadone use in 30 days before followup visit 2"
-label variable recentopioids_v3 "Days of heroin or methadone use in 30 days before followup visit 3"
-label variable recentopioids_v4 "Days of heroin or methadone use in 30 days before followup visit 4"
-label variable recentopioids_v5 "Days of heroin or methadone use in 30 days before followup visit 5"
-label variable recentopioids_v6 "Days of heroin or methadone use in 30 days before followup visit 6"
+label variable recentopioids_base "Days of heroin, methadone, or analgesic use in 30 days before baseline"
+label variable recentopioids_v1 "Days of heroin, methadone, or analgesic use in 30 days before followup visit 1"
+label variable recentopioids_v2 "Days of heroin, methadone, or analgesic use in 30 days before followup visit 2"
+label variable recentopioids_v3 "Days of heroin, methadone, or analgesic use in 30 days before followup visit 3"
+label variable recentopioids_v4 "Days of heroin, methadone, or analgesic use in 30 days before followup visit 4"
+label variable recentopioids_v5 "Days of heroin, methadone, or analgesic use in 30 days before followup visit 5"
+label variable recentopioids_v6 "Days of heroin, methadone, or analgesic use in 30 days before followup visit 6"
 
 fre recentopioids_base
 fre recentopioids_v1
@@ -430,13 +459,13 @@ fre recentopioids_v6
 **Maximum value possible is 30 days
 replace recentopioids_base=. if recentopioids_base==92
 
-list recentopioids_base bc103d bc104d
-list recentopioids_v1 qc83d_1 qc84d_1
-list recentopioids_v2 qc83d_2 qc84d_2
-list recentopioids_v3 qc83d_3 qc84d_3
-list recentopioids_v4 qc83d_4 qc84d_4
-list recentopioids_v5 qc83d_5 qc84d_5
-list recentopioids_v6 qc83d_6 qc84d_6
+*list recentopioids_base bc103d bc104d bc105d
+*list recentopioids_v1 qc83d_1 qc84d_1 qc85d_1
+*list recentopioids_v2 qc83d_2 qc84d_2 qc85d_2
+*list recentopioids_v3 qc83d_3 qc84d_3 qc85d_3
+*list recentopioids_v4 qc83d_4 qc84d_4 qc85d_4
+*list recentopioids_v5 qc83d_5 qc84d_5 qc85d_5
+*list recentopioids_v6 qc83d_6 qc84d_6 qc85d_6
 
 clonevar anyrecentopioids_base = recentopioids_base
 gen anyrecentopioids_v1 = recentopioids_v1
@@ -446,13 +475,13 @@ gen anyrecentopioids_v4 = recentopioids_v4
 gen anyrecentopioids_v5 = recentopioids_v5
 gen anyrecentopioids_v6 = recentopioids_v6
 
-label variable anyrecentopioids_base "Any heroin or methadone use in 30 days before baseline"
-label variable anyrecentopioids_v1 "Any heroin or methadone use in 30 days before followup visit 1"
-label variable anyrecentopioids_v2 "Any heroin or methadone use in 30 days before followup visit 2"
-label variable anyrecentopioids_v3 "Any heroin or methadone use in 30 days before followup visit 3"
-label variable anyrecentopioids_v4 "Any heroin or methadone use in 30 days before followup visit 4"
-label variable anyrecentopioids_v5 "Any heroin or methadone use in 30 days before followup visit 5"
-label variable anyrecentopioids_v6 "Any heroin or methadone use in 30 days before followup visit 6"
+label variable anyrecentopioids_base "Any heroin, methadone, or analgesic use in 30 days before baseline"
+label variable anyrecentopioids_v1 "Any heroin, methadone, or analgesic use in 30 days before followup visit 1"
+label variable anyrecentopioids_v2 "Any heroin, methadone, or analgesic use in 30 days before followup visit 2"
+label variable anyrecentopioids_v3 "Any heroin, methadone, or analgesic use in 30 days before followup visit 3"
+label variable anyrecentopioids_v4 "Any heroin, methadone, or analgesic use in 30 days before followup visit 4"
+label variable anyrecentopioids_v5 "Any heroin, methadone, or analgesic use in 30 days before followup visit 5"
+label variable anyrecentopioids_v6 "Any heroin, methadone, or analgesic use in 30 days before followup visit 6"
 
 label values anyrecentopioids_base no_yes
 label values anyrecentopioids_v1 no_yes
@@ -485,10 +514,10 @@ gen recentopioids_qu2=.
 gen recentopioids_qu3=.
 gen recentopioids_qu4=.
 
-label variable recentopioids_qu1 "Days of heroin or methadone use in 30 days before followup in quarter 1"
-label variable recentopioids_qu2 "Days of heroin or methadone use in 30 days before followup in quarter 2"
-label variable recentopioids_qu3 "Days of heroin or methadone use in 30 days before followup in quarter 3"
-label variable recentopioids_qu4 "Days of heroin or methadone use in 30 days before followup in quarter 4"
+label variable recentopioids_qu1 "Days of heroin, methadone or analgesic use in 30 days before followup in quarter 1"
+label variable recentopioids_qu2 "Days of heroin, methadone or analgesic use in 30 days before followup in quarter 2"
+label variable recentopioids_qu3 "Days of heroin, methadone or analgesic use in 30 days before followup in quarter 3"
+label variable recentopioids_qu4 "Days of heroin, methadone or analgesic use in 30 days before followup in quarter 4"
 
 replace recentopioids_qu1=recentopioids_v1 if visit1_qu==1 & recentopioids_v1!=.
 replace recentopioids_qu1=recentopioids_v2 if visit2_qu==1 & recentopioids_v2!=. & recentopioids_qu1==.
@@ -543,10 +572,10 @@ gen anyrecentopioids_qu2=.
 gen anyrecentopioids_qu3=.
 gen anyrecentopioids_qu4=.
 
-label variable anyrecentopioids_qu1 "Any heroin or methadone use in 30 days before followup in quarter 1"
-label variable anyrecentopioids_qu2 "Any heroin or methadone use in 30 days before followup in quarter 2"
-label variable anyrecentopioids_qu3 "Any heroin or methadone use in 30 days before followup in quarter 3"
-label variable anyrecentopioids_qu4 "Any heroin or methadone use in 30 days before followup in quarter 4"
+label variable anyrecentopioids_qu1 "Any heroin, methadone, or analgesic use in 30 days before followup in quarter 1"
+label variable anyrecentopioids_qu2 "Any heroin, methadone, or analgesic use in 30 days before followup in quarter 2"
+label variable anyrecentopioids_qu3 "Any heroin, methadone, or analgesic use in 30 days before followup in quarter 3"
+label variable anyrecentopioids_qu4 "Any heroin, methadone, or analgesic use in 30 days before followup in quarter 4"
 
 label values anyrecentopioids_qu1 no_yes
 label values anyrecentopioids_qu2 no_yes
@@ -622,10 +651,10 @@ gen abstinentopioids_qu2 = .
 gen abstinentopioids_qu3 = .
 gen abstinentopioids_qu4 = .
 
-label variable abstinentopioids_qu1 "Subject reported abstinence from heroin and methadone for one or more quarter"
-label variable abstinentopioids_qu2 "Subject reported abstinence from heroin and methadone for two or more consecutive quarters"
-label variable abstinentopioids_qu3 "Subject reported abstinence from heroin and methadone for three or more consecutive quarters"
-label variable abstinentopioids_qu4 "Subject reported abstinence from heroin and methadone for four consecutive quarters"
+label variable abstinentopioids_qu1 "Subject reported abstinence from heroin, methadone, and analgesics for one or more quarter"
+label variable abstinentopioids_qu2 "Subject reported abstinence from heroin, methadone, and analgesics for two or more consecutive quarters"
+label variable abstinentopioids_qu3 "Subject reported abstinence from heroin, methadone, and analgesics for three or more consecutive quarters"
+label variable abstinentopioids_qu4 "Subject reported abstinence from heroin, methadone, and analgesics for four consecutive quarters"
 
 label values abstinentopioids_qu1 no_yes
 label values abstinentopioids_qu2 no_yes
@@ -1043,9 +1072,9 @@ replace everotherpk = 1 if bc105y > 0
 label variable everotherpk "Subject has ever used other opioids or analgesics"
 label values everotherpk no_yes
 
-replace everanyopioid=0 if everheroin==0 & evermethadone==0 
-replace everanyopioid=1 if everheroin==1 | evermethadone==1
-label variable everanyopioid "Subject has ever used heroin or methadone"
+replace everanyopioid=0 if everheroin==0 & evermethadone==0 & everotherpk==0
+replace everanyopioid=1 if everheroin==1 | evermethadone==1 | everotherpk==1
+label variable everanyopioid "Subject has ever used heroin, methadone, analgesics"
 label values everanyopioid no_yes
 
 replace eversedative = 0 if bc107y == 0
@@ -1156,5 +1185,5 @@ clonevar recentmethadonetx = bc144
 recode recentmethadonetx 8=.a
 label values recentmethadonetx no_yes
 
-*export delimited pid everincar_base recentincar_base recentincar_qu1 recentincar_qu2 recentincar_qu3 recentincar_qu4 retention1q retention2q retention3q retention4q recentopioids_base recentopioids_qu1 recentopioids_qu2 recentopioids_qu3 recentopioids_qu4 anyrecentopioids_base anyrecentopioids_qu1 anyrecentopioids_qu2 anyrecentopioids_qu3 anyrecentopioids_qu4 age white black latino asian_and_other english male heterosexual married alone homeless hsdiploma employed mentaldiag asialcscore asidrugscore injectdrugs everalcintox everheroin evermethadone everotherpk eversedative evercocaine evermarijuana everanyopioid recentalcintox recentheroin recentmethadone recentotherpk recentsedative recentcocaine recentmarijuana years_any_opioid overdosed treatedfordrugs recentmethadonetx using "C:\Users\riggins\Documents\einstein_materials\Summer Research Fellowship\longitudinal_wide3_riggins.csv", replace
+*export delimited pid everincar_base recentincar_base recentincar_qu1 recentincar_qu2 recentincar_qu3 recentincar_qu4 retention1q retention2q retention3q retention4q recentopioids_base recentopioids_qu1 recentopioids_qu2 recentopioids_qu3 recentopioids_qu4 anyrecentopioids_base anyrecentopioids_qu1 anyrecentopioids_qu2 anyrecentopioids_qu3 anyrecentopioids_qu4 age white black latino asian_and_other english male heterosexual married alone homeless hsdiploma employed mentaldiag asialcscore asidrugscore injectdrugs everalcintox everheroin evermethadone everotherpk eversedative evercocaine evermarijuana everanyopioid recentalcintox recentheroin recentmethadone recentotherpk recentsedative recentcocaine recentmarijuana years_any_opioid overdosed treatedfordrugs recentmethadonetx using "C:\Users\riggins\Documents\einstein_materials\bupe\longitudinal_wide3_riggins.csv", replace
 *codebook pid everincar_base recentincar_base recentincar_qu1 recentincar_qu2 recentincar_qu3 recentincar_qu4 retention1q retention2q retention3q retention4q recentopioids_base recentopioids_qu1 recentopioids_qu2 recentopioids_qu3 recentopioids_qu4 anyrecentopioids_base anyrecentopioids_qu1 anyrecentopioids_qu2 anyrecentopioids_qu3 anyrecentopioids_qu4 age white black latino asian_and_other english male heterosexual married alone homeless hsdiploma employed mentaldiag asialcscore asidrugscore injectdrugs everalcintox everheroin evermethadone everotherpk eversedative evercocaine evermarijuana everanyopioid recentalcintox recentheroin recentmethadone recentotherpk recentsedative recentcocaine recentmarijuana years_any_opioid overdosed treatedfordrugs recentmethadonetx

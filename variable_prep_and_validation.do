@@ -285,18 +285,22 @@ replace recentincar_allqu = 1 if recentincar_qu1==1 | recentincar_qu2==1 | recen
 
 list recentincar_allqu recentincar_qu1 recentincar_qu2 recentincar_qu3 recentincar_qu4
 
+gen recentincar_q1 = recentincar_qu1
 gen recentincar_q2 = recentincar_qu2
 gen recentincar_q3 = recentincar_qu3
 gen recentincar_q4 = recentincar_qu4
 
+label variable recentincar_q1 "Reported incarceration before quarter one visit or missed tx b/c incarcerated"
 label variable recentincar_q2 "Reported incarceration before quarter two visit or missed tx b/c incarcerated"
 label variable recentincar_q3 "Reported incarceration before quarter two visit or missed tx b/c incarcerated"
 label variable recentincar_q4 "Reported incarceration before quarter four visit or missed tx b/c incarcerated"
 
+label values recentincar_q1 no_yes
 label values recentincar_q2 no_yes
 label values recentincar_q3 no_yes
 label values recentincar_q4 no_yes
 
+replace recentincar_q1 = 1 if dtxq1==7
 replace recentincar_q2 = 1 if dtxq2==7
 replace recentincar_q3 = 1 if dtxq2==7
 replace recentincar_q4 = 1 if dtxq4==7

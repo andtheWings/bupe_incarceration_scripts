@@ -285,25 +285,29 @@ replace recentincar_allqu = 1 if recentincar_qu1==1 | recentincar_qu2==1 | recen
 
 list recentincar_allqu recentincar_qu1 recentincar_qu2 recentincar_qu3 recentincar_qu4
 
-gen recentincar_q1 = recentincar_qu1
-gen recentincar_q2 = recentincar_qu2
-gen recentincar_q3 = recentincar_qu3
-gen recentincar_q4 = recentincar_qu4
+gen newrecentincar_qu1 = recentincar_qu1
+gen newrecentincar_qu2 = recentincar_qu2
+gen newrecentincar_qu3 = recentincar_qu3
+gen newrecentincar_qu4 = recentincar_qu4
+gen newrecentincar_allqu = recentincar_allqu
 
-label variable recentincar_q1 "Reported incarceration before quarter one visit or missed tx b/c incarcerated"
-label variable recentincar_q2 "Reported incarceration before quarter two visit or missed tx b/c incarcerated"
-label variable recentincar_q3 "Reported incarceration before quarter two visit or missed tx b/c incarcerated"
-label variable recentincar_q4 "Reported incarceration before quarter four visit or missed tx b/c incarcerated"
+label variable newrecentincar_qu1 "Reported incarceration before quarter one visit or missed tx b/c incarcerated"
+label variable newrecentincar_qu2 "Reported incarceration before quarter two visit or missed tx b/c incarcerated"
+label variable newrecentincar_qu3 "Reported incarceration before quarter two visit or missed tx b/c incarcerated"
+label variable newrecentincar_qu4 "Reported incarceration before quarter four visit or missed tx b/c incarcerated"
+label variable newrecentincar_allqu "Reported incarceration at any visit or missed tx b/c incarcerated"
 
-label values recentincar_q1 no_yes
-label values recentincar_q2 no_yes
-label values recentincar_q3 no_yes
-label values recentincar_q4 no_yes
+label values newrecentincar_qu1 no_yes
+label values newrecentincar_qu2 no_yes
+label values newrecentincar_qu3 no_yes
+label values newrecentincar_qu4 no_yes
+label values newrecentincar_allqu no_yes
 
-replace recentincar_q1 = 1 if dtxq1==7
-replace recentincar_q2 = 1 if dtxq2==7
-replace recentincar_q3 = 1 if dtxq2==7
-replace recentincar_q4 = 1 if dtxq4==7
+replace newrecentincar_qu1 = 1 if dtxq1==7
+replace newrecentincar_qu2 = 1 if dtxq2==7
+replace newrecentincar_qu3 = 1 if dtxq2==7
+replace newrecentincar_qu4 = 1 if dtxq4==7
+replace newrecentincar_allqu = 1 if dtxq1==7 | dtxq2==7 | dtxq3==7 | dtxq4==7
 
 **Parole/probation per quarter:
 
@@ -1189,5 +1193,5 @@ clonevar recentmethadonetx = bc144
 recode recentmethadonetx 8=.a
 label values recentmethadonetx no_yes
 
-*export delimited pid everincar_base recentincar_base recentincar_qu1 recentincar_qu2 recentincar_qu3 recentincar_qu4 retention1q retention2q retention3q retention4q recentopioids_base recentopioids_qu1 recentopioids_qu2 recentopioids_qu3 recentopioids_qu4 anyrecentopioids_base anyrecentopioids_qu1 anyrecentopioids_qu2 anyrecentopioids_qu3 anyrecentopioids_qu4 age white black latino asian_and_other english male heterosexual married alone homeless hsdiploma employed mentaldiag asialcscore asidrugscore injectdrugs everalcintox everheroin evermethadone everotherpk eversedative evercocaine evermarijuana everanyopioid recentalcintox recentheroin recentmethadone recentotherpk recentsedative recentcocaine recentmarijuana years_any_opioid overdosed treatedfordrugs recentmethadonetx using "C:\Users\riggins\Documents\einstein_materials\bupe\longitudinal_wide3_riggins.csv", replace
-*codebook pid everincar_base recentincar_base recentincar_qu1 recentincar_qu2 recentincar_qu3 recentincar_qu4 retention1q retention2q retention3q retention4q recentopioids_base recentopioids_qu1 recentopioids_qu2 recentopioids_qu3 recentopioids_qu4 anyrecentopioids_base anyrecentopioids_qu1 anyrecentopioids_qu2 anyrecentopioids_qu3 anyrecentopioids_qu4 age white black latino asian_and_other english male heterosexual married alone homeless hsdiploma employed mentaldiag asialcscore asidrugscore injectdrugs everalcintox everheroin evermethadone everotherpk eversedative evercocaine evermarijuana everanyopioid recentalcintox recentheroin recentmethadone recentotherpk recentsedative recentcocaine recentmarijuana years_any_opioid overdosed treatedfordrugs recentmethadonetx
+*export delimited pid everincar_base recentincar_base recentincar_qu1 recentincar_qu2 recentincar_qu3 recentincar_qu4 newrecentincar_qu1 newrecentincar_qu2 newrecentincar_qu3 newrecentincar_qu4 retention1q retention2q retention3q retention4q recentopioids_base recentopioids_qu1 recentopioids_qu2 recentopioids_qu3 recentopioids_qu4 anyrecentopioids_base anyrecentopioids_qu1 anyrecentopioids_qu2 anyrecentopioids_qu3 anyrecentopioids_qu4 age white black latino asian_and_other english male heterosexual married alone homeless hsdiploma employed mentaldiag asialcscore asidrugscore injectdrugs everalcintox everheroin evermethadone everotherpk eversedative evercocaine evermarijuana everanyopioid recentalcintox recentheroin recentmethadone recentotherpk recentsedative recentcocaine recentmarijuana years_any_opioid overdosed treatedfordrugs recentmethadonetx using "C:\Users\riggins\Documents\einstein_materials\bupe\longitudinal_wide3_riggins.csv", replace
+*codebook pid everincar_base recentincar_base recentincar_qu1 recentincar_qu2 recentincar_qu3 recentincar_qu4 newrecentincar_qu1 newrecentincar_qu2 newrecentincar_qu3 newrecentincar_qu4 retention1q retention2q retention3q retention4q recentopioids_base recentopioids_qu1 recentopioids_qu2 recentopioids_qu3 recentopioids_qu4 anyrecentopioids_base anyrecentopioids_qu1 anyrecentopioids_qu2 anyrecentopioids_qu3 anyrecentopioids_qu4 age white black latino asian_and_other english male heterosexual married alone homeless hsdiploma employed mentaldiag asialcscore asidrugscore injectdrugs everalcintox everheroin evermethadone everotherpk eversedative evercocaine evermarijuana everanyopioid recentalcintox recentheroin recentmethadone recentotherpk recentsedative recentcocaine recentmarijuana years_any_opioid overdosed treatedfordrugs recentmethadonetx

@@ -1,5 +1,6 @@
 *Dependency:
 **net install collin.pkg
+**search chi2power 
 
 *Percent retained per quarter
 fre retention1q
@@ -25,6 +26,9 @@ tab recentcj_base retention1q, row chi2
 tab recentcj_base retention2q, row chi2
 tab recentcj_base retention3q, row chi2
 tab recentcj_base retention4q, row chi2
+
+*Evaluate power of Chi2 test for retention from recent incarceration
+tab recentincar_base retention4q, row lrchi2
 
 *Modify "don't know" and "refused" missing values to generic missing values:
 *recode mentaldiag .a=.

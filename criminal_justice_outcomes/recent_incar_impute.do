@@ -1,0 +1,241 @@
+*Modify "don't know" and "refused" missing values to generic missing values
+recode alone .a=.
+recode mentaldiag .a=.
+recode treatedfordrugs .b=.
+recode recentmethadonetx .a=.
+
+*Summarize missingness of variables
+misstable summarize age white black latino asian_and_other english male heterosexual married alone homeless hsdiploma employed mentaldiag injectdrugs everalcintox everheroin evermethadone everotherpk eversedative evercocaine evermarijuana everanyopioid recentalcintox recentheroin recentmethadone recentotherpk recentsedative recentcocaine recentmarijuana years_any_opioid overdosed treatedfordrugs recentmethadonetx retention1q retention2q retention3q retention4q everincar_base recentincar_base recentincar_qu1 recentincar_qu2 recentincar_qu3 recentincar_qu4
+
+*Look for patterns
+**Most common pattern is for all 4 quarterly incarceration indicators to be missing
+misstable patterns age white black latino asian_and_other english male heterosexual married alone homeless hsdiploma employed mentaldiag injectdrugs everalcintox everheroin evermethadone everotherpk eversedative evercocaine evermarijuana everanyopioid recentalcintox recentheroin recentmethadone recentotherpk recentsedative recentcocaine recentmarijuana years_any_opioid overdosed treatedfordrugs recentmethadonetx retention1q retention2q retention3q retention4q everincar_base recentincar_base recentincar_qu1 recentincar_qu2 recentincar_qu3 recentincar_qu4
+
+*Identify all variables that predict retention
+**See treatment_retention.do:
+***age white black male recentalcintox recentcocaine recentmethadone
+
+*Identify all variables that predict recent incarceration
+**See recent_incarceration.do:
+***asian_and_other male english homeless everheroin recentheroin recentcocaine recentsedative recentmarijuana years_any_opioid recentincar_base retention1q retention2q retention3q retention4q
+
+*Generate missing-indicator variables
+quietly misstable summarize age recentincar_qu1 recentincar_qu2 recentincar_qu3 recentincar_qu4, generate (miss_)
+
+*Identify variables that predict missingness of age
+
+logit miss_age white
+logit miss_age black
+logit miss_age latino
+logit miss_age asian_and_other
+logit miss_age english
+logit miss_age male
+logit miss_age heterosexual
+logit miss_age married
+logit miss_age alone
+logit miss_age homeless
+logit miss_age hsdiploma
+logit miss_age employed
+logit miss_age mentaldiag
+logit miss_age injectdrugs
+logit miss_age everalcintox
+logit miss_age everheroin
+logit miss_age evermethadone 
+logit miss_age everotherpk 
+logit miss_age eversedative 
+logit miss_age evercocaine
+logit miss_age evermarijuana
+logit miss_age everanyopioid
+logit miss_age recentalcintox
+logit miss_age recentheroin
+logit miss_age recentmethadone
+logit miss_age recentotherpk
+logit miss_age recentsedative
+logit miss_age recentcocaine
+logit miss_age recentmarijuana
+logit miss_age years_any_opioid
+logit miss_age overdosed
+logit miss_age treatedfordrugs
+logit miss_age recentmethadonetx
+logit miss_age everincar_base
+logit miss_age recentincar_base
+**alone everotherpk recentmarijuana
+
+*Identify variables that predict missingness of 1st quarter recent incarceration
+
+logit miss_recentincar_qu1 age
+logit miss_recentincar_qu1 white
+logit miss_recentincar_qu1 black
+logit miss_recentincar_qu1 latino
+logit miss_recentincar_qu1 asian_and_other
+logit miss_recentincar_qu1 english
+logit miss_recentincar_qu1 male
+logit miss_recentincar_qu1 heterosexual
+logit miss_recentincar_qu1 married
+logit miss_recentincar_qu1 alone
+logit miss_recentincar_qu1 homeless
+logit miss_recentincar_qu1 hsdiploma
+logit miss_recentincar_qu1 employed
+logit miss_recentincar_qu1 mentaldiag
+logit miss_recentincar_qu1 injectdrugs
+logit miss_recentincar_qu1 everalcintox
+logit miss_recentincar_qu1 everheroin
+logit miss_recentincar_qu1 evermethadone 
+logit miss_recentincar_qu1 everotherpk 
+logit miss_recentincar_qu1 eversedative 
+logit miss_recentincar_qu1 evercocaine
+logit miss_recentincar_qu1 evermarijuana
+logit miss_recentincar_qu1 everanyopioid
+logit miss_recentincar_qu1 recentalcintox
+logit miss_recentincar_qu1 recentheroin
+logit miss_recentincar_qu1 recentmethadone
+logit miss_recentincar_qu1 recentotherpk
+logit miss_recentincar_qu1 recentsedative
+logit miss_recentincar_qu1 recentcocaine
+logit miss_recentincar_qu1 recentmarijuana
+logit miss_recentincar_qu1 years_any_opioid
+logit miss_recentincar_qu1 overdosed
+logit miss_recentincar_qu1 treatedfordrugs
+logit miss_recentincar_qu1 recentmethadonetx
+logit miss_recentincar_qu1 everincar_base
+logit miss_recentincar_qu1 recentincar_base
+logit miss_recentincar_qu1 retention1q
+**age eversedative retention1q
+
+*Identify variables that predict missingness of 2nd quarter recent incarceration
+
+logit miss_recentincar_qu2 age
+logit miss_recentincar_qu2 white
+logit miss_recentincar_qu2 black
+logit miss_recentincar_qu2 latino
+logit miss_recentincar_qu2 asian_and_other
+logit miss_recentincar_qu2 english
+logit miss_recentincar_qu2 male
+logit miss_recentincar_qu2 heterosexual
+logit miss_recentincar_qu2 married
+logit miss_recentincar_qu2 alone
+logit miss_recentincar_qu2 homeless
+logit miss_recentincar_qu2 hsdiploma
+logit miss_recentincar_qu2 employed
+logit miss_recentincar_qu2 mentaldiag
+logit miss_recentincar_qu2 injectdrugs
+logit miss_recentincar_qu2 everalcintox
+logit miss_recentincar_qu2 everheroin
+logit miss_recentincar_qu2 evermethadone 
+logit miss_recentincar_qu2 everotherpk 
+logit miss_recentincar_qu2 eversedative 
+logit miss_recentincar_qu2 evercocaine
+logit miss_recentincar_qu2 evermarijuana
+logit miss_recentincar_qu2 everanyopioid
+logit miss_recentincar_qu2 recentalcintox
+logit miss_recentincar_qu2 recentheroin
+logit miss_recentincar_qu2 recentmethadone
+logit miss_recentincar_qu2 recentotherpk
+logit miss_recentincar_qu2 recentsedative
+logit miss_recentincar_qu2 recentcocaine
+logit miss_recentincar_qu2 recentmarijuana
+logit miss_recentincar_qu2 years_any_opioid
+logit miss_recentincar_qu2 overdosed
+logit miss_recentincar_qu2 treatedfordrugs
+logit miss_recentincar_qu2 recentmethadonetx
+logit miss_recentincar_qu2 everincar_base
+logit miss_recentincar_qu2 recentincar_base
+logit miss_recentincar_qu2 retention1q
+logit miss_recentincar_qu2 retention2q
+**english homeless evermethadone recentmethadone recentmarijuana retention1q retention2q
+
+*Identify variables that predict missingness of 3rd quarter recent incarceration
+
+logit miss_recentincar_qu3 age
+logit miss_recentincar_qu3 white
+logit miss_recentincar_qu3 black
+logit miss_recentincar_qu3 latino
+logit miss_recentincar_qu3 asian_and_other
+logit miss_recentincar_qu3 english
+logit miss_recentincar_qu3 male
+logit miss_recentincar_qu3 heterosexual
+logit miss_recentincar_qu3 married
+logit miss_recentincar_qu3 alone
+logit miss_recentincar_qu3 homeless
+logit miss_recentincar_qu3 hsdiploma
+logit miss_recentincar_qu3 employed
+logit miss_recentincar_qu3 mentaldiag
+logit miss_recentincar_qu3 injectdrugs
+logit miss_recentincar_qu3 everalcintox
+logit miss_recentincar_qu3 everheroin
+logit miss_recentincar_qu3 evermethadone 
+logit miss_recentincar_qu3 everotherpk 
+logit miss_recentincar_qu3 eversedative 
+logit miss_recentincar_qu3 evercocaine
+logit miss_recentincar_qu3 evermarijuana
+logit miss_recentincar_qu3 everanyopioid
+logit miss_recentincar_qu3 recentalcintox
+logit miss_recentincar_qu3 recentheroin
+logit miss_recentincar_qu3 recentmethadone
+logit miss_recentincar_qu3 recentotherpk
+logit miss_recentincar_qu3 recentsedative
+logit miss_recentincar_qu3 recentcocaine
+logit miss_recentincar_qu3 recentmarijuana
+logit miss_recentincar_qu3 years_any_opioid
+logit miss_recentincar_qu3 overdosed
+logit miss_recentincar_qu3 treatedfordrugs
+logit miss_recentincar_qu3 recentmethadonetx
+logit miss_recentincar_qu3 everincar_base
+logit miss_recentincar_qu3 recentincar_base
+logit miss_recentincar_qu3 retention1q
+logit miss_recentincar_qu3 retention2q
+logit miss_recentincar_qu3 retention3q
+**age latino employed retention1q retention2q retention3q
+
+*Identify variables that predict missingness of 4th quarter recent incarceration
+
+logit miss_recentincar_qu4 age
+logit miss_recentincar_qu4 white
+logit miss_recentincar_qu4 black
+logit miss_recentincar_qu4 latino
+logit miss_recentincar_qu4 asian_and_other
+logit miss_recentincar_qu4 english
+logit miss_recentincar_qu4 male
+logit miss_recentincar_qu4 heterosexual
+logit miss_recentincar_qu4 married
+logit miss_recentincar_qu4 alone
+logit miss_recentincar_qu4 homeless
+logit miss_recentincar_qu4 hsdiploma
+logit miss_recentincar_qu4 employed
+logit miss_recentincar_qu4 mentaldiag
+logit miss_recentincar_qu4 injectdrugs
+logit miss_recentincar_qu4 everalcintox
+logit miss_recentincar_qu4 everheroin
+logit miss_recentincar_qu4 evermethadone 
+logit miss_recentincar_qu4 everotherpk 
+logit miss_recentincar_qu4 eversedative 
+logit miss_recentincar_qu4 evercocaine
+logit miss_recentincar_qu4 evermarijuana
+logit miss_recentincar_qu4 everanyopioid
+logit miss_recentincar_qu4 recentalcintox
+logit miss_recentincar_qu4 recentheroin
+logit miss_recentincar_qu4 recentmethadone
+logit miss_recentincar_qu4 recentotherpk
+logit miss_recentincar_qu4 recentsedative
+logit miss_recentincar_qu4 recentcocaine
+logit miss_recentincar_qu4 recentmarijuana
+logit miss_recentincar_qu4 years_any_opioid
+logit miss_recentincar_qu4 overdosed
+logit miss_recentincar_qu4 treatedfordrugs
+logit miss_recentincar_qu4 recentmethadonetx
+logit miss_recentincar_qu4 everincar_base
+logit miss_recentincar_qu4 recentincar_base
+logit miss_recentincar_qu4 retention1q
+logit miss_recentincar_qu4 retention2q
+logit miss_recentincar_qu4 retention3q
+logit miss_recentincar_qu4 retention4q
+**male english retention1q retention2q retention3q retention4q
+
+*Imputation set-up
+mi set flong
+mi register imputed age recentincar_qu1 recentincar_qu2 recentincar_qu3 recentincar_qu4
+mi register regular white black latino asian_and_other male english homeless alone employed everheroin evermethadone everotherpk eversedative recentalcintox recentheroin recentcocaine recentmethadone recentsedative recentmarijuana years_any_opioid recentincar_base retention1q retention2q retention3q retention4q
+
+*Perform imputation
+mi impute mvn age recentincar_qu1 recentincar_qu2 recentincar_qu3 recentincar_qu4, add(20) rseed(18)
+

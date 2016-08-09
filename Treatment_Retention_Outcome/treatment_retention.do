@@ -2,6 +2,8 @@
 **net install collin.pkg
 **search chi2power 
 
+drop if drugtx!=1
+
 *Percent retained per quarter
 fre retention1q
 fre retention2q

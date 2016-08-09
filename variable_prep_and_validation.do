@@ -5,10 +5,36 @@ label define no_yes 0 "no" 1 "yes" .a "don't know" .b "refused"
 
 *Drug treatment:
 
-label define drugtx 1 "Bupe" 2 "Methadone" 3 "Other Tx" 4 "Unknown"
+label define drugtx 1 "bupe" 2 "methadone" 3 "other tx" 4 "unknown"
 label values drugtx drugtx
 
-drop if drugtx!=1
+recode drugtx .=4
+
+label define dtxq 1 "bupe" 2 "methadone" 3 "other tx" 4 "unknown" 6 "died" 7 "jailed" 8 "lost to f/u" 9 "DNA - withdrew from study" 10 "moved" 11 "no tx"
+label values dtxq1 dtxq
+label values dtxq2 dtxq
+label values dtxq3 dtxq
+label values dtxq4 dtxq
+
+gen bupe_qu1 = dtxq1
+gen bupe_qu2 = dtxq2
+gen bupe_qu3 = dtxq3
+gen bupe_qu4 = dtxq4
+
+label variable bupe_qu1 "Received bupe in Q1"
+label variable bupe_qu2 "Received bupe in Q2"
+label variable bupe_qu3 "Received bupe in Q3"
+label variable bupe_qu4 "Received bupe in Q4"
+
+label values bupe_qu1 no_yes
+label values bupe_qu2 no_yes
+label values bupe_qu3 no_yes
+label values bupe_qu4 no_yes
+
+recode bupe_qu1 2/max=0
+recode bupe_qu2 2/max=0
+recode bupe_qu3 2/max=0
+recode bupe_qu4 2/max=0
 
 *Visit quarter coding:
 
@@ -89,21 +115,21 @@ replace visit5_qu = 4 if visit5since>315 & visit5since<406
 replace visit6_qu = 4 if visit6since>315 & visit6since<406 
 
 **Checking for duplicates of coded visit quarters: 
-list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit1_qu==visit2_qu 
-list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit1_qu==visit3_qu 
-list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit1_qu==visit4_qu 
-list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit1_qu==visit5_qu
-list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit1_qu==visit6_qu
-list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit2_qu==visit3_qu 
-list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit2_qu==visit4_qu 
-list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit2_qu==visit5_qu 
-list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit2_qu==visit6_qu
-list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit3_qu==visit4_qu
-list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit3_qu==visit5_qu 
-list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit3_qu==visit6_qu 
-list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit4_qu==visit5_qu 
-list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit4_qu==visit6_qu 
-list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit5_qu==visit6_qu
+**list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit1_qu==visit2_qu 
+**list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit1_qu==visit3_qu 
+**list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit1_qu==visit4_qu 
+**list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit1_qu==visit5_qu
+**list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit1_qu==visit6_qu
+**list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit2_qu==visit3_qu 
+**list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit2_qu==visit4_qu 
+**list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit2_qu==visit5_qu 
+**list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit2_qu==visit6_qu
+**list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit3_qu==visit4_qu
+**list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit3_qu==visit5_qu 
+**list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit3_qu==visit6_qu 
+**list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit4_qu==visit5_qu 
+**list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit4_qu==visit6_qu 
+**list pid visit1_qu visit2_qu visit3_qu visit4_qu visit5_qu visit6_qu if visit5_qu==visit6_qu
 **There are lots of duplicates, but I am choosing to keep all these duplicates as they are
 
 *Criminal justice status per visit:
@@ -193,6 +219,40 @@ fre parole_v5
 fre parole_v6
 ***One person at baseline stated they "didn't know" if they were on parole or probation
 replace parole_base=.a if bc29==8
+
+**Charges, trial, or sentencing status per visit:
+
+clonevar charges_base = bc30
+clonevar charges_v1 = qc15_1
+clonevar charges_v2 = qc15_2
+clonevar charges_v3 = qc15_3
+clonevar charges_v4 = qc15_4
+clonevar charges_v5 = qc15_5
+clonevar charges_v6 = qc15_6
+
+label variable charges_base "Subject reported at baseline he/she was awaiting charges, trial, or sentencing"
+label variable charges_v1 "Subject reported at visit 1 he/she was awaiting charges, trial, or sentencing"
+label variable charges_v2 "Subject reported at visit 2 he/she was awaiting charges, trial, or sentencing"
+label variable charges_v3 "Subject reported at visit 3 he/she was awaiting charges, trial, or sentencing"
+label variable charges_v4 "Subject reported at visit 4 he/she was awaiting charges, trial, or sentencing"
+label variable charges_v5 "Subject reported at visit 5 he/she was awaiting charges, trial, or sentencing"
+label variable charges_v6 "Subject reported at visit 6 he/she was awaiting charges, trial, or sentencing"
+
+label values charges_base no_yes
+label values charges_v1 no_yes
+label values charges_v2 no_yes
+label values charges_v3 no_yes
+label values charges_v4 no_yes
+label values charges_v5 no_yes
+label values charges_v6 no_yes
+
+fre charges_base
+fre charges_v1
+fre charges_v2
+fre charges_v3
+fre charges_v4
+fre charges_v5
+fre charges_v6
 
 *Criminal justice status per quarter:
 
@@ -293,7 +353,7 @@ gen newrecentincar_allqu = recentincar_allqu
 
 label variable newrecentincar_qu1 "Reported incarceration before quarter one visit or missed tx b/c incarcerated"
 label variable newrecentincar_qu2 "Reported incarceration before quarter two visit or missed tx b/c incarcerated"
-label variable newrecentincar_qu3 "Reported incarceration before quarter two visit or missed tx b/c incarcerated"
+label variable newrecentincar_qu3 "Reported incarceration before quarter three visit or missed tx b/c incarcerated"
 label variable newrecentincar_qu4 "Reported incarceration before quarter four visit or missed tx b/c incarcerated"
 label variable newrecentincar_allqu "Reported incarceration at any visit or missed tx b/c incarcerated"
 
@@ -392,6 +452,91 @@ replace parole_qu4=1 if visit5_qu==4 & parole_v5==1
 replace parole_qu4=1 if visit6_qu==4 & parole_v6==1
 
 list parole_qu4 parole_v1 visit1_qu parole_v2 visit2_qu parole_v3 visit3_qu parole_v4 visit4_qu parole_v5 visit5_qu parole_v6 visit6_qu
+
+**Criminal charges, trial, or sentencing per quarter:
+
+gen charges_qu1=.
+gen charges_qu2=.
+gen charges_qu3=.
+gen charges_qu4=.
+gen charges_allqu=.
+
+label variable charges_qu1 "Subject reported awaiting charges, trial, or sentencing at quarter one visit"
+label variable charges_qu2 "Subject reported awaiting charges, trial, or sentencing at quarter two visit"
+label variable charges_qu3 "Subject reported awaiting charges, trial, or sentencing at quarter three visit"
+label variable charges_qu4 "Subject reported awaiting charges, trial, or sentencing at quarter four visit"
+label variable charges_allqu "Subject reported awaiting charges, trial, or sentencing at any of the quarterly visits"
+
+label values charges_qu1 no_yes
+label values charges_qu2 no_yes
+label values charges_qu3 no_yes
+label values charges_qu4 no_yes
+label values charges_allqu no_yes
+
+replace charges_qu1=0 if visit1_qu==1 & charges_v1==0
+replace charges_qu1=0 if visit2_qu==1 & charges_v2==0
+replace charges_qu1=0 if visit3_qu==1 & charges_v3==0
+replace charges_qu1=0 if visit4_qu==1 & charges_v4==0
+replace charges_qu1=0 if visit5_qu==1 & charges_v5==0
+replace charges_qu1=0 if visit6_qu==1 & charges_v6==0
+
+replace charges_qu1=1 if visit1_qu==1 & charges_v1==1
+replace charges_qu1=1 if visit2_qu==1 & charges_v2==1
+replace charges_qu1=1 if visit3_qu==1 & charges_v3==1
+replace charges_qu1=1 if visit4_qu==1 & charges_v4==1
+replace charges_qu1=1 if visit5_qu==1 & charges_v5==1
+replace charges_qu1=1 if visit6_qu==1 & charges_v6==1
+
+*list charges_qu1 charges_v1 visit1_qu charges_v2 visit2_qu charges_v3 visit3_qu charges_v4 visit4_qu charges_v5 visit5_qu charges_v6 visit6_qu
+
+replace charges_qu2=0 if visit1_qu==2 & charges_v1==0
+replace charges_qu2=0 if visit2_qu==2 & charges_v2==0
+replace charges_qu2=0 if visit3_qu==2 & charges_v3==0
+replace charges_qu2=0 if visit4_qu==2 & charges_v4==0
+replace charges_qu2=0 if visit5_qu==2 & charges_v5==0
+replace charges_qu2=0 if visit6_qu==2 & charges_v6==0
+
+replace charges_qu2=1 if visit1_qu==2 & charges_v1==1
+replace charges_qu2=1 if visit2_qu==2 & charges_v2==1
+replace charges_qu2=1 if visit3_qu==2 & charges_v3==1
+replace charges_qu2=1 if visit4_qu==2 & charges_v4==1
+replace charges_qu2=1 if visit5_qu==2 & charges_v5==1
+replace charges_qu2=1 if visit6_qu==2 & charges_v6==1
+
+*list charges_qu2 charges_v1 visit1_qu charges_v2 visit2_qu charges_v3 visit3_qu charges_v4 visit4_qu charges_v5 visit5_qu charges_v6 visit6_qu
+
+replace charges_qu3=0 if visit1_qu==3 & charges_v1==0
+replace charges_qu3=0 if visit2_qu==3 & charges_v2==0
+replace charges_qu3=0 if visit3_qu==3 & charges_v3==0
+replace charges_qu3=0 if visit4_qu==3 & charges_v4==0
+replace charges_qu3=0 if visit5_qu==3 & charges_v5==0
+replace charges_qu3=0 if visit6_qu==3 & charges_v6==0
+
+replace charges_qu3=1 if visit1_qu==3 & charges_v1==1
+replace charges_qu3=1 if visit2_qu==3 & charges_v2==1
+replace charges_qu3=1 if visit3_qu==3 & charges_v3==1
+replace charges_qu3=1 if visit4_qu==3 & charges_v4==1
+replace charges_qu3=1 if visit5_qu==3 & charges_v5==1
+replace charges_qu3=1 if visit6_qu==3 & charges_v6==1
+
+*list charges_qu3 charges_v1 visit1_qu charges_v2 visit2_qu charges_v3 visit3_qu charges_v4 visit4_qu charges_v5 visit5_qu charges_v6 visit6_qu
+
+replace charges_qu4=0 if visit1_qu==4 & charges_v1==0
+replace charges_qu4=0 if visit2_qu==4 & charges_v2==0
+replace charges_qu4=0 if visit3_qu==4 & charges_v3==0
+replace charges_qu4=0 if visit4_qu==4 & charges_v4==0
+replace charges_qu4=0 if visit5_qu==4 & charges_v5==0
+replace charges_qu4=0 if visit6_qu==4 & charges_v6==0
+
+replace charges_qu4=1 if visit1_qu==4 & charges_v1==1
+replace charges_qu4=1 if visit2_qu==4 & charges_v2==1
+replace charges_qu4=1 if visit3_qu==4 & charges_v3==1
+replace charges_qu4=1 if visit4_qu==4 & charges_v4==1
+replace charges_qu4=1 if visit5_qu==4 & charges_v5==1
+replace charges_qu4=1 if visit6_qu==4 & charges_v6==1
+
+*list charges_qu4 charges_v1 visit1_qu charges_v2 visit2_qu charges_v3 visit3_qu charges_v4 visit4_qu charges_v5 visit5_qu charges_v6 visit6_qu
+
 
 *Recent criminal justice involvement
 

@@ -1,3 +1,5 @@
+drop if drugtx!=1
+
 *Modify "don't know" and "refused" missing values to generic missing values:
 recode mentaldiag .a=.
 recode treatedfordrugs .b=.

@@ -10,6 +10,8 @@ label values drugtx drugtx
 
 recode drugtx .=4
 
+drop if drugtx!=1
+
 label define dtxq 1 "bupe" 2 "methadone" 3 "other tx" 4 "unknown" 6 "died" 7 "jailed" 8 "lost to f/u" 9 "DNA - withdrew from study" 10 "moved" 11 "no tx"
 label values dtxq1 dtxq
 label values dtxq2 dtxq

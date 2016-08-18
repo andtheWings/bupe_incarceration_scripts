@@ -21,3 +21,7 @@ graph bar (asis) incar_n incar_y incar_missing, over(treated) over(quarter) stac
 *charges from previous quarter treatment:
 use "/home/riggins/bupe_incarceration_scripts/criminal_justice_outcomes/charges from previous quarter treatment.dta", replace
 graph bar (asis) charge_n charge_y charge_missing, over(treated, label(labsize(small))) over(quarter) percentages stack bar(3, fcolor(gray)) title(Percent awaiting charges stratified by previous quarter BMT status, size(medium) color(black)) legend(title("Presently awaiting charges, trial, and/or sentencing?", size(medium) color(black)))
+
+*charges from previous quarter retention:
+use "/home/riggins/bupe_incarceration_scripts/criminal_justice_outcomes/charges from previous quarter retention.dta", replace
+graph bar (asis) charge_n charge_y charge_missing, over(retained, label(labsize(small))) over(quarter) percentages stack bar(3, fcolor(gray)) title(Percent awaiting charges stratified by previous quarter BMT retention, size(medlarge) color(black)) legend(title("Presently awaiting charges, trial, and/or sentencing?", size(medium) color(black)))

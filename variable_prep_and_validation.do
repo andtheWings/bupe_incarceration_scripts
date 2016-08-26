@@ -256,6 +256,8 @@ fre charges_v4
 fre charges_v5
 fre charges_v6
 
+recode charges_base 8=.a
+
 *Criminal justice status per quarter:
 
 **Recent incarceration per quarter:

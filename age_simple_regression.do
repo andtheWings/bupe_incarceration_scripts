@@ -3,7 +3,6 @@
 regress age white
 regress age black
 regress age latino
-regress age asian_and_other
 regress age english
 regress age male
 regress age heterosexual
@@ -35,3 +34,5 @@ regress age treatedfordrugs
 regress age recentmethadonetx
 regress age everincar_base
 regress age recentincar_base
+regress age charges_base
+*overdosed, years_any_opioid, recentmarijuana, everheroin, injectdrugs, alone, heterosexual, latino, black, white

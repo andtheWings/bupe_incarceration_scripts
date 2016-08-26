@@ -54,48 +54,6 @@ logit miss_age recentincar_base
 logit miss_age charges_base
 **alone everotherpk recentmarijuana
 
-*Generate missing-indicator variables
-quietly misstable summarize age recentincar_qu1 recentincar_qu2 recentincar_qu3 recentincar_qu4, generate (miss_)
-
-*Identify variables that predict missingness of age
-
-logit miss_age white
-logit miss_age black
-logit miss_age latino
-logit miss_age asian_and_other
-logit miss_age english
-logit miss_age male
-logit miss_age heterosexual
-logit miss_age married
-logit miss_age alone
-logit miss_age homeless
-logit miss_age hsdiploma
-logit miss_age employed
-logit miss_age mentaldiag
-logit miss_age injectdrugs
-logit miss_age everalcintox
-logit miss_age everheroin
-logit miss_age evermethadone 
-logit miss_age everotherpk 
-logit miss_age eversedative 
-logit miss_age evercocaine
-logit miss_age evermarijuana
-logit miss_age everanyopioid
-logit miss_age recentalcintox
-logit miss_age recentheroin
-logit miss_age recentmethadone
-logit miss_age recentotherpk
-logit miss_age recentsedative
-logit miss_age recentcocaine
-logit miss_age recentmarijuana
-logit miss_age years_any_opioid
-logit miss_age overdosed
-logit miss_age treatedfordrugs
-logit miss_age recentmethadonetx
-logit miss_age everincar_base
-logit miss_age recentincar_base
-**alone everotherpk recentmarijuana
-
 *Identify variables that predict missingness of 1st quarter recent incarceration
 
 logit miss_recentincar_qu1 age

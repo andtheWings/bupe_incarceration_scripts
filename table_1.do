@@ -10,7 +10,7 @@ histogram age
 summarize age
 
 histogram age, by(everincar_base)
-ttest age, by(everincar_base)
+ttest age, by(everincar_base)	
 
 histogram age, by(parole_base)
 ttest age, by(parole_base) 
@@ -18,11 +18,15 @@ ttest age, by(parole_base)
 histogram age, by(recentincar_base)
 ttest age, by(recentincar_base) 
 
+histogram age, by(retention4q)
+ttest age, by(retention4q)
+
 *''Site''
 
 tab everincar_base site, row chi2
 tab recentincar_base site, row chi2
 tab parole_base site, row chi2
+tab retention4q site, row chi2
 
 *''Race/Ethnicity''
 
@@ -46,6 +50,11 @@ tab parole_base black, row chi2
 tab parole_base latino, row chi2
 tab parole_base asian_and_other, row chi2 exact
 
+tab retention4q white, row chi2
+tab retention4q black, row chi2
+tab retention4q latino, row chi2
+tab retention4q asian_and_other, row chi2 exact
+
 *''English as primary language''
 
 fre english
@@ -59,6 +68,7 @@ fre male
 tab everincar_base male, row chi2
 tab recentincar_base male, row chi2
 tab parole_base male, row chi2
+tab retention4q male, row chi2
 
 *''Heterosexual''
 
@@ -87,6 +97,7 @@ tab homeless
 tab everincar_base homeless, row chi2
 tab recentincar_base homeless, row chi2
 tab parole_base homeless, row chi2
+tab retention4q homeless, row chi2
 
 *''High school diploma or equivalency''
 
@@ -94,6 +105,7 @@ fre hsdiploma
 tab everincar_base hsdiploma, row chi2
 tab recentincar_base hsdiploma, row chi2
 tab parole_base hsdiploma, row chi2
+tab retention4q hsdiploma, row chi2
 
 *''Employed''
 
@@ -101,6 +113,7 @@ fre employed
 tab everincar_base employed, row chi2
 tab recentincar_base employed, row chi2 exact
 tab parole_base employed, row chi2
+tab retention4q employed, row chi2
 
 *''Years since HIV diagnosis''
 
@@ -133,7 +146,7 @@ fre mentaldiag
 tab everincar_base mentaldiag, row chi2
 tab recentincar_base mentaldiag, row chi2
 tab parole_base mentaldiag, row chi2
-
+tab retention4q mentaldiag, row chi2
 
 *''Depression Scale''
 
@@ -178,10 +191,12 @@ summarize asidrugscore
 histogram asidrugscore, by(everincar_base)
 histogram asidrugscore, by(recentincar_base)
 histogram asidrugscore, by(parole_base)
+histogram asidrugscore, by(retention4q)
 
 ttest asidrugscore, by(everincar_base) unequal
 ttest asidrugscore, by(recentincar_base) unequal
 ttest asidrugscore, by(parole_base) unequal
+ttest asidrugscore, by(retention4q) unequal
 
 *Inject drugs ever?
 
@@ -189,6 +204,7 @@ fre injectdrugs
 tab everincar_base injectdrugs, row chi2
 tab recentincar_base injectdrugs, row chi2
 tab parole_base injectdrugs, row chi2
+tab retention4q injectdrugs, row chi2
 
 *Ever use specific drugs?
 
@@ -201,6 +217,7 @@ fre everheroin
 tab everincar_base everheroin, row chi2
 tab recentincar_base everheroin, row chi2
 tab parole_base everheroin, row chi2
+tab retention4q everheroin, row chi2
 
 fre evermethadone
 tab everincar_base evermethadone, row chi2
@@ -399,6 +416,8 @@ by recentincar_base, sort: summarize treatedfordrugs, detail
 ranksum treatedfordrugs, by(recentincar_base)
 by parole_base, sort: summarize treatedfordrugs, detail
 ranksum treatedfordrugs, by(parole_base)
+by retention4q, sort: summarize treatedfordrugs, detail
+ranksum treatedfordrugs, by(retention4q)
 
 *''Methadone treatment in prior three months''
 
@@ -406,3 +425,11 @@ fre recentmethadonetx
 tab everincar_base recentmethadonetx, row chi2
 tab recentincar_base recentmethadonetx, row chi2
 tab parole_base recentmethadonetx, row chi2
+
+*Ever incarcerated
+fre everincar_base
+tab retention4q everincar_base, row chi2
+
+*Recently incarcerated
+fre recentincar_base 
+tab retention4q recentincar_base, row chi2

@@ -184,6 +184,11 @@ logit recentincar_qu4 retention3q
 logit recentincar_qu4 retention4q
 **recentcocaine, years_any_opioid, dtxq2, dtxq3, dtxq4, retention1q, retention2q, retention3q, retention4q
 
+*Simple logistic regressions of BMT treatment
+logit bupe_qu2 recentincar_qu1
+logit bupe_qu3 recentincar_qu2
+logit bupe_qu4 recentincar_qu3
+
 *Simple logistic regressions of 1st quarter charges:
 
 logit charges_qu1 age

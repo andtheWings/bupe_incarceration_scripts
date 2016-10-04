@@ -842,6 +842,10 @@ replace bc2=. if bc2==99
 
 *Race/ethnicity:
 
+label define racemd 1 "White" 2 "Black" 3 "Latino" 4 "Asian" 5 "Other"
+label values racemd racemd
+recode racemd 99=.
+
 fre racemd
 tab racemd bc3
 tab racemd, generate(ethrace)

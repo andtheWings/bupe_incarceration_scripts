@@ -260,6 +260,7 @@ fre recentheroin
 tab everincar_base recentheroin, row chi2
 tab recentincar_base recentheroin, row chi2
 tab parole_base recentheroin, row chi2
+tab retention4q recentheroin, row chi2
 
 fre recentmethadone
 tab everincar_base recentmethadone, row chi2
@@ -280,6 +281,7 @@ fre recentcocaine
 tab everincar_base recentcocaine, row chi2
 tab recentincar_base recentcocaine, row chi2
 tab parole_base recentcocaine, row chi2
+tab retention4q recentcocaine, row chi2
 
 fre recentmarijuana
 tab everincar_base recentmarijuana, row chi2

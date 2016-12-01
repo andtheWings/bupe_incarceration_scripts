@@ -4,6 +4,9 @@
 *by whether individuals had ever been incarcerated greater than 3 days 
 *before or during the study.
 
+*drop if recentincar_base==.
+**for paper on treatment outcomes from recent incarceration
+
 *''Age''
 
 histogram age 
@@ -40,10 +43,10 @@ tab everincar_base black, row chi2
 tab everincar_base latino, row chi2
 tab everincar_base asian_and_other, row chi2 exact
 
-tab recentincar_base white, row chi2
-tab recentincar_base black, row chi2
-tab recentincar_base latino, row chi2
-tab recentincar_base asian_and_other, row chi2 exact
+tab recentincar_base white, row chi2 miss
+tab recentincar_base black, row chi2 miss
+tab recentincar_base latino, row chi2 miss
+tab recentincar_base asian_and_other, row chi2 exact miss
 
 tab parole_base white, row chi2
 tab parole_base black, row chi2
@@ -65,10 +68,10 @@ tab parole_base english, row chi2
 *''Male''
 
 fre male
-tab everincar_base male, row chi2
-tab recentincar_base male, row chi2
-tab parole_base male, row chi2
-tab retention4q male, row chi2
+tab everincar_base male, row chi2 miss
+tab recentincar_base male, row chi2 miss
+tab parole_base male, row chi2 miss
+tab retention4q male, row chi2 miss
 
 *''Heterosexual''
 
@@ -93,27 +96,27 @@ tab parole_base alone, row chi2
 
 *''Self-reported homelessness''
 
-tab homeless
-tab everincar_base homeless, row chi2
-tab recentincar_base homeless, row chi2
-tab parole_base homeless, row chi2
-tab retention4q homeless, row chi2
+fre homeless
+tab everincar_base homeless, row chi2 miss
+tab recentincar_base homeless, row chi2 miss
+tab parole_base homeless, row chi2 miss
+tab retention4q homeless, row chi2 miss
 
 *''High school diploma or equivalency''
 
 fre hsdiploma
-tab everincar_base hsdiploma, row chi2
-tab recentincar_base hsdiploma, row chi2
-tab parole_base hsdiploma, row chi2
-tab retention4q hsdiploma, row chi2
+tab everincar_base hsdiploma, row chi2 miss
+tab recentincar_base hsdiploma, row chi2 miss
+tab parole_base hsdiploma, row chi2 miss
+tab retention4q hsdiploma, row chi2 miss
 
 *''Employed''
 
 fre employed
-tab everincar_base employed, row chi2
-tab recentincar_base employed, row chi2 exact
-tab parole_base employed, row chi2
-tab retention4q employed, row chi2
+tab everincar_base employed, row chi2 miss
+tab recentincar_base employed, row chi2 exact miss
+tab parole_base employed, row chi2 miss
+tab retention4q employed, row chi2 miss
 
 *''Years since HIV diagnosis''
 
@@ -143,10 +146,10 @@ tab retention4q employed, row chi2
 *Ever diagnosed with mental illness
 
 fre mentaldiag
-tab everincar_base mentaldiag, row chi2
-tab recentincar_base mentaldiag, row chi2
-tab parole_base mentaldiag, row chi2
-tab retention4q mentaldiag, row chi2
+tab everincar_base mentaldiag, row chi2 miss
+tab recentincar_base mentaldiag, row chi2 miss
+tab parole_base mentaldiag, row chi2 miss
+tab retention4q mentaldiag, row chi2 miss
 
 *''Depression Scale''
 
@@ -201,10 +204,10 @@ ttest asidrugscore, by(retention4q) unequal
 *Inject drugs ever?
 
 fre injectdrugs
-tab everincar_base injectdrugs, row chi2
-tab recentincar_base injectdrugs, row chi2
-tab parole_base injectdrugs, row chi2
-tab retention4q injectdrugs, row chi2
+tab everincar_base injectdrugs, row chi2 miss
+tab recentincar_base injectdrugs, row chi2 miss
+tab parole_base injectdrugs, row chi2 miss
+tab retention4q injectdrugs, row chi2 miss
 
 *Ever use specific drugs?
 
@@ -214,10 +217,10 @@ tab recentincar_base everalcintox, row chi2
 tab parole_base everalcintox, row chi2
 
 fre everheroin
-tab everincar_base everheroin, row chi2
-tab recentincar_base everheroin, row chi2
-tab parole_base everheroin, row chi2
-tab retention4q everheroin, row chi2
+tab everincar_base everheroin, row chi2 miss
+tab recentincar_base everheroin, row chi2 miss
+tab parole_base everheroin, row chi2 miss
+tab retention4q everheroin, row chi2 miss
 
 fre evermethadone
 tab everincar_base evermethadone, row chi2

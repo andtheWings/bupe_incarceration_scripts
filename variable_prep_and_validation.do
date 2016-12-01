@@ -294,7 +294,7 @@ replace recentincar_qu1=1 if visit4_qu==1 & recentincar_v4==1
 replace recentincar_qu1=1 if visit5_qu==1 & recentincar_v5==1
 replace recentincar_qu1=1 if visit6_qu==1 & recentincar_v6==1
 
-list recentincar_qu1 recentincar_v1 visit1_qu recentincar_v2 visit2_qu recentincar_v3 visit3_qu recentincar_v4 visit4_qu recentincar_v5 visit5_qu recentincar_v6 visit6_qu
+**list recentincar_qu1 recentincar_v1 visit1_qu recentincar_v2 visit2_qu recentincar_v3 visit3_qu recentincar_v4 visit4_qu recentincar_v5 visit5_qu recentincar_v6 visit6_qu
 
 replace recentincar_qu2=0 if visit1_qu==2 & recentincar_v1==0
 replace recentincar_qu2=0 if visit2_qu==2 & recentincar_v2==0
@@ -310,7 +310,7 @@ replace recentincar_qu2=1 if visit4_qu==2 & recentincar_v4==1
 replace recentincar_qu2=1 if visit5_qu==2 & recentincar_v5==1
 replace recentincar_qu2=1 if visit6_qu==2 & recentincar_v6==1
 
-list recentincar_qu2 recentincar_v1 visit1_qu recentincar_v2 visit2_qu recentincar_v3 visit3_qu recentincar_v4 visit4_qu recentincar_v5 visit5_qu recentincar_v6 visit6_qu
+**list recentincar_qu2 recentincar_v1 visit1_qu recentincar_v2 visit2_qu recentincar_v3 visit3_qu recentincar_v4 visit4_qu recentincar_v5 visit5_qu recentincar_v6 visit6_qu
 
 replace recentincar_qu3=0 if visit1_qu==3 & recentincar_v1==0
 replace recentincar_qu3=0 if visit2_qu==3 & recentincar_v2==0
@@ -326,7 +326,7 @@ replace recentincar_qu3=1 if visit4_qu==3 & recentincar_v4==1
 replace recentincar_qu3=1 if visit5_qu==3 & recentincar_v5==1
 replace recentincar_qu3=1 if visit6_qu==3 & recentincar_v6==1
 
-list recentincar_qu3 recentincar_v1 visit1_qu recentincar_v2 visit2_qu recentincar_v3 visit3_qu recentincar_v4 visit4_qu recentincar_v5 visit5_qu recentincar_v6 visit6_qu
+**list recentincar_qu3 recentincar_v1 visit1_qu recentincar_v2 visit2_qu recentincar_v3 visit3_qu recentincar_v4 visit4_qu recentincar_v5 visit5_qu recentincar_v6 visit6_qu
 
 replace recentincar_qu4=0 if visit1_qu==4 & recentincar_v1==0
 replace recentincar_qu4=0 if visit2_qu==4 & recentincar_v2==0
@@ -342,12 +342,12 @@ replace recentincar_qu4=1 if visit4_qu==4 & recentincar_v4==1
 replace recentincar_qu4=1 if visit5_qu==4 & recentincar_v5==1
 replace recentincar_qu4=1 if visit6_qu==4 & recentincar_v6==1
 
-list recentincar_qu4 recentincar_v1 visit1_qu recentincar_v2 visit2_qu recentincar_v3 visit3_qu recentincar_v4 visit4_qu recentincar_v5 visit5_qu recentincar_v6 visit6_qu
+**list recentincar_qu4 recentincar_v1 visit1_qu recentincar_v2 visit2_qu recentincar_v3 visit3_qu recentincar_v4 visit4_qu recentincar_v5 visit5_qu recentincar_v6 visit6_qu
 
 replace recentincar_allqu = 0 if recentincar_qu1==0 & recentincar_qu2==0 & recentincar_qu3==0 & recentincar_qu4==0
 replace recentincar_allqu = 1 if recentincar_qu1==1 | recentincar_qu2==1 | recentincar_qu3==1 | recentincar_qu4==1
 
-list recentincar_allqu recentincar_qu1 recentincar_qu2 recentincar_qu3 recentincar_qu4
+**list recentincar_allqu recentincar_qu1 recentincar_qu2 recentincar_qu3 recentincar_qu4
 
 gen newrecentincar_qu1 = recentincar_qu1
 gen newrecentincar_qu2 = recentincar_qu2
@@ -407,7 +407,7 @@ replace parole_qu1=1 if visit4_qu==1 & parole_v4==1
 replace parole_qu1=1 if visit5_qu==1 & parole_v5==1
 replace parole_qu1=1 if visit6_qu==1 & parole_v6==1
 
-list parole_qu1 parole_v1 visit1_qu parole_v2 visit2_qu parole_v3 visit3_qu parole_v4 visit4_qu parole_v5 visit5_qu parole_v6 visit6_qu
+**list parole_qu1 parole_v1 visit1_qu parole_v2 visit2_qu parole_v3 visit3_qu parole_v4 visit4_qu parole_v5 visit5_qu parole_v6 visit6_qu
 
 replace parole_qu2=0 if visit1_qu==2 & parole_v1==0
 replace parole_qu2=0 if visit2_qu==2 & parole_v2==0
@@ -423,7 +423,7 @@ replace parole_qu2=1 if visit4_qu==2 & parole_v4==1
 replace parole_qu2=1 if visit5_qu==2 & parole_v5==1
 replace parole_qu2=1 if visit6_qu==2 & parole_v6==1
 
-list parole_qu2 parole_v1 visit1_qu parole_v2 visit2_qu parole_v3 visit3_qu parole_v4 visit4_qu parole_v5 visit5_qu parole_v6 visit6_qu
+**list parole_qu2 parole_v1 visit1_qu parole_v2 visit2_qu parole_v3 visit3_qu parole_v4 visit4_qu parole_v5 visit5_qu parole_v6 visit6_qu
 
 replace parole_qu3=0 if visit1_qu==3 & parole_v1==0
 replace parole_qu3=0 if visit2_qu==3 & parole_v2==0
@@ -439,7 +439,7 @@ replace parole_qu3=1 if visit4_qu==3 & parole_v4==1
 replace parole_qu3=1 if visit5_qu==3 & parole_v5==1
 replace parole_qu3=1 if visit6_qu==3 & parole_v6==1
 
-list parole_qu3 parole_v1 visit1_qu parole_v2 visit2_qu parole_v3 visit3_qu parole_v4 visit4_qu parole_v5 visit5_qu parole_v6 visit6_qu
+**list parole_qu3 parole_v1 visit1_qu parole_v2 visit2_qu parole_v3 visit3_qu parole_v4 visit4_qu parole_v5 visit5_qu parole_v6 visit6_qu
 
 replace parole_qu4=0 if visit1_qu==4 & parole_v1==0
 replace parole_qu4=0 if visit2_qu==4 & parole_v2==0
@@ -455,7 +455,7 @@ replace parole_qu4=1 if visit4_qu==4 & parole_v4==1
 replace parole_qu4=1 if visit5_qu==4 & parole_v5==1
 replace parole_qu4=1 if visit6_qu==4 & parole_v6==1
 
-list parole_qu4 parole_v1 visit1_qu parole_v2 visit2_qu parole_v3 visit3_qu parole_v4 visit4_qu parole_v5 visit5_qu parole_v6 visit6_qu
+**list parole_qu4 parole_v1 visit1_qu parole_v2 visit2_qu parole_v3 visit3_qu parole_v4 visit4_qu parole_v5 visit5_qu parole_v6 visit6_qu
 
 **Criminal charges, trial, or sentencing per quarter:
 
@@ -564,7 +564,7 @@ replace retention=2 if dtxq1==1 & dtxq2==1 & dtxq3!=1
 replace retention=3 if dtxq1==1 & dtxq2==1 & dtxq3==1 & dtxq4!=1
 replace retention=4 if dtxq1==1 & dtxq2==1 & dtxq3==1 & dtxq4==1
 
-list retention dtxq1 dtxq2 dtxq3 dtxq4
+**list retention dtxq1 dtxq2 dtxq3 dtxq4
 
 clonevar retention1q=retention
 recode retention1q 2/4=1
@@ -586,7 +586,7 @@ recode retention4q 1/3=0 4=1
 label variable retention4q "Subject was retained on bup/nx treatment for four consecutive quarters"
 label values retention4q no_yes
 
-list retention retention1q retention2q retention3q retention4q
+**list retention retention1q retention2q retention3q retention4q
 
 *Opioid Use per Visit:
 
@@ -656,13 +656,13 @@ recode anyrecentopioids_v4 1/30=1
 recode anyrecentopioids_v5 1/30=1
 recode anyrecentopioids_v6 1/30=1
 
-list anyrecentopioids_base recentopioids_base
-list anyrecentopioids_v1 recentopioids_v1
-list anyrecentopioids_v2 recentopioids_v2
-list anyrecentopioids_v3 recentopioids_v3
-list anyrecentopioids_v4 recentopioids_v4
-list anyrecentopioids_v5 recentopioids_v5
-list anyrecentopioids_v6 recentopioids_v6
+**list anyrecentopioids_base recentopioids_base
+**list anyrecentopioids_v1 recentopioids_v1
+**list anyrecentopioids_v2 recentopioids_v2
+**list anyrecentopioids_v3 recentopioids_v3
+**list anyrecentopioids_v4 recentopioids_v4
+**list anyrecentopioids_v5 recentopioids_v5
+**list anyrecentopioids_v6 recentopioids_v6
 
 *Quarterly Opioid Use:
 
@@ -753,7 +753,7 @@ replace anyrecentopioids_qu1=1 if visit4_qu==1 & anyrecentopioids_v4==1
 replace anyrecentopioids_qu1=1 if visit5_qu==1 & anyrecentopioids_v5==1
 replace anyrecentopioids_qu1=1 if visit6_qu==1 & anyrecentopioids_v6==1
 
-list anyrecentopioids_qu1 anyrecentopioids_v1 visit1_qu anyrecentopioids_v2 visit2_qu anyrecentopioids_v3 visit3_qu anyrecentopioids_v4 visit4_qu anyrecentopioids_v5 visit5_qu anyrecentopioids_v6 visit6_qu
+**list anyrecentopioids_qu1 anyrecentopioids_v1 visit1_qu anyrecentopioids_v2 visit2_qu anyrecentopioids_v3 visit3_qu anyrecentopioids_v4 visit4_qu anyrecentopioids_v5 visit5_qu anyrecentopioids_v6 visit6_qu
 
 replace anyrecentopioids_qu2=0 if visit1_qu==2 & anyrecentopioids_v1==0
 replace anyrecentopioids_qu2=0 if visit2_qu==2 & anyrecentopioids_v2==0
@@ -769,7 +769,7 @@ replace anyrecentopioids_qu2=1 if visit4_qu==2 & anyrecentopioids_v4==1
 replace anyrecentopioids_qu2=1 if visit5_qu==2 & anyrecentopioids_v5==1
 replace anyrecentopioids_qu2=1 if visit6_qu==2 & anyrecentopioids_v6==1
 
-list anyrecentopioids_qu2 anyrecentopioids_v1 visit1_qu anyrecentopioids_v2 visit2_qu anyrecentopioids_v3 visit3_qu anyrecentopioids_v4 visit4_qu anyrecentopioids_v5 visit5_qu anyrecentopioids_v6 visit6_qu
+**list anyrecentopioids_qu2 anyrecentopioids_v1 visit1_qu anyrecentopioids_v2 visit2_qu anyrecentopioids_v3 visit3_qu anyrecentopioids_v4 visit4_qu anyrecentopioids_v5 visit5_qu anyrecentopioids_v6 visit6_qu
 
 replace anyrecentopioids_qu3=0 if visit1_qu==3 & anyrecentopioids_v1==0
 replace anyrecentopioids_qu3=0 if visit2_qu==3 & anyrecentopioids_v2==0
@@ -785,7 +785,7 @@ replace anyrecentopioids_qu3=1 if visit4_qu==3 & anyrecentopioids_v4==1
 replace anyrecentopioids_qu3=1 if visit5_qu==3 & anyrecentopioids_v5==1
 replace anyrecentopioids_qu3=1 if visit6_qu==3 & anyrecentopioids_v6==1
 
-list anyrecentopioids_qu3 anyrecentopioids_v1 visit1_qu anyrecentopioids_v2 visit2_qu anyrecentopioids_v3 visit3_qu anyrecentopioids_v4 visit4_qu anyrecentopioids_v5 visit5_qu anyrecentopioids_v6 visit6_qu
+**list anyrecentopioids_qu3 anyrecentopioids_v1 visit1_qu anyrecentopioids_v2 visit2_qu anyrecentopioids_v3 visit3_qu anyrecentopioids_v4 visit4_qu anyrecentopioids_v5 visit5_qu anyrecentopioids_v6 visit6_qu
 
 replace anyrecentopioids_qu4=0 if visit1_qu==4 & anyrecentopioids_v1==0
 replace anyrecentopioids_qu4=0 if visit2_qu==4 & anyrecentopioids_v2==0
@@ -801,7 +801,7 @@ replace anyrecentopioids_qu4=1 if visit4_qu==4 & anyrecentopioids_v4==1
 replace anyrecentopioids_qu4=1 if visit5_qu==4 & anyrecentopioids_v5==1
 replace anyrecentopioids_qu4=1 if visit6_qu==4 & anyrecentopioids_v6==1
 
-list anyrecentopioids_qu4 anyrecentopioids_v1 visit1_qu anyrecentopioids_v2 visit2_qu anyrecentopioids_v3 visit3_qu anyrecentopioids_v4 visit4_qu anyrecentopioids_v5 visit5_qu anyrecentopioids_v6 visit6_qu
+**list anyrecentopioids_qu4 anyrecentopioids_v1 visit1_qu anyrecentopioids_v2 visit2_qu anyrecentopioids_v3 visit3_qu anyrecentopioids_v4 visit4_qu anyrecentopioids_v5 visit5_qu anyrecentopioids_v6 visit6_qu
 
 gen abstinentopioids_qu1 = .
 gen abstinentopioids_qu2 = .
@@ -828,10 +828,10 @@ replace abstinentopioids_qu2=1 if anyrecentopioids_qu1==0 & anyrecentopioids_qu2
 replace abstinentopioids_qu3=1 if anyrecentopioids_qu1==0 & anyrecentopioids_qu2==0 & anyrecentopioids_qu3==0
 replace abstinentopioids_qu4=1 if anyrecentopioids_qu1==0 & anyrecentopioids_qu2==0 & anyrecentopioids_qu3==0 & anyrecentopioids_qu4==0
 
-list abstinentopioids_qu1 anyrecentopioids_qu1
-list abstinentopioids_qu2 anyrecentopioids_qu1 anyrecentopioids_qu2
-list abstinentopioids_qu3 anyrecentopioids_qu1 anyrecentopioids_qu2 anyrecentopioids_qu3
-list abstinentopioids_qu4 anyrecentopioids_qu1 anyrecentopioids_qu2 anyrecentopioids_qu3 anyrecentopioids_qu4
+**list abstinentopioids_qu1 anyrecentopioids_qu1
+**list abstinentopioids_qu2 anyrecentopioids_qu1 anyrecentopioids_qu2
+**list abstinentopioids_qu3 anyrecentopioids_qu1 anyrecentopioids_qu2 anyrecentopioids_qu3
+**list abstinentopioids_qu4 anyrecentopioids_qu1 anyrecentopioids_qu2 anyrecentopioids_qu3 anyrecentopioids_qu4
 
 *Age:
 
@@ -988,7 +988,7 @@ label define bc12 1 "full-time (35 hours/week or more)" 2 "part-time (less than 
 label values bc12 bc12
 
 tab bc11 bc12
-list pid if bc12==7 & bc11==1
+**list pid if bc12==7 & bc11==1
 **1 of 103 people who reported they were employed (bc11) was listed as "does not apply" under variable for type of paid work (bc12). Individual kept in.
 
 tabulate bc11, generate(employed)
@@ -1003,8 +1003,8 @@ fre employed
 clonevar mentaldiag = bc91
 label values mentaldiag no_yes
 fre mentaldiag
-recode mentaldiag 8=.a
-**.a == "don't know"
+recode mentaldiag 8=.
+**8 == "don't know"
 
 
 *Depression Scale:
@@ -1324,7 +1324,7 @@ recode yearsheroin 55=. 99=.b
 recode yearsmethadone 88=.
 
 egen float years_any_opioid = rowmax(yearsheroin yearsmethadone)
-list yearsheroin yearsmethadone years_any_opioid recentincar_base
+**list yearsheroin yearsmethadone years_any_opioid recentincar_base
 label variable years_any_opioid "Longest number of years using either heroin or methadone"
 
 *Number of times overdosed on drugs:
